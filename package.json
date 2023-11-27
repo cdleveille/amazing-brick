@@ -1,6 +1,6 @@
 {
-  "name": "fullstack-bun",
-  "description": "Bun/TypeScript monorepo template.",
+  "name": "amazing-brick",
+  "description": "",
   "author": "Chris Leveille <cdleveille@gmail.com",
   "license": "MIT",
   "module": "src/server/index.ts",
@@ -9,7 +9,7 @@
     "prepare": "husky install",
     "lint": "bunx eslint --ext .js,.jsx,.ts,.tsx . && bunx prettier --check .",
     "fix": "bunx eslint --fix --ext .js,.jsx,.ts,.tsx . && bunx prettier --write .",
-    "db:up": "docker compose -f \".fullstack-bun-dev-container/docker-compose.yml\" up -d --build",
+    "db:up": "docker compose -f \".amazing-brick-dev-container/docker-compose.yml\" up -d --build",
     "build": "bun scripts/build.ts",
     "build:prod": "bun scripts/build.ts BUN_ENV=production && workbox injectManifest workbox-config.json",
     "deploy": "flyctl deploy --remote-only --detach --no-cache",
