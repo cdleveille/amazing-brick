@@ -1,12 +1,5 @@
-# fly.toml app configuration file generated for amazing-brick on 2024-01-30T16:22:24-05:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
-app = 'amazingbrick'
-primary_region = 'bos'
-
-[build]
+app = "amazingbrick"
+primary_region = "bos"
 
 [[services]]
   auto_stop_machines = false
@@ -29,9 +22,3 @@ primary_region = 'bos'
     type = "connections"
     hard_limit = 500
     soft_limit = 400
-
-[[vm]]
-  cpu_kind = 'shared'
-  cpus = 1
-  memory_mb = 256
-
