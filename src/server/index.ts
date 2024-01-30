@@ -22,7 +22,7 @@ if (!IS_PROD && !fs.existsSync(PUBLIC_DIR)) {
 	}
 }
 
-await connectToDatabase();
+if (!Config.SKIP_DB) await connectToDatabase();
 const app = express();
 app.use(nocache());
 app.use(

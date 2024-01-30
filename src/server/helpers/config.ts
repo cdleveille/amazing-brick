@@ -5,5 +5,6 @@ export const Config = {
 	HOST: Bun.env.HOST || "http://localhost",
 	PORT: parseInt(Bun.env.PORT || "3000"),
 	RELOAD_PORT: 3001,
-	MONGO_URI: Bun.env.MONGO_URI || "mongodb://localhost:27017/amazing-brick"
+	MONGO_URI: Bun.env.MONGO_URI || "mongodb://localhost:27017/amazing-brick",
+	SKIP_DB: Bun.env.SKIP_DB === "true"
 } as IConfig;
