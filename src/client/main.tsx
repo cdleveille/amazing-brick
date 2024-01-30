@@ -2,8 +2,8 @@
 
 import { createRoot } from "react-dom/client";
 
-import { Banner } from "@components";
 import { useConfig, useSocket } from "@hooks";
+import { Home } from "@pages";
 
 const registerServiceWorker = async () => {
 	if (!navigator.serviceWorker) return;
@@ -23,4 +23,4 @@ window.addEventListener("load", async () => {
 const rootDiv = document.createElement("div");
 document.body.appendChild(rootDiv);
 const root = createRoot(rootDiv);
-root.render(<Banner width={200} height={200} />);
+root.render(<Home />);

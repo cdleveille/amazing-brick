@@ -1,16 +1,11 @@
 import { brickImg } from "@assets";
 import { Header } from "@components";
 
-interface IBannerProps {
-	width?: number;
-	height?: number;
-}
-
-export const Banner = ({ width, height }: IBannerProps) => {
+export const Banner = () => {
 	return (
-		<div className="hello centered">
+		<div>
 			<Header text="AMAZING&nbsp;BRICK" />
-			<img src={brickImg} width={width} height={height} alt="Amazing Brick"></img>
+			<img src={brickImg} width={200} height={200} alt="Amazing Brick"></img>
 		</div>
 	);
 };

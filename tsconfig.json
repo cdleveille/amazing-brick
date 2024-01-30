@@ -27,6 +27,7 @@
       "@hooks": ["src/client/hooks"],
       "@middleware": ["src/server/middleware"],
       "@models": ["src/server/models"],
+      "@pages": ["src/client/pages"],
       "@services": ["src/server/services"],
       "@types": ["src/server/types"]
     }
