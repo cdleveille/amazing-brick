@@ -2,7 +2,7 @@
 
 import { createRoot } from "react-dom/client";
 
-import { Hello } from "@components";
+import { Banner } from "@components";
 import { useConfig, useSocket } from "@hooks";
 
 const registerServiceWorker = async () => {
@@ -23,4 +23,4 @@ window.addEventListener("load", async () => {
 const rootDiv = document.createElement("div");
 document.body.appendChild(rootDiv);
 const root = createRoot(rootDiv);
-root.render(<Hello width={200} height={200} />);
+root.render(<Banner width={200} height={200} />);

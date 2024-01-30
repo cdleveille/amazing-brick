@@ -1,4 +1,4 @@
-# fullstack-bun
+# amazing-brick
 
 ## Setup
 
@@ -15,7 +15,3 @@
 -   [MongoDB](https://www.mongodb.com)
 -   [React](https://react.dev)
 -   [Socket.io](https://socket.io)
-
-## Lighthouse
-
-![image](https://user-images.githubusercontent.com/1410481/182275923-ce762fe9-3e8e-4ebf-b511-cdca0f732c15.png)

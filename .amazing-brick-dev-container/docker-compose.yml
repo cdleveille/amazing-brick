@@ -1,9 +1,9 @@
 version: "3.6"
 
 services:
-  fullstack-bun-mongodb-local:
+  amazing-brick-mongodb-local:
     image: mongo:latest
-    container_name: fullstack-bun-mongodb-local
+    container_name: amazing-brick-mongodb-local
     command: mongod --port 27017
     ports:
       - 27017:27017
