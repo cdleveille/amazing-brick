@@ -1,15 +1,10 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 import { Canvas } from "@components";
 import { Game } from "@game";
 
 export const Play = () => {
-	const newGame = useCallback(() => new Game(), []);
-	const [game] = useState(newGame);
+	const game = useCallback(() => new Game(), []);
 
-	return (
-		<>
-			<Canvas game={game} />
-		</>
-	);
+	return <Canvas game={game()} />;
 };

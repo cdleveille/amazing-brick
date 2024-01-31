@@ -11,10 +11,16 @@ export const Home = ({ setScreen }: IHomeProps) => {
 			<div className="home-inner">
 				<Banner />
 				<div className="home-buttons">
-					<Button label="RATE" backgroundColor={Color.Red} onClick={() => setScreen(Screen.Rate)} />
+					<Button backgroundColor={Color.Red} onClick={() => setScreen(Screen.Rate)}>
+						RATE
+					</Button>
 					<div className="home-buttons-lower">
-						<Button label="PLAY" backgroundColor={Color.Green} onClick={() => setScreen(Screen.Play)} />
-						<Button label="SCORES" backgroundColor={Color.Blue} onClick={() => setScreen(Screen.Scores)} />
+						<Button backgroundColor={Color.Green} onClick={() => setScreen(Screen.Play)}>
+							PLAY
+						</Button>
+						<Button backgroundColor={Color.Blue} onClick={() => setScreen(Screen.Scores)}>
+							SCORES
+						</Button>
 					</div>
 				</div>
 			</div>

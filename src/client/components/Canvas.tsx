@@ -8,6 +8,5 @@ interface ICanvasProps {
 
 export const Canvas = ({ game }: ICanvasProps) => {
 	const ref = useCallback((canvas: HTMLCanvasElement) => start(canvas, game), []);
-
 	return <canvas ref={ref} />;
 };

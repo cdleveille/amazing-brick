@@ -1,15 +1,15 @@
-import React from "react";
+import { ReactNode } from "react";
 
 interface IButtonProps {
-	label: React.ReactNode;
+	children: ReactNode;
 	backgroundColor: string;
 	onClick: () => void;
 }
 
-export const Button = ({ label, backgroundColor, onClick }: IButtonProps) => {
+export const Button = ({ children, backgroundColor, onClick }: IButtonProps) => {
 	return (
 		<div className="button" style={{ backgroundColor }} onClick={onClick}>
-			{label}
+			{children}
 		</div>
 	);
 };
