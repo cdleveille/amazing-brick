@@ -14,7 +14,7 @@ export const Home = ({ setScreen, scaleRatio }: IHomeProps) => {
 				<Banner scaleRatio={scaleRatio} />
 				<div style={{ marginTop: `${60 * scaleRatio}px` }}>
 					<RateButton onClick={() => {}} scaleRatio={scaleRatio} margin={buttonMargin} />
-					<div>
+					<div className="buttons-row">
 						<PlayButton
 							onClick={() => setScreen(Screen.Play)}
 							scaleRatio={scaleRatio}

@@ -90,6 +90,12 @@ h1 {
 	font-family: "Roboto-Thin";
 }
 
+.buttons-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
 .home-inner {
 	width: fit-content;
 	text-align: center;
