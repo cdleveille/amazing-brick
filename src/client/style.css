@@ -6,6 +6,20 @@
 	user-select: none;
 }
 
+@font-face {
+	font-family: "Roboto-Regular";
+	font-style: normal;
+	font-weight: 600;
+	src: url("assets/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Roboto-Thin";
+	font-style: normal;
+	font-weight: lighter;
+	src: url("assets/Roboto-Thin.ttf") format("truetype");
+}
+
 html,
 body {
 	background-color: #000000;
@@ -25,6 +39,7 @@ h1 {
 	-o-transition: all 0.2s ease-in-out;
 	-webkit-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
+	font-family: "Roboto-Regular";
 }
 
 .button:hover {
@@ -69,6 +84,10 @@ h1 {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+.header-outer * {
+	font-family: "Roboto-Thin";
 }
 
 .home-inner {
