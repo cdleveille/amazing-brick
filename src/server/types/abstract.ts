@@ -1,3 +1,5 @@
+import { Screen } from "@types";
+
 export interface IConfig {
 	IS_PROD: boolean;
 	HOST: string;
@@ -20,4 +22,10 @@ export interface IUser {
 export interface IError {
 	code: number;
 	message: string;
+}
+
+export type GameScreen = `${Screen}`;
+
+export interface IGamestate {
+	screen: GameScreen;
 }

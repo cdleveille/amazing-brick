@@ -3,6 +3,7 @@
 	margin: 0;
 	padding: 0;
 	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+	user-select: none;
 }
 
 html,
@@ -11,8 +12,7 @@ body {
 }
 
 h1 {
-	margin-bottom: 30px;
-	font-size: 48px;
+	font-size: 60px;
 	font-weight: lighter;
 	color: #000000;
 }
@@ -48,6 +48,21 @@ h1 {
 	-webkit-transform: translateX(-50%) translateY(-50%);
 	-ms-transform: translateX(-50%) translateY(-50%);
 	transform: translateX(-50%) translateY(-50%);
+}
+
+.header-inner {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-top: -0.8rem;
+}
+
+.header-outer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .home-buttons .button {

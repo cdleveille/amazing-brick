@@ -1,11 +1,17 @@
 import { brickImg } from "@assets";
-import { Header } from "@components";
 
 export const Banner = () => {
 	return (
 		<div>
-			<Header text="AMAZING&nbsp;BRICK" />
-			<img src={brickImg} width={200} height={200} alt="Amazing Brick"></img>
+			<h1>
+				<div className="header-outer">
+					<div className="header-text">AMAZING</div>
+					<div className="header-inner">
+						<img src={brickImg} width={80} height={80} alt="Amazing Brick"></img>
+						<div className="header-text">BRICK</div>
+					</div>
+				</div>
+			</h1>
 		</div>
 	);
 };

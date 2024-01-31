@@ -3,3 +3,10 @@ export enum Color {
 	Blue = "#7FA3FB",
 	Red = "#EB5D49"
 }
+
+export enum Screen {
+	Home = "home",
+	Play = "play",
+	Rate = "rate",
+	Scores = "scores"
+}
