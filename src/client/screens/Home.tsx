@@ -1,26 +1,30 @@
-import { Banner, Button } from "@components";
-import { Color, GameScreen, Screen } from "@types";
+import { Banner, PlayButton, RateButton, ScoresButton } from "@components";
+import { GameScreen, Screen } from "@types";
 
 interface IHomeProps {
 	setScreen: (screen: GameScreen) => void;
+	scaleRatio: number;
 }
 
-export const Home = ({ setScreen }: IHomeProps) => {
+export const Home = ({ setScreen, scaleRatio }: IHomeProps) => {
+	const buttonMargin = 20;
 	return (
-		<div className="home-outer">
+		<div className="home-outer centered">
 			<div className="home-inner">
-				<Banner />
-				<div className="home-buttons">
-					<Button backgroundColor={Color.Red} onClick={() => setScreen(Screen.Rate)}>
-						RATE
-					</Button>
-					<div className="home-buttons-lower">
-						<Button backgroundColor={Color.Green} onClick={() => setScreen(Screen.Play)}>
-							PLAY
-						</Button>
-						<Button backgroundColor={Color.Blue} onClick={() => setScreen(Screen.Scores)}>
-							SCORES
-						</Button>
+				<Banner scaleRatio={scaleRatio} />
+				<div style={{ marginTop: `${60 * scaleRatio}px` }}>
+					<RateButton onClick={() => {}} scaleRatio={scaleRatio} margin={buttonMargin} />
+					<div>
+						<PlayButton
+							onClick={() => setScreen(Screen.Play)}
+							scaleRatio={scaleRatio}
+							margin={buttonMargin}
+						/>
+						<ScoresButton
+							onClick={() => setScreen(Screen.Scores)}
+							scaleRatio={scaleRatio}
+							margin={buttonMargin}
+						/>
 					</div>
 				</div>
 			</div>

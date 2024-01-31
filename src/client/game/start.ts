@@ -1,10 +1,10 @@
-import { Game, now } from "@game";
+import { Game, now, WindowHandler } from "@game";
 
 export const start = (canvas: HTMLCanvasElement, game: Game) => {
 	const ctx = canvas.getContext("2d");
 	if (!ctx) throw new Error("cannot get 2d context");
 	// new InputHandler(canvas, game);
-	// new WindowHandler(canvas, game, setIsOffline);
+	new WindowHandler(canvas, game);
 	game.init();
 
 	let current: number, last: number, delta: number;

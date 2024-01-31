@@ -29,3 +29,10 @@ export type GameScreen = `${Screen}`;
 export interface IGamestate {
 	screen: GameScreen;
 }
+
+export interface IResize {
+	width: number;
+	height: number;
+	xOffset: number;
+	yOffset: number;
+}

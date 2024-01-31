@@ -8,22 +8,19 @@
 
 html,
 body {
-	background-color: #ffffff;
+	background-color: #000000;
+	overflow: hidden;
 }
 
 h1 {
-	font-size: 60px;
 	font-weight: lighter;
 	color: #000000;
 }
 
 .button {
-	width: 10rem;
 	display: inline-block;
-	padding: 0.75rem;
 	color: #ffffff;
 	border-radius: 2rem;
-	font-size: 1.25rem;
 	-moz-transition: all 0.2s ease-in-out;
 	-o-transition: all 0.2s ease-in-out;
 	-webkit-transition: all 0.2s ease-in-out;
@@ -37,6 +34,16 @@ h1 {
 
 .button:active {
 	filter: brightness(80%);
+}
+
+.button-inner {
+	background-color: magenta;
+}
+
+.canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .centered {
@@ -55,7 +62,6 @@ h1 {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	margin-top: -0.8rem;
 }
 
 .header-outer {
@@ -65,22 +71,15 @@ h1 {
 	align-items: center;
 }
 
-.home-buttons .button {
-	margin: 1.5rem;
-}
-
 .home-inner {
 	width: fit-content;
 	text-align: center;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	row-gap: 1rem;
 }
 
 .home-outer {
-	width: 100vw;
-	height: 100vh;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
