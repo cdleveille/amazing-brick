@@ -4,9 +4,10 @@ import { GameScreen, Screen } from "@types";
 interface IHomeProps {
 	setScreen: (screen: GameScreen) => void;
 	scaleRatio: number;
+	initGame: () => void;
 }
 
-export const Home = ({ setScreen, scaleRatio }: IHomeProps) => {
+export const Home = ({ setScreen, scaleRatio, initGame }: IHomeProps) => {
 	const buttonMargin = 20;
 	return (
 		<div className="home-outer centered">
@@ -16,7 +17,10 @@ export const Home = ({ setScreen, scaleRatio }: IHomeProps) => {
 					<RateButton onClick={() => {}} scaleRatio={scaleRatio} margin={buttonMargin} />
 					<div className="buttons-row">
 						<PlayButton
-							onClick={() => setScreen(Screen.Play)}
+							onClick={() => {
+								initGame();
+								setScreen(Screen.Play);
+							}}
 							scaleRatio={scaleRatio}
 							margin={buttonMargin}
 						/>

@@ -5,7 +5,6 @@ export const start = (canvas: HTMLCanvasElement, game: Game) => {
 	if (!ctx) throw new Error("cannot get 2d context");
 	// new InputHandler(canvas, game);
 	new WindowHandler(canvas, game);
-	game.init();
 
 	let current: number, last: number, delta: number;
 

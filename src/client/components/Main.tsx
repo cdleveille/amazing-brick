@@ -20,7 +20,7 @@ export const Main = () => {
 	const getScreen = () => {
 		switch (gamestate.screen) {
 			case Screen.Home:
-				return <Home setScreen={setScreen} scaleRatio={scaleRatio} />;
+				return <Home setScreen={setScreen} scaleRatio={scaleRatio} initGame={() => game.init()} />;
 		}
 	};
 

@@ -1,13 +1,15 @@
+import { Brick } from "@game";
 import { Color, IResize } from "@types";
 
 export class Game {
-	width: number = 0;
-	height: number = 0;
-	xOffset: number = 0;
-	yOffset: number = 0;
-	scaleRatio: number = 0;
+	width = 0;
+	height = 0;
+	xOffset = 0;
+	yOffset = 0;
+	scaleRatio = 0;
 	setScaleRatio: (scaleRatio: number) => void;
 	setOffset: (offset: { xOffset: number; yOffset: number }) => void;
+	brick = new Brick();
 
 	constructor(
 		setScaleRatio: (scaleRatio: number) => void,
@@ -15,11 +17,11 @@ export class Game {
 	) {
 		this.setScaleRatio = setScaleRatio;
 		this.setOffset = setOffset;
-		console.log("new game");
 	}
 
 	init() {
-		//
+		this.brick.x = this.width / 2;
+		this.brick.y = (3 * this.height) / 4;
 	}
 
 	resize(screen: IResize) {
@@ -44,5 +46,8 @@ export class Game {
 		// white game screen
 		ctx.fillStyle = Color.White;
 		ctx.fillRect(this.xOffset, this.yOffset, this.width, this.height);
+
+		// draw brick
+		this.brick.draw(ctx, this.scaleRatio, this.xOffset, this.yOffset);
 	}
 }
