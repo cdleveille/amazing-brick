@@ -1,5 +1,10 @@
+import { jumpImg } from "@assets";
 import { Brick } from "@game";
 import { Color, IResize, JumpDirection } from "@types";
+
+import { loadImage } from "./util";
+
+const jumpImgLoaded = loadImage(jumpImg);
 
 export class Game {
 	width = 0;
@@ -9,8 +14,9 @@ export class Game {
 	scaleRatio = 0;
 	setScaleRatio: (scaleRatio: number) => void;
 	setOffset: (offset: { xOffset: number; yOffset: number }) => void;
-	brick = new Brick();
+	brick = new Brick(this);
 	isStarted = false;
+	showJumpImage = false;
 
 	constructor(
 		setScaleRatio: (scaleRatio: number) => void,
@@ -23,6 +29,7 @@ export class Game {
 	init() {
 		this.brick.x = this.width / 2;
 		this.brick.y = this.height / 2 - this.brick.size / 2;
+		this.showJumpImage = true;
 	}
 
 	resize(screen: IResize) {
@@ -37,7 +44,10 @@ export class Game {
 	}
 
 	jump(direction: JumpDirection) {
-		if (!this.isStarted) this.isStarted = true;
+		if (!this.isStarted) {
+			this.isStarted = true;
+			this.showJumpImage = false;
+		}
 		this.brick.jump(direction, this.scaleRatio);
 	}
 
@@ -78,5 +88,18 @@ export class Game {
 
 		// draw brick
 		this.brick.draw(ctx, this.scaleRatio, this.xOffset, this.yOffset);
+
+		// jump image
+		if (this.showJumpImage) {
+			const imgWidth = 298.737747 * this.scaleRatio;
+			const imgHeight = 141.6416078 * this.scaleRatio;
+			ctx.drawImage(
+				jumpImgLoaded,
+				this.xOffset + this.width / 2 - imgWidth / 2,
+				this.yOffset + this.height / 2 - imgHeight - 50 * this.scaleRatio,
+				imgWidth,
+				imgHeight
+			);
+		}
 	}
 }

@@ -8,6 +8,7 @@ import icon_192x192 from "./icon_192x192.png";
 import icon_192x192_maskable from "./icon_192x192_maskable.png";
 import icon_512x512 from "./icon_512x512.png";
 import icon_512x512_maskable from "./icon_512x512_maskable.png";
+import jump from "./jump.svg";
 import play from "./play.svg";
 import scores from "./scores.svg";
 
@@ -21,5 +22,6 @@ export const icon_192x192Img = icon_192x192;
 export const icon_192x192_maskableImg = icon_192x192_maskable;
 export const icon_512x512Img = icon_512x512;
 export const icon_512x512_maskableImg = icon_512x512_maskable;
+export const jumpImg = jump;
 export const playImg = play;
 export const scoresImg = scores;

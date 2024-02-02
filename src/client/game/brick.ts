@@ -1,4 +1,5 @@
 import { brickCroppedImg } from "@assets";
+import { Game } from "@game";
 import { JumpDirection } from "@types";
 
 import { loadImage } from "./util";
@@ -6,6 +7,7 @@ import { loadImage } from "./util";
 const brickImg = loadImage(brickCroppedImg);
 
 export class Brick {
+	game: Game;
 	x = -1000;
 	y = -1000;
 	xv = 0;
@@ -14,12 +16,8 @@ export class Brick {
 	size = 50;
 	isTouchingWall = false;
 
-	constructor() {
-		//
-	}
-
-	init() {
-		//
+	constructor(game: Game) {
+		this.game = game;
 	}
 
 	resize(newWidth: number, sizeRatio: number, scaleRatio: number) {
@@ -34,6 +32,10 @@ export class Brick {
 	}
 
 	jump(direction: JumpDirection, scaleRatio: number) {
+		if (this.isTouchingWall) {
+			if (direction === JumpDirection.Right && this.x > this.game.width / 2) return;
+			else if (direction === JumpDirection.Left && this.x < this.game.width / 2) return;
+		}
 		const xvMult = direction === JumpDirection.Left ? -1 : 1;
 		this.xv = 200 * scaleRatio * xvMult;
 		this.yv = -800 * scaleRatio;
