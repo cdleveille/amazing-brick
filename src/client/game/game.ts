@@ -1,5 +1,5 @@
 import { Brick } from "@game";
-import { Color, IResize } from "@types";
+import { Color, IResize, JumpDirection } from "@types";
 
 export class Game {
 	width = 0;
@@ -10,6 +10,7 @@ export class Game {
 	setScaleRatio: (scaleRatio: number) => void;
 	setOffset: (offset: { xOffset: number; yOffset: number }) => void;
 	brick = new Brick();
+	isStarted = false;
 
 	constructor(
 		setScaleRatio: (scaleRatio: number) => void,
@@ -21,7 +22,7 @@ export class Game {
 
 	init() {
 		this.brick.x = this.width / 2;
-		this.brick.y = (3 * this.height) / 4;
+		this.brick.y = this.height / 2 - this.brick.size / 2;
 	}
 
 	resize(screen: IResize) {
@@ -30,12 +31,40 @@ export class Game {
 		this.xOffset = screen.xOffset;
 		this.yOffset = screen.yOffset;
 		this.scaleRatio = this.height / 924;
+		this.brick.resize(this.width, 103 / 1290, this.scaleRatio);
 		this.setScaleRatio(this.scaleRatio);
 		this.setOffset({ xOffset: this.xOffset, yOffset: this.yOffset });
 	}
 
+	jump(direction: JumpDirection) {
+		if (!this.isStarted) this.isStarted = true;
+		this.brick.jump(direction, this.scaleRatio);
+	}
+
+	handleCollisions() {
+		// touching wall
+		if (this.brick.x - this.brick.size / 2 <= 0) {
+			this.brick.x = this.brick.size / 2;
+			this.brick.xv = 0;
+			this.brick.isTouchingWall = true;
+		} else if (this.brick.x + this.brick.size / 2 >= this.width) {
+			this.brick.x = this.width - this.brick.size / 2;
+			this.brick.xv = 0;
+			this.brick.isTouchingWall = true;
+		} else {
+			this.brick.isTouchingWall = false;
+		}
+
+		// touching floor
+		if (this.brick.y + this.brick.size / 2 > this.height) {
+			this.brick.y = this.height - this.brick.size / 2;
+			this.brick.yv = 0;
+		}
+	}
+
 	update(delta: number) {
-		console.log(delta);
+		this.brick.update(delta, this.isStarted, this.scaleRatio);
+		this.handleCollisions();
 	}
 
 	draw(ctx: CanvasRenderingContext2D) {

@@ -8,9 +8,7 @@ import { GameScreen, IGamestate, Screen } from "@types";
 export const Main = () => {
 	const [gamestate, setGamestate] = useState<IGamestate>({ screen: Screen.Home });
 	const [scaleRatio, setScaleRatio] = useState(0);
-	const [offset, setOffset] = useState({ xOffset: 0, yOffset: 0 });
-
-	console.log(offset);
+	const [, setOffset] = useState({ xOffset: 0, yOffset: 0 });
 
 	const setScreen = (screen: GameScreen) => setGamestate(gamestate => ({ ...gamestate, screen }));
 

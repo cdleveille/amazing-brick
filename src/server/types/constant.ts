@@ -16,3 +16,8 @@ export enum Screen {
 	Rate = "rate",
 	Scores = "scores"
 }
+
+export enum JumpDirection {
+	Left = "left",
+	Right = "right"
+}
