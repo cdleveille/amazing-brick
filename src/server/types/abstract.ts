@@ -36,3 +36,7 @@ export interface IResize {
 	xOffset: number;
 	yOffset: number;
 }
+
+export interface IObstacleBar {
+	y: number;
+}

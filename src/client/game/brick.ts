@@ -8,22 +8,26 @@ const brickImg = loadImage(brickCroppedImg);
 
 export class Brick {
 	game: Game;
-	x = -1000;
-	y = -1000;
+	x = 0;
+	y = 0;
 	xv = 0;
 	yv = 0;
-	g = 2000;
-	size = 50;
+	g = 0;
+	width = 0;
+	radius = this.width / 2;
 	isTouchingWall = false;
+	isHalfwayUp = true;
 
 	constructor(game: Game) {
 		this.game = game;
 	}
 
-	resize(newWidth: number, sizeRatio: number, scaleRatio: number) {
-		const oldWidth = this.size / sizeRatio;
+	resize(newWidth: number, scaleRatio: number) {
+		const widthRatio = 103 / 1290;
+		const oldWidth = (this.width || 1) / widthRatio;
 		const ratio = newWidth / oldWidth;
-		this.size = newWidth * sizeRatio;
+		this.width = newWidth * widthRatio;
+		this.radius = this.width / 2;
 		this.x *= ratio;
 		this.y *= ratio;
 		this.xv *= ratio;
@@ -37,7 +41,7 @@ export class Brick {
 			else if (direction === JumpDirection.Left && this.x < this.game.width / 2) return;
 		}
 		const xvMult = direction === JumpDirection.Left ? -1 : 1;
-		this.xv = 200 * scaleRatio * xvMult;
+		this.xv = 125 * scaleRatio * xvMult;
 		this.yv = -800 * scaleRatio;
 	}
 
@@ -49,17 +53,18 @@ export class Brick {
 			this.yv = Math.min(this.yv, 400 * scaleRatio);
 		}
 
+		if (this.y <= this.game.height / 2 && this.yv <= 0) {
+			this.y = this.game.height / 2;
+			this.isHalfwayUp = true;
+		} else {
+			this.isHalfwayUp = false;
+		}
+
 		this.y += this.yv * delta;
 		this.x += this.xv * delta;
 	}
 
 	draw(ctx: CanvasRenderingContext2D, scaleRatio: number, xOffset: number, yOffset: number) {
-		ctx.drawImage(
-			brickImg,
-			this.x - this.size / 2 + xOffset,
-			this.y - this.size / 2 + yOffset,
-			this.size,
-			this.size
-		);
+		ctx.drawImage(brickImg, this.x - this.radius + xOffset, this.y - this.radius + yOffset, this.width, this.width);
 	}
 }

@@ -1,5 +1,5 @@
 import { jumpImg } from "@assets";
-import { Brick } from "@game";
+import { Brick, Obstacle } from "@game";
 import { Color, IResize, JumpDirection } from "@types";
 
 import { loadImage } from "./util";
@@ -15,6 +15,7 @@ export class Game {
 	setScaleRatio: (scaleRatio: number) => void;
 	setOffset: (offset: { xOffset: number; yOffset: number }) => void;
 	brick = new Brick(this);
+	obstace = new Obstacle(this);
 	isStarted = false;
 	showJumpImage = false;
 
@@ -28,7 +29,7 @@ export class Game {
 
 	init() {
 		this.brick.x = this.width / 2;
-		this.brick.y = this.height / 2 - this.brick.size / 2;
+		this.brick.y = this.height / 2;
 		this.showJumpImage = true;
 	}
 
@@ -38,7 +39,8 @@ export class Game {
 		this.xOffset = screen.xOffset;
 		this.yOffset = screen.yOffset;
 		this.scaleRatio = this.height / 924;
-		this.brick.resize(this.width, 103 / 1290, this.scaleRatio);
+		this.brick.resize(this.width, this.scaleRatio);
+		this.obstace.resize(this.scaleRatio);
 		this.setScaleRatio(this.scaleRatio);
 		this.setOffset({ xOffset: this.xOffset, yOffset: this.yOffset });
 	}
@@ -53,12 +55,12 @@ export class Game {
 
 	handleCollisions() {
 		// touching wall
-		if (this.brick.x - this.brick.size / 2 <= 0) {
-			this.brick.x = this.brick.size / 2;
+		if (this.brick.x - this.brick.radius <= 0) {
+			this.brick.x = this.brick.radius;
 			this.brick.xv = 0;
 			this.brick.isTouchingWall = true;
-		} else if (this.brick.x + this.brick.size / 2 >= this.width) {
-			this.brick.x = this.width - this.brick.size / 2;
+		} else if (this.brick.x + this.brick.radius >= this.width) {
+			this.brick.x = this.width - this.brick.radius;
 			this.brick.xv = 0;
 			this.brick.isTouchingWall = true;
 		} else {
@@ -66,14 +68,15 @@ export class Game {
 		}
 
 		// touching floor
-		if (this.brick.y + this.brick.size / 2 > this.height) {
-			this.brick.y = this.height - this.brick.size / 2;
+		if (this.brick.y + this.brick.radius > this.height) {
+			this.brick.y = this.height - this.brick.radius;
 			this.brick.yv = 0;
 		}
 	}
 
 	update(delta: number) {
 		this.brick.update(delta, this.isStarted, this.scaleRatio);
+		this.obstace.update(delta);
 		this.handleCollisions();
 	}
 
@@ -86,6 +89,9 @@ export class Game {
 		ctx.fillStyle = Color.White;
 		ctx.fillRect(this.xOffset, this.yOffset, this.width, this.height);
 
+		// obstacles
+		this.obstace.draw(ctx, this.xOffset, this.yOffset);
+
 		// draw brick
 		this.brick.draw(ctx, this.scaleRatio, this.xOffset, this.yOffset);
 
@@ -96,7 +102,7 @@ export class Game {
 			ctx.drawImage(
 				jumpImgLoaded,
 				this.xOffset + this.width / 2 - imgWidth / 2,
-				this.yOffset + this.height / 2 - imgHeight - 50 * this.scaleRatio,
+				this.yOffset + this.height / 2 - imgHeight - 30 * this.scaleRatio,
 				imgWidth,
 				imgHeight
 			);
