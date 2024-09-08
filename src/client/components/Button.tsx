@@ -1,28 +1,29 @@
-import { ReactNode } from "react";
+import { useAppContext } from "@hooks";
 
-interface IButtonProps {
-	children: ReactNode;
-	backgroundColor: string;
+type ButtonProps = {
 	onClick: () => void;
-	scaleRatio: number;
-	margin?: number;
-}
+	backgroundColor: string;
+	className?: string;
+	children?: React.ReactNode;
+};
 
-export const Button = ({ children, backgroundColor, onClick, scaleRatio, margin = 0 }: IButtonProps) => {
+export const Button = ({ onClick, backgroundColor, className, children }: ButtonProps) => {
+	const {
+		canvas: { scaleRatio }
+	} = useAppContext();
+
 	return (
-		<div
-			className="button"
+		<button
+			className={`btn ${className}`}
 			style={{
-				backgroundColor,
-				width: `${180 * scaleRatio}px`,
-				height: `${54 * scaleRatio}px`,
-				padding: `${12 * scaleRatio}px`,
-				fontSize: `${22 * scaleRatio}px`,
-				margin: `${margin * scaleRatio}px`
+				backgroundColor: backgroundColor,
+				width: `${164 * scaleRatio}px`,
+				height: `${44 * scaleRatio}px`,
+				borderRadius: `${32 * scaleRatio}px`
 			}}
 			onClick={onClick}
 		>
 			{children}
-		</div>
+		</button>
 	);
 };

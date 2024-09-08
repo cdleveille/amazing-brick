@@ -1,111 +1,37 @@
-import { jumpImg } from "@assets";
-import { Brick, Obstacle } from "@game";
-import { Color, IResize, JumpDirection } from "@types";
+import { Brick, now } from "@game";
 
-import { loadImage } from "./util";
-
-const jumpImgLoaded = loadImage(jumpImg);
+import type { TCanvas } from "@types";
 
 export class Game {
-	width = 0;
-	height = 0;
-	xOffset = 0;
-	yOffset = 0;
-	scaleRatio = 0;
-	setScaleRatio: (scaleRatio: number) => void;
-	setOffset: (offset: { xOffset: number; yOffset: number }) => void;
-	brick = new Brick(this);
-	obstace = new Obstacle(this);
-	isStarted = false;
-	showJumpImage = false;
+	canvas: TCanvas;
+	brick: Brick;
 
-	constructor(
-		setScaleRatio: (scaleRatio: number) => void,
-		setOffset: (offset: { xOffset: number; yOffset: number }) => void
-	) {
-		this.setScaleRatio = setScaleRatio;
-		this.setOffset = setOffset;
+	constructor(canvas: TCanvas) {
+		this.canvas = canvas;
+		this.brick = new Brick(this);
+		console.log("game created");
 	}
 
-	init() {
-		this.brick.x = this.width / 2;
-		this.brick.y = this.height / 2;
-		this.showJumpImage = true;
+	start() {
+		console.log("game started");
+		let current: number, last: number, delta: number;
+		const frame = () => {
+			current = now();
+			// eslint-disable-next-line no-constant-binary-expression
+			delta = (current - last ?? now()) / 1000 || 0;
+			requestAnimationFrame(frame);
+			this.update(delta);
+			last = current;
+		};
+		requestAnimationFrame(frame);
 	}
 
-	resize(screen: IResize) {
-		this.width = screen.width;
-		this.height = screen.height;
-		this.xOffset = screen.xOffset;
-		this.yOffset = screen.yOffset;
-		this.scaleRatio = this.height / 924;
-		this.brick.resize(this.width, this.scaleRatio);
-		this.obstace.resize(this.scaleRatio);
-		this.setScaleRatio(this.scaleRatio);
-		this.setOffset({ xOffset: this.xOffset, yOffset: this.yOffset });
-	}
-
-	jump(direction: JumpDirection) {
-		if (!this.isStarted) {
-			this.isStarted = true;
-			this.showJumpImage = false;
-		}
-		this.brick.jump(direction, this.scaleRatio);
-	}
-
-	handleCollisions() {
-		// touching wall
-		if (this.brick.x - this.brick.radius <= 0) {
-			this.brick.x = this.brick.radius;
-			this.brick.xv = 0;
-			this.brick.isTouchingWall = true;
-		} else if (this.brick.x + this.brick.radius >= this.width) {
-			this.brick.x = this.width - this.brick.radius;
-			this.brick.xv = 0;
-			this.brick.isTouchingWall = true;
-		} else {
-			this.brick.isTouchingWall = false;
-		}
-
-		// touching floor
-		if (this.brick.y + this.brick.radius > this.height) {
-			this.brick.y = this.height - this.brick.radius;
-			this.brick.yv = 0;
-		}
+	resize(canvas: TCanvas) {
+		this.canvas = canvas;
+		console.log(`game resized to ${canvas.width}x${canvas.height}`);
 	}
 
 	update(delta: number) {
-		this.brick.update(delta, this.isStarted, this.scaleRatio);
-		this.obstace.update(delta);
-		this.handleCollisions();
-	}
-
-	draw(ctx: CanvasRenderingContext2D) {
-		// black background
-		ctx.fillStyle = Color.Black;
-		ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
-		// white game screen
-		ctx.fillStyle = Color.White;
-		ctx.fillRect(this.xOffset, this.yOffset, this.width, this.height);
-
-		// obstacles
-		this.obstace.draw(ctx, this.xOffset, this.yOffset);
-
-		// draw brick
-		this.brick.draw(ctx, this.scaleRatio, this.xOffset, this.yOffset);
-
-		// jump image
-		if (this.showJumpImage) {
-			const imgWidth = 298.737747 * this.scaleRatio;
-			const imgHeight = 141.6416078 * this.scaleRatio;
-			ctx.drawImage(
-				jumpImgLoaded,
-				this.xOffset + this.width / 2 - imgWidth / 2,
-				this.yOffset + this.height / 2 - imgHeight - 30 * this.scaleRatio,
-				imgWidth,
-				imgHeight
-			);
-		}
+		this.brick.update(delta);
 	}
 }

@@ -22,13 +22,13 @@
     "paths": {
       "@assets": ["src/client/assets"],
       "@components": ["src/client/components"],
+      "@constants": ["src/server/constants"],
       "@controllers": ["src/server/controllers"],
       "@game": ["src/client/game"],
       "@helpers": ["src/server/helpers"],
       "@hooks": ["src/client/hooks"],
       "@middleware": ["src/server/middleware"],
       "@models": ["src/server/models"],
-      "@screens": ["src/client/screens"],
       "@services": ["src/server/services"],
       "@types": ["src/server/types"]
     }
