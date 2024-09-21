@@ -1,4 +1,4 @@
-import { Brick, Button } from "@components";
+import { Brick, Button, Text } from "@components";
 import { useAppContext } from "@hooks";
 
 export const Home = () => {
@@ -34,13 +34,13 @@ export const Home = () => {
 			</div>
 			<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
 				<Button onClick={() => setScreen("play")} backgroundColor="#93cb65">
-					<span style={{ fontSize: `${22 * scaleRatio}px` }}>PLAY</span>
+					<Text text="PLAY" size={22} />
 				</Button>
 				<Button onClick={() => setScreen("home")} backgroundColor="#7fa3fb">
-					<span style={{ fontSize: `${22 * scaleRatio}px` }}>SCORES</span>
+					<Text text="SCORES" size={22} />
 				</Button>
 				<Button onClick={() => setScreen("home")} backgroundColor="#eb5d49">
-					<span style={{ fontSize: `${22 * scaleRatio}px` }}>RATE</span>
+					<Text text="RATE" size={22} />
 				</Button>
 			</div>
 		</div>

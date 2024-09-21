@@ -8,7 +8,8 @@ export const Pause = () => {
 
 	const {
 		canvas: { width, height, scaleRatio },
-		setScreen
+		setScreen,
+		game
 	} = useAppContext();
 
 	return (
@@ -18,7 +19,13 @@ export const Pause = () => {
 					<Button onClick={() => setScreen("home")} backgroundColor="#7fa3fb">
 						<span style={{ fontSize: `${22 * scaleRatio}px` }}>HOME</span>
 					</Button>
-					<Button onClick={() => setIsPaused(false)} backgroundColor="#93cb65">
+					<Button
+						onClick={() => {
+							setIsPaused(false);
+							if (game) game.isPaused = false;
+						}}
+						backgroundColor="#93cb65"
+					>
 						<span style={{ fontSize: `${22 * scaleRatio}px` }}>PLAY</span>
 					</Button>
 				</div>
@@ -31,7 +38,10 @@ export const Pause = () => {
 					border: `${1 * scaleRatio}px solid black`,
 					margin: `${8 * scaleRatio}px`
 				}}
-				onClick={() => setIsPaused(true)}
+				onClick={() => {
+					setIsPaused(true);
+					if (game) game.isPaused = true;
+				}}
 			>
 				<div
 					style={{

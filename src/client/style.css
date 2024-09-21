@@ -25,6 +25,10 @@ body {
 	font-family: "Roboto-Regular";
 }
 
+button {
+	z-index: 10;
+}
+
 .canvas {
 	position: fixed;
 	background-color: white;
@@ -80,14 +84,14 @@ body {
 	cursor: pointer;
 }
 
-.brick {
-	background-color: black;
-	rotate: 45deg;
-}
-
 .play-container {
 	position: relative;
 	height: 100%;
+}
+
+.brick {
+	background-color: black;
+	rotate: 45deg;
 }
 
 .pause-overlay {

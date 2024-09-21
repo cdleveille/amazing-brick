@@ -48,3 +48,5 @@ export type TCanvas = {
 };
 
 export type TScreen = "home" | "play";
+
+export type TJumpDirection = "left" | "right";
