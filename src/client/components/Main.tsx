@@ -5,12 +5,12 @@ import { Game } from "@game";
 import { AppContext } from "@hooks";
 
 import type { TCanvas, TScreen } from "@types";
-
 export const Main = () => {
 	const [game, setGame] = useState<Game>();
 	const [screen, setScreen] = useState<TScreen>("home");
 	const [canvas, setCanvas] = useState<TCanvas>();
 	const [score, setScore] = useState(0);
+	const [isPaused, setPaused] = useState(false);
 
 	const onResize = () => {
 		const aspectRatio = 1290 / 2294;
@@ -50,10 +50,17 @@ export const Main = () => {
 		game.resize(canvas);
 	}, [canvas]);
 
+	const setIsPaused = (isPaused: boolean) => {
+		setPaused(isPaused);
+		if (game) game.isPaused = isPaused;
+	};
+
 	if (!canvas) return null;
 
 	return (
-		<AppContext.Provider value={{ game, setGame, screen, setScreen, canvas, score, setScore }}>
+		<AppContext.Provider
+			value={{ game, setGame, screen, setScreen, canvas, score, setScore, isPaused, setIsPaused }}
+		>
 			<div
 				className="canvas"
 				style={{ top: canvas.yOffset, left: canvas.xOffset, width: canvas.width, height: canvas.height }}

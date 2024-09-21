@@ -5,13 +5,14 @@ import { Game } from "@game";
 import { useAppContext } from "@hooks";
 
 export const Play = () => {
-	const { canvas, setGame } = useAppContext();
+	const { canvas, setGame, setIsPaused } = useAppContext();
 
 	useEffect(() => {
 		const game = new Game(canvas);
 		game.start();
 		setGame(game);
-		return initGameEventListeners(game);
+		setIsPaused(false);
+		return initInputEventListeners(game);
 	}, []);
 
 	return (
@@ -25,25 +26,25 @@ export const Play = () => {
 	);
 };
 
-const initGameEventListeners = (game: Game) => {
+const initInputEventListeners = (game: Game) => {
 	const LEFT_KEYS = ["ArrowLeft", "a"];
 	const RIGHT_KEYS = ["ArrowRight", "d"];
 
-	const mouseJump = (e: MouseEvent) => {
+	const onMouseDown = (e: MouseEvent) => {
 		if (e.button === 0) return game.jump("left");
 		if (e.button === 2) return game.jump("right");
 	};
 
-	const keyJump = (e: KeyboardEvent) => {
+	const onKeyDown = (e: KeyboardEvent) => {
 		if (LEFT_KEYS.includes(e.key)) return game.jump("left");
 		if (RIGHT_KEYS.includes(e.key)) return game.jump("right");
 	};
 
-	document.addEventListener("mousedown", mouseJump);
-	document.addEventListener("keydown", keyJump);
+	document.addEventListener("mousedown", onMouseDown);
+	document.addEventListener("keydown", onKeyDown);
 
 	return () => {
-		document.removeEventListener("mousedown", mouseJump);
-		document.removeEventListener("keydown", keyJump);
+		document.removeEventListener("mousedown", onMouseDown);
+		document.removeEventListener("keydown", onKeyDown);
 	};
 };

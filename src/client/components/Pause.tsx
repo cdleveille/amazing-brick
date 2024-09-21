@@ -1,32 +1,26 @@
-import { useState } from "react";
-
-import { Button } from "@components";
+import { Button, Text } from "@components";
 import { useAppContext } from "@hooks";
 
 export const Pause = () => {
-	const [isPaused, setIsPaused] = useState(false);
-
 	const {
 		canvas: { width, height, scaleRatio },
 		setScreen,
-		game
+		game,
+		isPaused,
+		setIsPaused
 	} = useAppContext();
+
+	if (!game) return null;
 
 	return (
 		<>
 			{isPaused && (
 				<div className="pause-overlay" style={{ width, height, rowGap: `${32 * scaleRatio}px` }}>
 					<Button onClick={() => setScreen("home")} backgroundColor="#7fa3fb">
-						<span style={{ fontSize: `${22 * scaleRatio}px` }}>HOME</span>
+						<Text size={22}>HOME</Text>
 					</Button>
-					<Button
-						onClick={() => {
-							setIsPaused(false);
-							if (game) game.isPaused = false;
-						}}
-						backgroundColor="#93cb65"
-					>
-						<span style={{ fontSize: `${22 * scaleRatio}px` }}>PLAY</span>
+					<Button onClick={() => setIsPaused(false)} backgroundColor="#93cb65">
+						<Text size={22}>PLAY</Text>
 					</Button>
 				</div>
 			)}
@@ -38,10 +32,7 @@ export const Pause = () => {
 					border: `${1 * scaleRatio}px solid black`,
 					margin: `${8 * scaleRatio}px`
 				}}
-				onClick={() => {
-					setIsPaused(true);
-					if (game) game.isPaused = true;
-				}}
+				onClick={() => setIsPaused(true)}
 			>
 				<div
 					style={{

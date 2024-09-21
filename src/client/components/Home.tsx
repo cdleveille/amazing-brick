@@ -34,13 +34,13 @@ export const Home = () => {
 			</div>
 			<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
 				<Button onClick={() => setScreen("play")} backgroundColor="#93cb65">
-					<Text text="PLAY" size={22} />
+					<Text size={22}>PLAY</Text>
 				</Button>
 				<Button onClick={() => setScreen("home")} backgroundColor="#7fa3fb">
-					<Text text="SCORES" size={22} />
+					<Text size={22}>SCORES</Text>
 				</Button>
 				<Button onClick={() => setScreen("home")} backgroundColor="#eb5d49">
-					<Text text="RATE" size={22} />
+					<Text size={22}>RATE</Text>
 				</Button>
 			</div>
 		</div>

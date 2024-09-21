@@ -1,14 +1,16 @@
+import React from "react";
+
 import { useAppContext } from "@hooks";
 
 type TextProps = {
-	text: string;
+	children: React.ReactNode;
 	size: number;
 	style?: React.CSSProperties;
 };
 
-export const Text = ({ text, size, style }: TextProps) => {
+export const Text = ({ children, size, style }: TextProps) => {
 	const {
 		canvas: { scaleRatio }
 	} = useAppContext();
-	return <span style={{ ...style, fontSize: `${size * scaleRatio}px` }}>{text}</span>;
+	return <span style={{ ...style, fontSize: `${size * scaleRatio}px` }}>{children}</span>;
 };

@@ -1,3 +1,3 @@
 import { build } from "@services";
 
-build();
+await build();

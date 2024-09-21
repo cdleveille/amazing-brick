@@ -28,7 +28,6 @@ export class Brick {
 		this.jumpSpeedY = 900 * this.game.canvas.scaleRatio;
 		this.jumpSpeedX = 150 * this.game.canvas.scaleRatio;
 		this.resize();
-		this.adjustPosition();
 	}
 
 	jump(direction: TJumpDirection) {
@@ -51,6 +50,8 @@ export class Brick {
 
 		this.jumpSpeedY = this.jumpSpeedY * resizeRatio;
 		this.jumpSpeedX = this.jumpSpeedX * resizeRatio;
+
+		this.adjustPosition();
 	}
 
 	adjustPosition() {
