@@ -9,6 +9,7 @@ export interface IConfig {
 	PORT: number;
 	RELOAD_PORT: number;
 	MONGO_URI: string;
+	SKIP_DB: boolean;
 }
 
 export interface IBase {
