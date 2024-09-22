@@ -66,7 +66,7 @@ export class Brick {
 
 	adjustPosition() {
 		this.ele.style.left = `${this.x + (this.diagonalWidth - this.sideLength) / 2 - this.diagonalRadius}px`;
-		this.ele.style.top = `${this.y + (this.diagonalWidth - this.sideLength) / 2 - this.diagonalRadius}px`;
+		this.ele.style.top = `${Math.max(this.y + (this.diagonalWidth - this.sideLength) / 2 - this.diagonalRadius, this.game.canvas.height / 2 - (this.diagonalWidth - this.sideLength) / 2 - this.diagonalRadius)}px`;
 	}
 
 	update(delta: number) {
