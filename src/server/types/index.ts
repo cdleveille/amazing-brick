@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { SocketEvent } from "@constants";
+import { Color, SocketEvent } from "@constants";
 import { Game } from "@game";
 
 export interface IConfig {
@@ -63,6 +63,7 @@ export type TWall = {
 	eleRight: HTMLElement;
 	gapX: number;
 	isScored: boolean;
+	color: Color;
 };
 
 export type TPoint = {

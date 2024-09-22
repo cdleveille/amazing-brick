@@ -49,10 +49,8 @@ export class Game {
 	jump(direction: TJumpDirection) {
 		if (this.isPaused) return;
 		if (this.isGameOver) return;
-		if (this.isPausedAtStart) {
-			this.isPausedAtStart = false;
-			this.ctx.setIsPausedAtStart(false);
-		}
+		this.isPausedAtStart = false;
+		this.ctx.setIsPausedAtStart(false);
 		this.brick.jump(direction);
 	}
 
@@ -62,7 +60,6 @@ export class Game {
 		this.gravity = this.gravity * resizeRatio;
 		this.brick.resize(resizeRatio);
 		this.obstacle.resize(resizeRatio);
-		console.log(`game resized to ${canvas.width}x${canvas.height}`);
 	}
 
 	handleCollisions() {

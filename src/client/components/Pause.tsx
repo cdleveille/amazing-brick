@@ -1,4 +1,5 @@
 import { Button, Text } from "@components";
+import { Color } from "@constants";
 import { useAppContext } from "@hooks";
 
 export const Pause = () => {
@@ -16,10 +17,10 @@ export const Pause = () => {
 		<>
 			{isPaused && (
 				<div className="pause-overlay" style={{ width, height, rowGap: `${32 * scaleRatio}px` }}>
-					<Button onClick={() => setScreen("home")} backgroundColor="#7fa3fb">
+					<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue}>
 						<Text size={22}>HOME</Text>
 					</Button>
-					<Button onClick={() => setIsPaused(false)} backgroundColor="#93cb65">
+					<Button onClick={() => setIsPaused(false)} backgroundColor={Color.Green}>
 						<Text size={22}>PLAY</Text>
 					</Button>
 				</div>
@@ -27,8 +28,8 @@ export const Pause = () => {
 			<button
 				className="btn-pause"
 				style={{
-					width: `${32 * scaleRatio}px`,
-					height: `${32 * scaleRatio}px`,
+					width: `${36 * scaleRatio}px`,
+					height: `${36 * scaleRatio}px`,
 					border: `${1 * scaleRatio}px solid black`,
 					margin: `${8 * scaleRatio}px`
 				}}
@@ -36,8 +37,8 @@ export const Pause = () => {
 			>
 				<div
 					style={{
-						width: `${8 * scaleRatio}px`,
-						height: `${14 * scaleRatio}px`,
+						width: `${10 * scaleRatio}px`,
+						height: `${16 * scaleRatio}px`,
 						borderLeft: `${1 * scaleRatio}px solid black`,
 						borderRight: `${1 * scaleRatio}px solid black`
 					}}
