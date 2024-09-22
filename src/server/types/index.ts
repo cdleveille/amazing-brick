@@ -40,6 +40,8 @@ export type TAppContext = {
 	setScore: Dispatch<SetStateAction<number>>;
 	isPaused: boolean;
 	setIsPaused: (isPaused: boolean) => void;
+	isPausedAtStart: boolean;
+	setIsPausedAtStart: Dispatch<SetStateAction<boolean>>;
 };
 
 export type TCanvas = {

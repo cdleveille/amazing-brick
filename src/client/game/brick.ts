@@ -14,6 +14,9 @@ export class Brick {
 	diagonalRadius: number;
 	jumpSpeedY: number;
 	jumpSpeedX: number;
+	isCollidingLeft: boolean;
+	isCollidingRight: boolean;
+	isCollidingTop: boolean;
 
 	constructor(game: Game) {
 		this.game = game;
@@ -25,14 +28,21 @@ export class Brick {
 		this.sideLength = 25.75 * this.game.canvas.scaleRatio;
 		this.diagonalWidth = (this.sideLength ** 2 * 2) ** 0.5;
 		this.diagonalRadius = this.diagonalWidth / 2;
-		this.jumpSpeedY = 900 * this.game.canvas.scaleRatio;
+		this.jumpSpeedY = 750 * this.game.canvas.scaleRatio;
 		this.jumpSpeedX = 150 * this.game.canvas.scaleRatio;
+		this.isCollidingLeft = false;
+		this.isCollidingRight = false;
+		this.isCollidingTop = true;
 		this.resize();
 	}
 
 	jump(direction: TJumpDirection) {
+		if (this.isCollidingLeft && direction === "left") return;
+		if (this.isCollidingRight && direction === "right") return;
 		this.yv = -this.jumpSpeedY;
 		this.xv = direction === "left" ? -this.jumpSpeedX : this.jumpSpeedX;
+		this.isCollidingLeft = false;
+		this.isCollidingRight = false;
 	}
 
 	resize(resizeRatio = 1) {

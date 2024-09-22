@@ -1,6 +1,7 @@
 export * from "./Brick";
 export * from "./Button";
 export * from "./Home";
+export * from "./Jump";
 export * from "./Main";
 export * from "./Pause";
 export * from "./Play";

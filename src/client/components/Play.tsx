@@ -1,17 +1,25 @@
 import { useEffect } from "react";
 
-import { Brick, Pause, Score } from "@components";
+import { Brick, Jump, Pause, Score } from "@components";
 import { Game } from "@game";
 import { useAppContext } from "@hooks";
 
 export const Play = () => {
-	const { canvas, setGame, setIsPaused } = useAppContext();
+	const ctx = useAppContext();
+	const {
+		canvas: { scaleRatio },
+		setGame,
+		setIsPaused,
+		isPausedAtStart,
+		setIsPausedAtStart
+	} = ctx;
 
 	useEffect(() => {
-		const game = new Game(canvas);
+		const game = new Game(ctx);
 		game.start();
 		setGame(game);
 		setIsPaused(false);
+		setIsPausedAtStart(true);
 		return initInputEventListeners(game);
 	}, []);
 
@@ -21,6 +29,11 @@ export const Play = () => {
 				<Pause />
 				<Score />
 			</div>
+			{isPausedAtStart && (
+				<div className="absolute-center">
+					<Jump style={{ marginBottom: `${170 * scaleRatio}px` }} />
+				</div>
+			)}
 			<Brick id="brick" />
 		</div>
 	);
@@ -36,6 +49,7 @@ const initInputEventListeners = (game: Game) => {
 	};
 
 	const onKeyDown = (e: KeyboardEvent) => {
+		if (e.repeat) return;
 		if (LEFT_KEYS.includes(e.key)) return game.jump("left");
 		if (RIGHT_KEYS.includes(e.key)) return game.jump("right");
 	};

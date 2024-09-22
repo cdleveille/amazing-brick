@@ -1,16 +1,18 @@
 import { Brick, now } from "@game";
 
-import type { TCanvas, TJumpDirection } from "@types";
+import type { TAppContext, TCanvas, TJumpDirection } from "@types";
 
 export class Game {
+	ctx: TAppContext;
 	canvas: TCanvas;
 	brick: Brick;
 	gravity: number;
 	isPaused: boolean;
 	isPausedAtStart: boolean;
 
-	constructor(canvas: TCanvas) {
-		this.canvas = canvas;
+	constructor(ctx: TAppContext) {
+		this.ctx = ctx;
+		this.canvas = ctx.canvas;
 		this.brick = new Brick(this);
 		this.gravity = 2000 * this.canvas.scaleRatio;
 		this.isPaused = false;
@@ -32,7 +34,10 @@ export class Game {
 
 	jump(direction: TJumpDirection) {
 		if (this.isPaused) return;
-		if (this.isPausedAtStart) this.isPausedAtStart = false;
+		if (this.isPausedAtStart) {
+			this.isPausedAtStart = false;
+			this.ctx.setIsPausedAtStart(false);
+		}
 		this.brick.jump(direction);
 	}
 
@@ -45,23 +50,24 @@ export class Game {
 	}
 
 	handleCollisions() {
-		if (this.brick.y + this.brick.diagonalRadius >= this.canvas.height) {
+		if (this.brick.y <= this.canvas.height / 2) {
+			this.brick.y = this.canvas.height / 2;
+		} else if (this.brick.y + this.brick.diagonalRadius >= this.canvas.height) {
 			this.brick.y = this.canvas.height - this.brick.diagonalRadius;
-			this.brick.yv = 0;
-		} else if (this.brick.y - this.brick.diagonalRadius <= 0) {
-			this.brick.y = this.brick.diagonalRadius;
 			this.brick.yv = 0;
 		}
 
 		if (this.brick.x - this.brick.diagonalRadius <= 0) {
 			this.brick.x = this.brick.diagonalRadius;
 			this.brick.xv = 0;
+			this.brick.isCollidingLeft = true;
 			if (this.brick.yv > 300 * this.canvas.scaleRatio) {
 				this.brick.yv = 300 * this.canvas.scaleRatio;
 			}
 		} else if (this.brick.x + this.brick.diagonalRadius >= this.canvas.width) {
 			this.brick.x = this.canvas.width - this.brick.diagonalRadius;
 			this.brick.xv = 0;
+			this.brick.isCollidingRight = true;
 			if (this.brick.yv > 300 * this.canvas.scaleRatio) {
 				this.brick.yv = 300 * this.canvas.scaleRatio;
 			}

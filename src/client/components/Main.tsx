@@ -11,6 +11,7 @@ export const Main = () => {
 	const [canvas, setCanvas] = useState<TCanvas>();
 	const [score, setScore] = useState(0);
 	const [isPaused, setPaused] = useState(false);
+	const [isPausedAtStart, setIsPausedAtStart] = useState(true);
 
 	const onResize = () => {
 		const aspectRatio = 1290 / 2294;
@@ -59,7 +60,19 @@ export const Main = () => {
 
 	return (
 		<AppContext.Provider
-			value={{ game, setGame, screen, setScreen, canvas, score, setScore, isPaused, setIsPaused }}
+			value={{
+				game,
+				setGame,
+				screen,
+				setScreen,
+				canvas,
+				score,
+				setScore,
+				isPaused,
+				setIsPaused,
+				isPausedAtStart,
+				setIsPausedAtStart
+			}}
 		>
 			<div
 				className="canvas"
