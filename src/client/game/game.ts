@@ -1,4 +1,4 @@
-import { Brick, now, Obstacle } from "@game";
+import { Brick, isRectangleIntersectingDiamond, now, Obstacle } from "@game";
 
 import type { TAppContext, TCanvas, TJumpDirection } from "@types";
 
@@ -10,6 +10,7 @@ export class Game {
 	gravity: number;
 	isPaused: boolean;
 	isPausedAtStart: boolean;
+	isGameOver: boolean;
 
 	constructor(ctx: TAppContext) {
 		this.ctx = ctx;
@@ -19,6 +20,7 @@ export class Game {
 		this.gravity = 1500 * this.canvas.scaleRatio;
 		this.isPaused = false;
 		this.isPausedAtStart = true;
+		this.isGameOver = false;
 	}
 
 	start() {
@@ -34,8 +36,19 @@ export class Game {
 		requestAnimationFrame(frame);
 	}
 
+	restart() {
+		this.isGameOver = false;
+		this.ctx.setIsPaused(false);
+		this.ctx.setIsPausedAtStart(true);
+		this.isPausedAtStart = true;
+		this.ctx.setScore(0);
+		this.brick = new Brick(this);
+		this.obstacle = new Obstacle(this);
+	}
+
 	jump(direction: TJumpDirection) {
 		if (this.isPaused) return;
+		if (this.isGameOver) return;
 		if (this.isPausedAtStart) {
 			this.isPausedAtStart = false;
 			this.ctx.setIsPausedAtStart(false);
@@ -59,8 +72,7 @@ export class Game {
 		} else this.brick.isCollidingTop = false;
 
 		if (this.brick.y + this.brick.diagonalRadius >= this.canvas.height) {
-			this.brick.y = this.canvas.height - this.brick.diagonalRadius;
-			this.brick.yv = 0;
+			this.restart();
 		}
 
 		if (this.brick.x - this.brick.diagonalRadius <= 0) {
@@ -76,6 +88,29 @@ export class Game {
 			this.brick.isCollidingRight = true;
 			if (this.brick.yv > 300 * this.canvas.scaleRatio) {
 				this.brick.yv = 300 * this.canvas.scaleRatio;
+			}
+		}
+
+		for (const wall of this.obstacle.walls) {
+			if (
+				isRectangleIntersectingDiamond(
+					{ x: 0, y: wall.y, width: wall.gapX, height: this.obstacle.wallHeight },
+					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
+				)
+			) {
+				this.isGameOver = true;
+			} else if (
+				isRectangleIntersectingDiamond(
+					{
+						x: wall.gapX + this.obstacle.wallGapWidth,
+						y: wall.y,
+						width: this.canvas.width - wall.gapX - this.obstacle.wallGapWidth,
+						height: this.obstacle.wallHeight
+					},
+					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
+				)
+			) {
+				this.isGameOver = true;
 			}
 		}
 	}

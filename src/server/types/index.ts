@@ -64,3 +64,21 @@ export type TWall = {
 	gapX: number;
 	isScored: boolean;
 };
+
+export type TPoint = {
+	x: number;
+	y: number;
+};
+
+export type TRectangle = {
+	x: number; // Top-left corner x
+	y: number; // Top-left corner y
+	width: number;
+	height: number;
+};
+
+export type TDiamond = {
+	cx: number; // Center x
+	cy: number; // Center y
+	size: number; // Distance from center to one of the points (half diagonal length)
+};

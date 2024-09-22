@@ -32,6 +32,10 @@ export class Obstacle {
 				isScored: false
 			}
 		];
+		for (const wall of this.walls) {
+			wall.eleLeft.style.height = "0px";
+			wall.eleRight.style.height = "0px";
+		}
 	}
 
 	getWallGapX() {

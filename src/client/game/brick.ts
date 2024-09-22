@@ -21,6 +21,7 @@ export class Brick {
 	constructor(game: Game) {
 		this.game = game;
 		this.ele = assertGetElementById("brick");
+		this.ele.classList.remove("spin");
 		this.x = this.game.canvas.width / 2;
 		this.y = this.game.canvas.height / 2;
 		this.xv = 0;
@@ -70,6 +71,11 @@ export class Brick {
 	}
 
 	update(delta: number) {
+		if (this.game.isGameOver) {
+			this.xv = 0;
+			this.yv = 600 * this.game.canvas.scaleRatio;
+			this.ele.classList.add("spin");
+		}
 		this.yv += this.game.gravity * delta;
 		this.x += this.xv * delta;
 		this.y += this.yv * delta;
