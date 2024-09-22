@@ -42,6 +42,7 @@ export type TAppContext = {
 	setIsPaused: (isPaused: boolean) => void;
 	isPausedAtStart: boolean;
 	setIsPausedAtStart: Dispatch<SetStateAction<boolean>>;
+	playerId: string;
 };
 
 export type TCanvas = {
@@ -55,3 +56,8 @@ export type TCanvas = {
 export type TScreen = "home" | "play";
 
 export type TJumpDirection = "left" | "right";
+
+export type TWall = {
+	y: number;
+	ele: HTMLElement;
+};

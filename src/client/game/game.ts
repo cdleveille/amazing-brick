@@ -1,4 +1,4 @@
-import { Brick, now } from "@game";
+import { Brick, now, Obstacle } from "@game";
 
 import type { TAppContext, TCanvas, TJumpDirection } from "@types";
 
@@ -6,6 +6,7 @@ export class Game {
 	ctx: TAppContext;
 	canvas: TCanvas;
 	brick: Brick;
+	obstacle: Obstacle;
 	gravity: number;
 	isPaused: boolean;
 	isPausedAtStart: boolean;
@@ -14,7 +15,8 @@ export class Game {
 		this.ctx = ctx;
 		this.canvas = ctx.canvas;
 		this.brick = new Brick(this);
-		this.gravity = 2000 * this.canvas.scaleRatio;
+		this.obstacle = new Obstacle(this);
+		this.gravity = 1500 * this.canvas.scaleRatio;
 		this.isPaused = false;
 		this.isPausedAtStart = true;
 	}
@@ -46,13 +48,17 @@ export class Game {
 		this.canvas = canvas;
 		this.gravity = this.gravity * resizeRatio;
 		this.brick.resize(resizeRatio);
+		this.obstacle.resize(resizeRatio);
 		console.log(`game resized to ${canvas.width}x${canvas.height}`);
 	}
 
 	handleCollisions() {
 		if (this.brick.y <= this.canvas.height / 2) {
 			this.brick.y = this.canvas.height / 2;
-		} else if (this.brick.y + this.brick.diagonalRadius >= this.canvas.height) {
+			this.brick.isCollidingTop = true;
+		} else this.brick.isCollidingTop = false;
+
+		if (this.brick.y + this.brick.diagonalRadius >= this.canvas.height) {
 			this.brick.y = this.canvas.height - this.brick.diagonalRadius;
 			this.brick.yv = 0;
 		}
@@ -77,6 +83,7 @@ export class Game {
 	update(delta: number) {
 		if (this.isPaused || this.isPausedAtStart) return;
 		this.brick.update(delta);
+		this.obstacle.update(delta);
 		this.handleCollisions();
 	}
 }

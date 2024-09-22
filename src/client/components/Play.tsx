@@ -25,6 +25,8 @@ export const Play = () => {
 
 	return (
 		<div className="play-container">
+			<div id="wall1" className="wall"></div>
+			<div id="wall2" className="wall"></div>
 			<div className="hud">
 				<Pause />
 				<Score />

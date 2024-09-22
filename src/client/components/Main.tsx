@@ -1,17 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Home, Play } from "@components";
+import { PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
 import { Game } from "@game";
-import { AppContext } from "@hooks";
+import { AppContext, useLocalStorage } from "@hooks";
 
 import type { TCanvas, TScreen } from "@types";
+
 export const Main = () => {
+	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
+
 	const [game, setGame] = useState<Game>();
-	const [screen, setScreen] = useState<TScreen>("home");
+	const [screen, setScreen] = useState<TScreen>("play");
 	const [canvas, setCanvas] = useState<TCanvas>();
 	const [score, setScore] = useState(0);
 	const [isPaused, setPaused] = useState(false);
 	const [isPausedAtStart, setIsPausedAtStart] = useState(true);
+
+	const playerId = useMemo(() => getLocalStorageItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID(), []);
 
 	const onResize = () => {
 		const aspectRatio = 1290 / 2294;
@@ -51,6 +57,10 @@ export const Main = () => {
 		game.resize(canvas);
 	}, [canvas]);
 
+	useEffect(() => {
+		setLocalStorageItem(PLAYER_ID_LOCAL_STORAGE_KEY, playerId);
+	}, [playerId]);
+
 	const setIsPaused = (isPaused: boolean) => {
 		setPaused(isPaused);
 		if (game) game.isPaused = isPaused;
@@ -71,7 +81,8 @@ export const Main = () => {
 				isPaused,
 				setIsPaused,
 				isPausedAtStart,
-				setIsPausedAtStart
+				setIsPausedAtStart,
+				playerId
 			}}
 		>
 			<div

@@ -103,9 +103,11 @@ button {
 }
 
 .hud {
+	position: absolute;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	width: 100%;
 }
 
 .absolute-center {
@@ -116,6 +118,12 @@ button {
 	-webkit-transform: translateX(-50%) translateY(-50%);
 	-ms-transform: translateX(-50%) translateY(-50%);
 	transform: translateX(-50%) translateY(-50%);
+}
+
+.wall {
+	position: absolute;
+	width: 100%;
+	background-color: #7fa3fb;
 }
 
 #brick {
