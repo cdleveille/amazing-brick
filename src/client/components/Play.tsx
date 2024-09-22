@@ -56,11 +56,26 @@ const initInputEventListeners = (game: Game) => {
 		if (RIGHT_KEYS.includes(e.key)) return game.jump("right");
 	};
 
+	const onTouchStart = (e: TouchEvent) => {
+		const touch = e.touches.item(0);
+		if (!touch) return;
+		if (touch.clientX < window.innerWidth / 2) return game.jump("left");
+		if (touch.clientX >= window.innerWidth / 2) return game.jump("right");
+	};
+
+	const onTouchEnd = (e: TouchEvent) => {
+		e.preventDefault();
+	};
+
 	document.addEventListener("mousedown", onMouseDown);
 	document.addEventListener("keydown", onKeyDown);
+	document.addEventListener("touchstart", onTouchStart);
+	document.addEventListener("touchend", onTouchEnd);
 
 	return () => {
 		document.removeEventListener("mousedown", onMouseDown);
 		document.removeEventListener("keydown", onKeyDown);
+		document.removeEventListener("touchstart", onTouchStart);
+		document.removeEventListener("touchend", onTouchEnd);
 	};
 };
