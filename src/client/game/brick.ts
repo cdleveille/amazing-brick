@@ -29,7 +29,7 @@ export class Brick {
 		this.diagonalWidth = (this.sideLength ** 2 * 2) ** 0.5;
 		this.diagonalRadius = this.diagonalWidth / 2;
 		this.jumpSpeedY = 650 * this.game.canvas.scaleRatio;
-		this.jumpSpeedX = 150 * this.game.canvas.scaleRatio;
+		this.jumpSpeedX = 120 * this.game.canvas.scaleRatio;
 		this.isCollidingLeft = false;
 		this.isCollidingRight = false;
 		this.isCollidingTop = true;

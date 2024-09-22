@@ -6,13 +6,7 @@ import { useAppContext } from "@hooks";
 
 export const Play = () => {
 	const ctx = useAppContext();
-	const {
-		canvas: { scaleRatio },
-		setGame,
-		setIsPaused,
-		isPausedAtStart,
-		setIsPausedAtStart
-	} = ctx;
+	const { setGame, setIsPaused, isPausedAtStart, setIsPausedAtStart } = ctx;
 
 	useEffect(() => {
 		const game = new Game(ctx);
@@ -25,15 +19,17 @@ export const Play = () => {
 
 	return (
 		<div className="play-container">
-			<div id="wall1" className="wall"></div>
-			<div id="wall2" className="wall"></div>
+			<div id="wall1-left" className="wall"></div>
+			<div id="wall1-right" className="wall"></div>
+			<div id="wall2-left" className="wall"></div>
+			<div id="wall2-right" className="wall"></div>
 			<div className="hud">
 				<Pause />
 				<Score />
 			</div>
 			{isPausedAtStart && (
 				<div className="absolute-center">
-					<Jump style={{ marginBottom: `${170 * scaleRatio}px` }} />
+					<Jump />
 				</div>
 			)}
 			<Brick id="brick" />

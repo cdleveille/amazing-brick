@@ -59,5 +59,8 @@ export type TJumpDirection = "left" | "right";
 
 export type TWall = {
 	y: number;
-	ele: HTMLElement;
+	eleLeft: HTMLElement;
+	eleRight: HTMLElement;
+	gapX: number;
+	isScored: boolean;
 };
