@@ -41,11 +41,6 @@ const initInputEventListeners = (game: Game) => {
 	const LEFT_KEYS = ["ArrowLeft", "a"];
 	const RIGHT_KEYS = ["ArrowRight", "d"];
 
-	const onMouseDown = (e: MouseEvent) => {
-		if (e.button === 0) return game.jump("left");
-		if (e.button === 2) return game.jump("right");
-	};
-
 	const onKeyDown = (e: KeyboardEvent) => {
 		if (e.repeat) return;
 		if (LEFT_KEYS.includes(e.key)) return game.jump("left");
@@ -63,13 +58,11 @@ const initInputEventListeners = (game: Game) => {
 		e.preventDefault();
 	};
 
-	document.addEventListener("mousedown", onMouseDown);
 	document.addEventListener("keydown", onKeyDown);
 	document.addEventListener("touchstart", onTouchStart);
 	document.addEventListener("touchend", onTouchEnd);
 
 	return () => {
-		document.removeEventListener("mousedown", onMouseDown);
 		document.removeEventListener("keydown", onKeyDown);
 		document.removeEventListener("touchstart", onTouchStart);
 		document.removeEventListener("touchend", onTouchEnd);

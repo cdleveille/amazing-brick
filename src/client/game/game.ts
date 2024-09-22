@@ -20,6 +20,8 @@ export class Game {
 		this.gravity = 1500 * this.canvas.scaleRatio;
 		this.isPaused = false;
 		this.isPausedAtStart = true;
+		this.ctx.setIsPausedAtStart(true);
+		this.ctx.setScore(0);
 		this.isGameOver = false;
 	}
 
