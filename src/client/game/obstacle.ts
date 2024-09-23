@@ -1,11 +1,10 @@
 import { Color, WALL_COLORS } from "@constants";
 import { assertGetElementById, Game } from "@game";
 
-import type { TWall } from "@types";
+import type { TWall, TBlock } from "@types";
 
 export class Obstacle {
 	game: Game;
-	walls: TWall[];
 	wallSpacing: number;
 	wallHeight: number;
 	wallGapWidth: number;
@@ -13,12 +12,15 @@ export class Obstacle {
 	wallBlockSpacing: number;
 	wallColor: Color;
 	wallCount: number;
+	walls: TWall[];
+	blockWidth: number;
+	blocks: TBlock[];
 
 	constructor(game: Game) {
 		this.game = game;
 		this.wallSpacing = (1313 / 2294) * this.game.canvas.height;
 		this.wallHeight = (132 / 2294) * this.game.canvas.height;
-		this.wallGapWidth = this.game.canvas.width * (447 / 1290);
+		this.wallGapWidth = (447 / 1290) * this.game.canvas.width;
 		this.wallGapMinDistFromEdge = this.wallGapWidth / 3;
 		this.wallBlockSpacing = (233 / 2294) * this.game.canvas.height;
 		this.wallColor = WALL_COLORS[0];
@@ -45,6 +47,8 @@ export class Obstacle {
 			wall.eleLeft.style.height = "0px";
 			wall.eleRight.style.height = "0px";
 		}
+		this.blockWidth = (89 / 1290) * this.game.canvas.width;
+		this.blocks = [];
 	}
 
 	getWallGapX() {
@@ -65,6 +69,7 @@ export class Obstacle {
 		this.wallHeight = this.wallHeight * resizeRatio;
 		this.wallGapWidth = this.wallGapWidth * resizeRatio;
 		this.wallGapMinDistFromEdge = this.wallGapWidth / 3;
+		this.blockWidth = this.blockWidth * resizeRatio;
 		for (const wall of this.walls) {
 			wall.y = wall.y * resizeRatio;
 			wall.gapX = wall.gapX * resizeRatio;

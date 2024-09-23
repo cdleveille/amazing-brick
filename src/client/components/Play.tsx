@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { Brick, Jump, Pause, Score } from "@components";
+import { Brick, Jump, Obstacle, Pause, Score } from "@components";
 import { Game } from "@game";
 import { useAppContext } from "@hooks";
 
@@ -19,10 +19,7 @@ export const Play = () => {
 
 	return (
 		<div className="play-container">
-			<div id="wall1-left" className="wall"></div>
-			<div id="wall1-right" className="wall"></div>
-			<div id="wall2-left" className="wall"></div>
-			<div id="wall2-right" className="wall"></div>
+			<Obstacle />
 			<div className="hud">
 				<Pause />
 				<Score />

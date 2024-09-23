@@ -181,6 +181,10 @@ button:focus {
 	font-weight: bold;
 }
 
+.block {
+	position: absolute;
+}
+
 .spin {
 	animation: spin 1s infinite;
 }
@@ -209,7 +213,7 @@ button:focus {
 }
 
 .shake {
-	animation: shake 0.3s ease-in-out;
+	animation: shake 0.2s ease-in-out;
 }
 
 @keyframes shake {
@@ -218,12 +222,12 @@ button:focus {
 		transform: translate(0, 0);
 	}
 	25% {
-		transform: translate(-0.25vw, -0.25vw);
+		transform: translate(-3px, -3px);
 	}
 	50% {
-		transform: translate(0.25vw, 0.25vw);
+		transform: translate(3px, 3px);
 	}
 	75% {
-		transform: translate(-0.25vw, 0.25vw);
+		transform: translate(-3px, 3px);
 	}
 }

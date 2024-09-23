@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import { SocketEvent } from "@constants";
 import { Score } from "@models";
 
-import type { TScore } from "@types";
+import type { TScore, TScoreRes } from "@types";
 
 export const initSocket = (httpServer: HttpServer) => {
 	const io = new Server(httpServer);
@@ -23,7 +23,10 @@ export const initSocket = (httpServer: HttpServer) => {
 					await Score.updateOne({ player_id }, { score, updated_at: new Date() });
 				}
 			}
-			socket.emit(SocketEvent.Score, Math.max(score, existingHighScore?.score ?? score));
+			socket.emit(SocketEvent.Score, {
+				score: Math.max(score, existingHighScore?.score ?? score),
+				existingHighScore: existingHighScore?.score ?? 0
+			} as TScoreRes);
 		});
 	});
 };

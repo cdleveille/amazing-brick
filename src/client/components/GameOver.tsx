@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { Button, Text } from "@components";
-import { Color } from "@constants";
-import { useApi, useAppContext } from "@hooks";
+import { Color, HIGH_SCORE_LOCAL_STORAGE_KEY } from "@constants";
+import { useApi, useAppContext, useLocalStorage } from "@hooks";
 
 export const GameOver = () => {
 	const {
@@ -12,12 +12,22 @@ export const GameOver = () => {
 		player_id
 	} = useAppContext();
 
-	const [highScore, setHighScore] = useState<number>();
+	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
+
+	const [highScore, setHighScore] = useState<number>(getLocalStorageItem<number>(HIGH_SCORE_LOCAL_STORAGE_KEY) ?? 0);
+	const [existingHighScore, setExistingHighScore] = useState<number>(
+		getLocalStorageItem<number>(HIGH_SCORE_LOCAL_STORAGE_KEY) ?? 0
+	);
 
 	const { submitScore } = useApi();
 
 	useEffect(() => {
-		(async () => setHighScore(await submitScore({ player_id, score })))();
+		(async () => {
+			const { score: hiScore, existingHighScore } = await submitScore({ player_id, score });
+			setHighScore(hiScore);
+			setExistingHighScore(existingHighScore);
+			setLocalStorageItem(HIGH_SCORE_LOCAL_STORAGE_KEY, hiScore);
+		})();
 	}, []);
 
 	return (
@@ -30,7 +40,7 @@ export const GameOver = () => {
 			>
 				GAME OVER
 			</h1>
-			{score === highScore && score > 0 && (
+			{score === highScore && score > 0 && score > existingHighScore && (
 				<div className="new-high-score blink" style={{ fontSize: `${32 * scaleRatio}px`, color: "#ff0000" }}>
 					NEW HIGH SCORE!
 				</div>

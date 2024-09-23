@@ -67,25 +67,35 @@ export type TWall = {
 	color: Color;
 };
 
+export type TBlock = {
+	x: number;
+	y: number;
+};
+
 export type TPoint = {
 	x: number;
 	y: number;
 };
 
 export type TRectangle = {
-	x: number; // Top-left corner x
-	y: number; // Top-left corner y
+	x: number;
+	y: number;
 	width: number;
 	height: number;
 };
 
 export type TDiamond = {
-	cx: number; // Center x
-	cy: number; // Center y
-	size: number; // Distance from center to one of the points (half diagonal length)
+	cx: number;
+	cy: number;
+	size: number;
 };
 
 export type TScore = {
 	player_id: string;
 	score: number;
+};
+
+export type TScoreRes = {
+	score: number;
+	existingHighScore: number;
 };
