@@ -34,7 +34,7 @@ export const Home = () => {
 				/>
 			</div>
 			<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
-				<Button onClick={() => setScreen("play")} backgroundColor={Color.Green}>
+				<Button onClick={() => setScreen("play")} backgroundColor={Color.Green} autoFocus>
 					<Text size={22}>PLAY</Text>
 				</Button>
 				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue}>

@@ -5,9 +5,10 @@ type ButtonProps = {
 	backgroundColor: string;
 	className?: string;
 	children?: React.ReactNode;
+	autoFocus?: boolean;
 };
 
-export const Button = ({ onClick, backgroundColor, className, children }: ButtonProps) => {
+export const Button = ({ onClick, backgroundColor, className, children, autoFocus }: ButtonProps) => {
 	const {
 		canvas: { scaleRatio }
 	} = useAppContext();
@@ -22,6 +23,7 @@ export const Button = ({ onClick, backgroundColor, className, children }: Button
 				borderRadius: `${32 * scaleRatio}px`
 			}}
 			onClick={onClick}
+			autoFocus={autoFocus}
 		>
 			{children}
 		</button>

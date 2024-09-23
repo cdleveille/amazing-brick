@@ -19,8 +19,6 @@ window.addEventListener("load", async () => {
 	if (IS_PROD) await registerServiceWorker();
 });
 
-document.addEventListener("contextmenu", e => e.preventDefault());
-
 const rootDiv = document.createElement("div");
 document.body.appendChild(rootDiv);
 const root = createRoot(rootDiv);
