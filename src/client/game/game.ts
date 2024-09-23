@@ -8,9 +8,10 @@ export class Game {
 	brick: Brick;
 	obstacle: Obstacle;
 	gravity: number;
-	isPaused: boolean;
-	isPausedAtStart: boolean;
-	isGameOver: boolean;
+	isPaused = false;
+	isPausedAtStart = true;
+	isGameOver = false;
+	score = 0;
 
 	constructor(ctx: TAppContext) {
 		this.ctx = ctx;
@@ -18,11 +19,9 @@ export class Game {
 		this.brick = new Brick(this);
 		this.obstacle = new Obstacle(this);
 		this.gravity = 1500 * this.canvas.scaleRatio;
-		this.isPaused = false;
-		this.isPausedAtStart = true;
+		this.ctx.setIsPaused(false);
 		this.ctx.setIsPausedAtStart(true);
 		this.ctx.setScore(0);
-		this.isGameOver = false;
 	}
 
 	start() {
@@ -42,7 +41,6 @@ export class Game {
 		this.isGameOver = false;
 		this.ctx.setIsPaused(false);
 		this.ctx.setIsPausedAtStart(true);
-		this.isPausedAtStart = true;
 		this.ctx.setScore(0);
 		this.brick = new Brick(this);
 		this.obstacle = new Obstacle(this);
@@ -51,7 +49,6 @@ export class Game {
 	jump(direction: TJumpDirection) {
 		if (this.isPaused) return;
 		if (this.isGameOver) return;
-		this.isPausedAtStart = false;
 		this.ctx.setIsPausedAtStart(false);
 		this.brick.jump(direction);
 	}
@@ -72,6 +69,7 @@ export class Game {
 
 		if (this.brick.y + this.brick.diagonalRadius >= this.canvas.height) {
 			this.restart();
+			this.ctx.submitScore(this.score);
 		}
 
 		if (this.brick.x - this.brick.diagonalRadius <= 0) {

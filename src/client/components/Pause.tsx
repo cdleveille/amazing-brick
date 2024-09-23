@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Button, Text } from "@components";
 import { Color } from "@constants";
 import { useAppContext } from "@hooks";
@@ -10,6 +12,15 @@ export const Pause = () => {
 		isPaused,
 		setIsPaused
 	} = useAppContext();
+
+	useEffect(() => {
+		const onKeyPress = (e: KeyboardEvent) => {
+			if (e.repeat) return;
+			if (e.key === "p") setIsPaused(isPaused => !isPaused);
+		};
+		document.addEventListener("keypress", onKeyPress);
+		return () => document.removeEventListener("keypress", onKeyPress);
+	}, []);
 
 	if (!game) return null;
 
@@ -33,7 +44,7 @@ export const Pause = () => {
 					border: `${1 * scaleRatio}px solid black`,
 					margin: `${8 * scaleRatio}px`
 				}}
-				onClick={() => setIsPaused(true)}
+				onClick={() => setIsPaused(isPaused => !isPaused)}
 			>
 				<div
 					style={{

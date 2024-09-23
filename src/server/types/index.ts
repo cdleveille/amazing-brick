@@ -39,10 +39,11 @@ export type TAppContext = {
 	score: number;
 	setScore: Dispatch<SetStateAction<number>>;
 	isPaused: boolean;
-	setIsPaused: (isPaused: boolean) => void;
+	setIsPaused: Dispatch<SetStateAction<boolean>>;
 	isPausedAtStart: boolean;
 	setIsPausedAtStart: Dispatch<SetStateAction<boolean>>;
-	playerId: string;
+	player_id: string;
+	submitScore: (score: number) => void;
 };
 
 export type TCanvas = {
@@ -82,4 +83,9 @@ export type TDiamond = {
 	cx: number; // Center x
 	cy: number; // Center y
 	size: number; // Distance from center to one of the points (half diagonal length)
+};
+
+export type TScore = {
+	player_id: string;
+	score: number;
 };

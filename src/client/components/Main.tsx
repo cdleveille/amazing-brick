@@ -14,10 +14,13 @@ export const Main = () => {
 	const [screen, setScreen] = useState<TScreen>("play");
 	const [canvas, setCanvas] = useState<TCanvas>();
 	const [score, setScore] = useState(0);
-	const [isPaused, setPaused] = useState(false);
+	const [isPaused, setIsPaused] = useState(false);
 	const [isPausedAtStart, setIsPausedAtStart] = useState(true);
 
-	const playerId = useMemo(() => getLocalStorageItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID(), []);
+	const player_id = useMemo(
+		() => getLocalStorageItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID(),
+		[]
+	);
 
 	const onResize = () => {
 		const aspectRatio = 1290 / 2294;
@@ -58,12 +61,22 @@ export const Main = () => {
 	}, [canvas]);
 
 	useEffect(() => {
-		setLocalStorageItem(PLAYER_ID_LOCAL_STORAGE_KEY, playerId);
-	}, [playerId]);
+		if (!game) return;
+		game.isPaused = isPaused;
+		game.isPausedAtStart = isPausedAtStart;
+	}, [isPaused, isPausedAtStart]);
 
-	const setIsPaused = (isPaused: boolean) => {
-		setPaused(isPaused);
-		if (game) game.isPaused = isPaused;
+	useEffect(() => {
+		setLocalStorageItem(PLAYER_ID_LOCAL_STORAGE_KEY, player_id);
+	}, [player_id]);
+
+	useEffect(() => {
+		if (!game) return;
+		game.score = score;
+	}, [score]);
+
+	const submitScore = (score: number) => {
+		console.log(score);
 	};
 
 	if (!canvas) return null;
@@ -82,7 +95,8 @@ export const Main = () => {
 				setIsPaused,
 				isPausedAtStart,
 				setIsPausedAtStart,
-				playerId
+				player_id,
+				submitScore
 			}}
 		>
 			<div
