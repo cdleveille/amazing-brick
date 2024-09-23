@@ -1,7 +1,7 @@
 import { SocketEvent } from "@constants";
 import { useSocket } from "@hooks";
 
-import type { SocketEventName } from "@types";
+import type { SocketEventName, TScore } from "@types";
 
 const TIMEOUT_MS = 5000;
 
@@ -32,15 +32,7 @@ export const useApi = () => {
 		});
 	};
 
-	const helloTo = (message: string, callback?: () => void) =>
-		to({
-			event: SocketEvent.HELLO,
-			data: message,
-			callback
-		});
+	const submitScore = (score: TScore) => toAndFrom<number>({ event: SocketEvent.Score, data: score });
 
-	const helloToAndFrom = (message: string, callback?: (res: string) => void) =>
-		toAndFrom({ event: SocketEvent.HELLO, data: message, callback });
-
-	return { helloTo, helloToAndFrom };
+	return { submitScore };
 };

@@ -80,8 +80,7 @@ export const Main = () => {
 		game.score = score;
 	}, [score]);
 
-	const submitScore = (score: number) => {
-		console.log(score);
+	const submitScore = async () => {
 		setScreen("game-over");
 	};
 

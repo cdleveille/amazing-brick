@@ -68,7 +68,7 @@ export class Game {
 		} else this.brick.isCollidingTop = false;
 
 		if (this.brick.y + this.brick.diagonalRadius >= this.canvas.height) {
-			this.ctx.submitScore(this.score);
+			this.ctx.submitScore();
 		}
 
 		if (this.brick.x - this.brick.diagonalRadius <= 0) {

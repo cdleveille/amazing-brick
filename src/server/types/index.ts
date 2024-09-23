@@ -43,7 +43,7 @@ export type TAppContext = {
 	isPausedAtStart: boolean;
 	setIsPausedAtStart: Dispatch<SetStateAction<boolean>>;
 	player_id: string;
-	submitScore: (score: number) => void;
+	submitScore: () => void;
 };
 
 export type TCanvas = {
