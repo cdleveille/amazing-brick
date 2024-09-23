@@ -41,6 +41,16 @@ button {
 	pointer-events: auto;
 }
 
+button:focus {
+	outline: none;
+	transform: scale(1.05);
+}
+
+button:focus {
+	outline: none;
+	box-shadow: none;
+}
+
 .canvas {
 	position: fixed;
 	background-color: white;
