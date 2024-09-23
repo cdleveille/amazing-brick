@@ -55,10 +55,10 @@ export const GameOver = () => {
 			</div>
 			<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
 				<Button onClick={() => setScreen("play")} backgroundColor={Color.Green} autoFocus>
-					<Text size={22}>RETRY</Text>
+					<Text size={26}>RETRY</Text>
 				</Button>
 				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue}>
-					<Text size={22}>HOME</Text>
+					<Text size={26}>HOME</Text>
 				</Button>
 			</div>
 		</div>

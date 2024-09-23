@@ -18,8 +18,8 @@ export const Button = ({ onClick, backgroundColor, className, children, autoFocu
 			className={`btn ${className}`}
 			style={{
 				backgroundColor: backgroundColor,
-				width: `${164 * scaleRatio}px`,
-				height: `${44 * scaleRatio}px`,
+				width: `${192 * scaleRatio}px`,
+				height: `${56 * scaleRatio}px`,
 				borderRadius: `${32 * scaleRatio}px`
 			}}
 			onClick={onClick}
