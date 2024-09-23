@@ -21,7 +21,7 @@ export const Jump = ({ style }: JumpProps) => {
 				}}
 			>
 				<div
-					className="arrow-left"
+					className="arrow-left blink"
 					style={{
 						borderLeft: `${15 * scaleRatio}px solid transparent`,
 						borderRight: `${15 * scaleRatio}px solid transparent`,
@@ -29,7 +29,7 @@ export const Jump = ({ style }: JumpProps) => {
 					}}
 				></div>
 				<div
-					className="arrow-right"
+					className="arrow-right blink"
 					style={{
 						borderLeft: `${15 * scaleRatio}px solid transparent`,
 						borderRight: `${15 * scaleRatio}px solid transparent`,
