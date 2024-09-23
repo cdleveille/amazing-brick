@@ -41,7 +41,8 @@ export const GameOver = () => {
 					border: `${1 * scaleRatio}px solid black`,
 					borderRadius: `${32 * scaleRatio}px`,
 					padding: `${48 * scaleRatio}px`,
-					columnGap: `${54 * scaleRatio}px`
+					columnGap: `${54 * scaleRatio}px`,
+					boxShadow: `0 0 ${2 * scaleRatio}px rgba(0, 0, 0, 0.5)`
 				}}
 			>
 				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>

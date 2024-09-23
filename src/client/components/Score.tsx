@@ -7,7 +7,13 @@ export const Score = () => {
 	} = useAppContext();
 
 	return (
-		<div className="score" style={{ fontSize: `${34 * scaleRatio}px`, margin: `${6 * scaleRatio}px` }}>
+		<div
+			className="score"
+			style={{
+				fontSize: `${40 * scaleRatio}px`,
+				margin: `${8 * scaleRatio}px ${16 * scaleRatio}px`
+			}}
+		>
 			{score}
 		</div>
 	);

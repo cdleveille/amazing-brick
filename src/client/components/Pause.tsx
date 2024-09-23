@@ -39,17 +39,18 @@ export const Pause = () => {
 			<button
 				className="btn-pause"
 				style={{
-					width: `${36 * scaleRatio}px`,
-					height: `${36 * scaleRatio}px`,
+					width: `${44 * scaleRatio}px`,
+					height: `${44 * scaleRatio}px`,
 					border: `${1 * scaleRatio}px solid black`,
-					margin: `${8 * scaleRatio}px`
+					margin: `${14 * scaleRatio}px`,
+					boxShadow: `0 0 ${2 * scaleRatio}px rgba(0, 0, 0, 0.5)`
 				}}
 				onClick={() => setIsPaused(isPaused => !isPaused)}
 			>
 				<div
 					style={{
-						width: `${10 * scaleRatio}px`,
-						height: `${16 * scaleRatio}px`,
+						width: `${12 * scaleRatio}px`,
+						height: `${18 * scaleRatio}px`,
 						borderLeft: `${1 * scaleRatio}px solid black`,
 						borderRight: `${1 * scaleRatio}px solid black`
 					}}
