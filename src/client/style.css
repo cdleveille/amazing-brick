@@ -144,6 +144,26 @@ button {
 	rotate: 270deg;
 }
 
+.game-over {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.game-over-header {
+	font-family: "Roboto-Thin";
+	font-weight: lighter;
+}
+
+.game-over-box {
+	display: flex;
+	flex-direction: row;
+	font-family: "Roboto-Thin";
+	font-weight: bold;
+}
+
 .spin {
 	animation: spin 1s linear infinite;
 }

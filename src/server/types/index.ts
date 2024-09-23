@@ -54,7 +54,7 @@ export type TCanvas = {
 	scaleRatio: number;
 };
 
-export type TScreen = "home" | "play";
+export type TScreen = "home" | "play" | "game-over";
 
 export type TJumpDirection = "left" | "right";
 

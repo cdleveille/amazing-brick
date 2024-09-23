@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { Home, Play } from "@components";
+import { Screen } from "@components";
 import { PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
 import { Game } from "@game";
 import { AppContext, useLocalStorage } from "@hooks";
@@ -11,7 +11,7 @@ export const Main = () => {
 	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
 
 	const [game, setGame] = useState<Game>();
-	const [screen, setScreen] = useState<TScreen>("play");
+	const [screen, setScreen] = useState<TScreen>("home");
 	const [canvas, setCanvas] = useState<TCanvas>();
 	const [score, setScore] = useState(0);
 	const [isPaused, setIsPaused] = useState(false);
@@ -71,12 +71,18 @@ export const Main = () => {
 	}, [player_id]);
 
 	useEffect(() => {
+		if (!game || screen === "play") return;
+		game.stopGameLoop = true;
+	}, [screen]);
+
+	useEffect(() => {
 		if (!game) return;
 		game.score = score;
 	}, [score]);
 
 	const submitScore = (score: number) => {
 		console.log(score);
+		setScreen("game-over");
 	};
 
 	if (!canvas) return null;
@@ -103,7 +109,7 @@ export const Main = () => {
 				className="canvas"
 				style={{ top: canvas.yOffset, left: canvas.xOffset, width: canvas.width, height: canvas.height }}
 			>
-				{screen === "home" ? <Home /> : <Play />}
+				<Screen screen={screen} />
 			</div>
 		</AppContext.Provider>
 	);

@@ -11,6 +11,7 @@ export class Game {
 	isPaused = false;
 	isPausedAtStart = true;
 	isGameOver = false;
+	stopGameLoop = false;
 	score = 0;
 
 	constructor(ctx: TAppContext) {
@@ -19,14 +20,14 @@ export class Game {
 		this.brick = new Brick(this);
 		this.obstacle = new Obstacle(this);
 		this.gravity = 1500 * this.canvas.scaleRatio;
-		this.ctx.setIsPaused(false);
-		this.ctx.setIsPausedAtStart(true);
-		this.ctx.setScore(0);
 	}
 
 	start() {
+		this.ctx.setScore(0);
+		this.stopGameLoop = false;
 		let current: number, last: number, delta: number;
 		const frame = () => {
+			if (this.stopGameLoop) return;
 			current = now();
 			// eslint-disable-next-line no-constant-binary-expression
 			delta = (current - last ?? now()) / 1000 || 0;
@@ -41,7 +42,6 @@ export class Game {
 		this.isGameOver = false;
 		this.ctx.setIsPaused(false);
 		this.ctx.setIsPausedAtStart(true);
-		this.ctx.setScore(0);
 		this.brick = new Brick(this);
 		this.obstacle = new Obstacle(this);
 	}
@@ -68,7 +68,6 @@ export class Game {
 		} else this.brick.isCollidingTop = false;
 
 		if (this.brick.y + this.brick.diagonalRadius >= this.canvas.height) {
-			this.restart();
 			this.ctx.submitScore(this.score);
 		}
 
