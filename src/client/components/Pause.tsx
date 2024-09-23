@@ -28,11 +28,11 @@ export const Pause = () => {
 		<>
 			{isPaused && (
 				<div className="pause-overlay" style={{ width, height, rowGap: `${32 * scaleRatio}px` }}>
-					<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus forceTouch>
-						<Text size={26}>HOME</Text>
+					<Button onClick={() => setIsPaused(false)} backgroundColor={Color.Green} forceTouch autoFocus>
+						<Text size={26}>RESUME</Text>
 					</Button>
-					<Button onClick={() => setIsPaused(false)} backgroundColor={Color.Green} forceTouch>
-						<Text size={26}>PLAY</Text>
+					<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} forceTouch>
+						<Text size={26}>HOME</Text>
 					</Button>
 				</div>
 			)}
