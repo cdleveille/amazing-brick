@@ -164,8 +164,13 @@ button {
 	font-weight: bold;
 }
 
+.new-high-score {
+	font-family: "Roboto-Thin";
+	font-weight: bold;
+}
+
 .spin {
-	animation: spin 1s linear infinite;
+	animation: spin 1s infinite;
 }
 
 @keyframes spin {
@@ -174,5 +179,19 @@ button {
 	}
 	to {
 		transform: rotate(-360deg);
+	}
+}
+
+.blink {
+	animation: blink 1s infinite;
+}
+
+@keyframes blink {
+	from,
+	to {
+		opacity: 0%;
+	}
+	50% {
+		opacity: 100%;
 	}
 }

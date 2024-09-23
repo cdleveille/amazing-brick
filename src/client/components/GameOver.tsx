@@ -30,6 +30,11 @@ export const GameOver = () => {
 			>
 				GAME OVER
 			</h1>
+			{score === highScore && score > 0 && (
+				<div className="new-high-score blink" style={{ fontSize: `${32 * scaleRatio}px`, color: "#ff0000" }}>
+					NEW HIGH SCORE!
+				</div>
+			)}
 			<div
 				className="game-over-box"
 				style={{
