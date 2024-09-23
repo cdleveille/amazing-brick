@@ -25,6 +25,7 @@ export class Game {
 	start() {
 		this.ctx.setScore(0);
 		this.stopGameLoop = false;
+		document.getElementsByClassName("canvas").item(0)?.classList.remove("shake");
 		let current: number, last: number, delta: number;
 		const frame = () => {
 			if (this.stopGameLoop) return;
@@ -94,7 +95,7 @@ export class Game {
 					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
 				)
 			) {
-				this.isGameOver = true;
+				this.crash();
 			} else if (
 				isRectangleIntersectingDiamond(
 					{
@@ -106,9 +107,14 @@ export class Game {
 					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
 				)
 			) {
-				this.isGameOver = true;
+				this.crash();
 			}
 		}
+	}
+
+	crash() {
+		this.isGameOver = true;
+		document.getElementsByClassName("canvas").item(0)?.classList.add("shake");
 	}
 
 	update(delta: number) {
