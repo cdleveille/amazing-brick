@@ -12,7 +12,7 @@ export const Play = () => {
 		const game = new Game(ctx);
 		game.start();
 		setGame(game);
-	setIsPaused(false);
+		setIsPaused(false);
 		setIsPausedAtStart(true);
 		return initInputEventListeners(game);
 	}, []);
