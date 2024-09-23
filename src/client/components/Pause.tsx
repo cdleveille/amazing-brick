@@ -28,10 +28,10 @@ export const Pause = () => {
 		<>
 			{isPaused && (
 				<div className="pause-overlay" style={{ width, height, rowGap: `${32 * scaleRatio}px` }}>
-					<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
+					<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus forceTouch>
 						<Text size={26}>HOME</Text>
 					</Button>
-					<Button onClick={() => setIsPaused(false)} backgroundColor={Color.Green}>
+					<Button onClick={() => setIsPaused(false)} backgroundColor={Color.Green} forceTouch>
 						<Text size={26}>PLAY</Text>
 					</Button>
 				</div>
@@ -46,6 +46,8 @@ export const Pause = () => {
 					boxShadow: `0 0 ${2 * scaleRatio}px rgba(0, 0, 0, 0.5)`
 				}}
 				onClick={() => setIsPaused(isPaused => !isPaused)}
+				onTouchStart={e => e.stopPropagation()}
+				onTouchEnd={() => setIsPaused(isPaused => !isPaused)}
 			>
 				<div
 					style={{
