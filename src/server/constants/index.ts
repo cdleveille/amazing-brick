@@ -1,5 +1,6 @@
 export enum SocketEvent {
-	Score = "score"
+	Score = "score",
+	Rating = "rating"
 }
 
 export const PLAYER_ID_LOCAL_STORAGE_KEY = "player_id";

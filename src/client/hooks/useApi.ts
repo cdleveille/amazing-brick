@@ -1,7 +1,7 @@
 import { SocketEvent } from "@constants";
 import { useSocket } from "@hooks";
 
-import type { SocketEventName, TEncryptedScore, TScoreRes } from "@types";
+import type { SocketEventName, TEncryptedScore, TRating, TScoreRes } from "@types";
 
 const TIMEOUT_MS = 5000;
 
@@ -34,5 +34,7 @@ export const useApi = () => {
 
 	const submitScore = (score: TEncryptedScore) => toAndFrom<TScoreRes>({ event: SocketEvent.Score, data: score });
 
-	return { submitScore };
+	const submitRating = (rating: TRating) => to({ event: SocketEvent.Rating, data: rating });
+
+	return { submitScore, submitRating };
 };

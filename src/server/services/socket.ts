@@ -3,9 +3,9 @@ import { Server as HttpServer } from "http";
 import { Server } from "socket.io";
 
 import { SocketEvent } from "@constants";
-import { Score } from "@models";
+import { Rating, Score } from "@models";
 
-import type { TEncryptedScore, TScoreRes } from "@types";
+import type { TEncryptedScore, TScoreRes, TRating } from "@types";
 
 export const initSocket = (httpServer: HttpServer) => {
 	const io = new Server(httpServer);
@@ -29,6 +29,16 @@ export const initSocket = (httpServer: HttpServer) => {
 				score: Math.max(score, existingHighScore?.score ?? score),
 				existingHighScore: existingHighScore?.score ?? 0
 			} as TScoreRes);
+		});
+
+		socket.on(SocketEvent.Rating, async ({ player_id, is_thumbs_up, comments }: TRating) => {
+			if (!player_id || typeof is_thumbs_up !== "boolean") return;
+			const existingRating = await Rating.findOne({ player_id });
+			if (existingRating) {
+				await Rating.updateOne({ player_id }, { is_thumbs_up, comments, updated_at: new Date() });
+			} else {
+				await Rating.create({ player_id, is_thumbs_up, comments });
+			}
 		});
 	});
 };

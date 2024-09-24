@@ -53,7 +53,7 @@ export type TCanvas = {
 	scaleRatio: number;
 };
 
-export type TScreen = "home" | "play" | "game-over";
+export type TScreen = "home" | "play" | "game-over" | "rate";
 
 export type TJumpDirection = "left" | "right";
 
@@ -105,4 +105,10 @@ export type TEncryptedScore = {
 export type TScoreRes = {
 	score: number;
 	existingHighScore: number;
+};
+
+export type TRating = {
+	player_id: string;
+	is_thumbs_up: boolean;
+	comments?: string;
 };

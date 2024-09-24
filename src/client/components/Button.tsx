@@ -9,9 +9,18 @@ type ButtonProps = {
 	children?: React.ReactNode;
 	autoFocus?: boolean;
 	forceTouch?: boolean;
+	disabled?: boolean;
 };
 
-export const Button = ({ onClick, backgroundColor, className, children, autoFocus, forceTouch }: ButtonProps) => {
+export const Button = ({
+	onClick,
+	backgroundColor,
+	className,
+	children,
+	autoFocus,
+	forceTouch,
+	disabled
+}: ButtonProps) => {
 	const [isClickable, setIsClickable] = useState(false);
 
 	const {
@@ -38,6 +47,7 @@ export const Button = ({ onClick, backgroundColor, className, children, autoFocu
 				if (!forceTouch || !isClickable) return;
 				onClick();
 			}}
+			disabled={disabled}
 		>
 			{children}
 		</button>

@@ -40,7 +40,7 @@ export const Home = () => {
 				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue}>
 					<Text size={26}>SCORES</Text>
 				</Button>
-				<Button onClick={() => setScreen("home")} backgroundColor={Color.Red}>
+				<Button onClick={() => setScreen("rate")} backgroundColor={Color.Red}>
 					<Text size={26}>RATE</Text>
 				</Button>
 			</div>

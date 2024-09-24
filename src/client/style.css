@@ -94,6 +94,17 @@ button:focus {
 	outline: none;
 }
 
+.btn:disabled {
+	transform: scale(1) !important;
+	opacity: 0.8 !important;
+}
+
+.btn:disabled:hover {
+	pointer-events: none !important;
+	transform: scale(1) !important;
+	cursor: default !important;
+}
+
 .btn-pause {
 	background: transparent;
 	border-radius: 50%;
@@ -183,6 +194,43 @@ button:focus {
 
 .block {
 	position: absolute;
+}
+
+.rate-container {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn-rate {
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 0.2s ease-in-out;
+	border: none;
+}
+
+.btn-rate:hover {
+	transform: scale(1.05) !important;
+}
+
+.btn-rate:focus {
+	transform: scale(1.05) !important;
+}
+
+.btn-rate:disabled {
+	all: unset;
+	background-color: #eeeeee;
+	opacity: 1 !important;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 0.2s ease-in-out;
+	border: none;
 }
 
 .spin {
