@@ -146,7 +146,7 @@ export class Obstacle {
 				this.game.ctx.setScore(score => score + 1);
 			}
 
-			if (wall.y > this.game.canvas.height) {
+			if (wall.y >= this.game.canvas.height) {
 				this.wallCount += 1;
 				wall.y -= this.wallSpacing * 2;
 				wall.gapX = this.getHighestBlock().gapX;
@@ -179,7 +179,7 @@ export class Obstacle {
 			block.ele.style.top = `${Math.max(0, block.y)}px`;
 			block.ele.style.left = `${block.x}px`;
 
-			if (block.y > this.game.canvas.height) {
+			if (block.y >= this.game.canvas.height) {
 				block.y -= this.wallSpacing * 2;
 				const id = block.ele.id;
 				if (id === "block1" || id === "block 3") {
