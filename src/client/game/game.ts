@@ -110,6 +110,22 @@ export class Game {
 				this.crash();
 			}
 		}
+
+		for (const block of this.obstacle.blocks) {
+			if (
+				isRectangleIntersectingDiamond(
+					{
+						x: block.x,
+						y: block.y,
+						width: this.obstacle.blockWidth,
+						height: this.obstacle.blockWidth
+					},
+					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
+				)
+			) {
+				this.crash();
+			}
+		}
 	}
 
 	crash() {

@@ -70,6 +70,9 @@ export type TWall = {
 export type TBlock = {
 	x: number;
 	y: number;
+	ele: HTMLElement;
+	gapX: number;
+	color: Color;
 };
 
 export type TPoint = {

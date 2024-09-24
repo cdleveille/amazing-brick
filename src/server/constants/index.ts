@@ -17,4 +17,4 @@ export enum Color {
 	Yellow = "#E6D922"
 }
 
-export const WALL_COLORS = [Color.Blue, Color.Purple, Color.Red, Color.Yellow, Color.LightGreen];
+export const OBSTACLE_COLORS = [Color.Blue, Color.Purple, Color.Red, Color.Yellow, Color.LightGreen];
