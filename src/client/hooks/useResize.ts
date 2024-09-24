@@ -33,6 +33,13 @@ export const useResize = (setCanvas: React.Dispatch<React.SetStateAction<TCanvas
 	useEffect(() => {
 		onResize();
 		window.addEventListener("resize", onResize);
-		return () => window.removeEventListener("resize", onResize);
+		window.addEventListener("orientationchange", onResize);
+		window.addEventListener("change", onResize);
+
+		return () => {
+			window.removeEventListener("resize", onResize);
+			window.removeEventListener("orientationchange", onResize);
+			window.removeEventListener("change", onResize);
+		};
 	}, []);
 };
