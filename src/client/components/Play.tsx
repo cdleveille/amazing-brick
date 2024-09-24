@@ -45,10 +45,11 @@ const initInputEventListeners = (game: Game) => {
 	};
 
 	const onTouchStart = (e: TouchEvent) => {
-		const touch = e.touches.item(0);
-		if (!touch) return;
-		if (touch.clientX < window.innerWidth / 2) return game.jump("left");
-		if (touch.clientX >= window.innerWidth / 2) return game.jump("right");
+		for (let i = 0; i < e.touches.length; i++) {
+			const touch = e.touches[i];
+			if (touch.clientX < window.innerWidth / 2) game.jump("left");
+			if (touch.clientX >= window.innerWidth / 2) game.jump("right");
+		}
 	};
 
 	const onTouchEnd = (e: TouchEvent) => {
