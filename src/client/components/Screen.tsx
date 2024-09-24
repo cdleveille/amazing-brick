@@ -1,8 +1,11 @@
 import { GameOver, Home, Play } from "@components";
+import { useSyncGame } from "@hooks";
 
 import type { TScreen } from "@types";
 
 export const Screen = ({ screen }: { screen: TScreen }) => {
+	useSyncGame();
+
 	switch (screen) {
 		case "home":
 			return <Home />;
