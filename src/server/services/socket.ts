@@ -1,16 +1,18 @@
+import CryptoJS from "crypto-js";
 import { Server as HttpServer } from "http";
 import { Server } from "socket.io";
 
 import { SocketEvent } from "@constants";
 import { Score } from "@models";
 
-import type { TScore, TScoreRes } from "@types";
+import type { TEncryptedScore, TScoreRes } from "@types";
 
 export const initSocket = (httpServer: HttpServer) => {
 	const io = new Server(httpServer);
 
 	io.on("connect", socket => {
-		socket.on(SocketEvent.Score, async ({ player_id, score }: TScore) => {
+		socket.on(SocketEvent.Score, async ({ player_id, score: encryptedScore }: TEncryptedScore) => {
+			const score = parseInt(CryptoJS.AES.decrypt(encryptedScore, socket.id).toString(CryptoJS.enc.Utf8));
 			if (!player_id || isNaN(score) || score < 0 || score % 1 !== 0) {
 				socket.emit(SocketEvent.Score, 0);
 				return;

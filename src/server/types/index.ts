@@ -97,6 +97,11 @@ export type TScore = {
 	score: number;
 };
 
+export type TEncryptedScore = {
+	player_id: string;
+	score: string;
+};
+
 export type TScoreRes = {
 	score: number;
 	existingHighScore: number;

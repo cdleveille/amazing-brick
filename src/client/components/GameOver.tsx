@@ -1,8 +1,9 @@
+import CryptoJS from "crypto-js";
 import { useEffect, useState } from "react";
 
 import { Button, Text } from "@components";
 import { Color, HIGH_SCORE_LOCAL_STORAGE_KEY } from "@constants";
-import { useApi, useAppContext, useLocalStorage } from "@hooks";
+import { useApi, useAppContext, useLocalStorage, useSocket } from "@hooks";
 
 export const GameOver = () => {
 	const {
@@ -21,9 +22,12 @@ export const GameOver = () => {
 
 	const { submitScore } = useApi();
 
+	const { socket } = useSocket();
+
 	useEffect(() => {
 		(async () => {
-			const { score: hiScore, existingHighScore } = await submitScore({ player_id, score });
+			const encryptedScore = CryptoJS.AES.encrypt(score.toString(), socket.id as string).toString();
+			const { score: hiScore, existingHighScore } = await submitScore({ player_id, score: encryptedScore });
 			setHighScore(hiScore);
 			setExistingHighScore(existingHighScore);
 			setLocalStorageItem(HIGH_SCORE_LOCAL_STORAGE_KEY, hiScore);
