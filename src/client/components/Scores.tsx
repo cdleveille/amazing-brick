@@ -62,27 +62,29 @@ export const Scores = () => {
 					</div>
 				</div>
 			</div>
-			<div style={{ width: "85%", textAlign: "center" }}>
-				<Text size={42}>Top 10</Text>
-				<div style={{ marginTop: `${16 * scaleRatio}px` }}>
-					{highScores?.slice(0, 10).map((score, index) => (
-						<div
-							key={index}
-							style={{
-								backgroundColor: index % 2 === 0 ? "#eeeeee" : "#ffffff",
-								display: "flex",
-								flexDirection: "row",
-								justifyContent: "center",
-								alignItems: "center",
-								columnGap: `${16 * scaleRatio}px`,
-								width: "100%"
-							}}
-						>
-							<Text size={32}>{score}</Text>
-						</div>
-					))}
+			{highScores?.length > 0 && (
+				<div style={{ width: "85%", textAlign: "center" }}>
+					<Text size={42}>Top 10</Text>
+					<div style={{ marginTop: `${16 * scaleRatio}px` }}>
+						{highScores?.slice(0, 10).map((score, index) => (
+							<div
+								key={index}
+								style={{
+									backgroundColor: index % 2 === 0 ? "#eeeeee" : "#ffffff",
+									display: "flex",
+									flexDirection: "row",
+									justifyContent: "center",
+									alignItems: "center",
+									columnGap: `${16 * scaleRatio}px`,
+									width: "100%"
+								}}
+							>
+								<Text size={32}>{score}</Text>
+							</div>
+						))}
+					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 };
