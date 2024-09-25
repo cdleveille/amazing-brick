@@ -51,7 +51,7 @@ export const Rate = () => {
 					onClick={() => {
 						if (typeof isThumbsUp !== "boolean" || comments.trim() === "") return;
 						submitRating({ player_id, is_thumbs_up: isThumbsUp, comments: comments.trim() });
-						setScreen("home");
+						setScreen("thanks");
 					}}
 					backgroundColor={Color.Green}
 				>

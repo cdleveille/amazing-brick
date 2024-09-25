@@ -11,3 +11,4 @@ export * from "./Rate";
 export * from "./Score";
 export * from "./Screen";
 export * from "./Text";
+export * from "./Thanks";
