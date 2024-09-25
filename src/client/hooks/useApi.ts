@@ -36,5 +36,10 @@ export const useApi = () => {
 
 	const submitRating = (rating: TRating) => to({ event: SocketEvent.Rating, data: rating });
 
-	return { submitScore, submitRating };
+	const getPlayerHighScore = (player_id: string) =>
+		toAndFrom<number>({ event: SocketEvent.PlayerHighScore, data: player_id });
+
+	const getHighScores = () => toAndFrom<number[]>({ event: SocketEvent.HighScores });
+
+	return { submitScore, submitRating, getPlayerHighScore, getHighScores };
 };

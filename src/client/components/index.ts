@@ -9,6 +9,7 @@ export * from "./Pause";
 export * from "./Play";
 export * from "./Rate";
 export * from "./Score";
+export * from "./Scores";
 export * from "./Screen";
 export * from "./Text";
 export * from "./Thanks";

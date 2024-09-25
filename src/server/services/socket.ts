@@ -40,5 +40,18 @@ export const initSocket = (httpServer: HttpServer) => {
 				await Rating.create({ player_id, is_thumbs_up, comments });
 			}
 		});
+
+		socket.on(SocketEvent.PlayerHighScore, async (player_id: string) => {
+			const existingHighScore = await Score.findOne({ player_id });
+			socket.emit(SocketEvent.PlayerHighScore, existingHighScore?.score ?? 0);
+		});
+
+		socket.on(SocketEvent.HighScores, async () => {
+			const highScores = await Score.find().sort({ score: -1 });
+			socket.emit(
+				SocketEvent.HighScores,
+				highScores.map(({ score }) => score)
+			);
+		});
 	});
 };

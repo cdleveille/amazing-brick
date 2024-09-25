@@ -21,7 +21,7 @@ export const Thanks = () => {
 		>
 			<div
 				style={{
-					fontSize: `${32 * scaleRatio}px`,
+					fontSize: `${24 * scaleRatio}px`,
 					textAlign: "center",
 					fontFamily: "Roboto-Thin",
 					fontWeight: "bolder"

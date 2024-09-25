@@ -40,7 +40,7 @@ export const Rate = () => {
 						? "What do you like about Amazing Brick?"
 						: isThumbsUp === false
 							? "What could be improved in Amazing Brick?"
-							: "What do you think about Amazing Brick?"
+							: "What do you think of Amazing Brick?"
 				}
 				spellCheck={false}
 				autoComplete="off"

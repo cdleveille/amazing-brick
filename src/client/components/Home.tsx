@@ -37,7 +37,7 @@ export const Home = () => {
 				<Button onClick={() => setScreen("play")} backgroundColor={Color.Green} autoFocus>
 					<Text size={26}>PLAY</Text>
 				</Button>
-				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue}>
+				<Button onClick={() => setScreen("scores")} backgroundColor={Color.Blue}>
 					<Text size={26}>SCORES</Text>
 				</Button>
 				<Button onClick={() => setScreen("rate")} backgroundColor={Color.Red}>

@@ -53,7 +53,7 @@ export type TCanvas = {
 	scaleRatio: number;
 };
 
-export type TScreen = "home" | "play" | "game-over" | "rate" | "thanks";
+export type TScreen = "home" | "play" | "game-over" | "rate" | "thanks" | "scores";
 
 export type TJumpDirection = "left" | "right";
 
