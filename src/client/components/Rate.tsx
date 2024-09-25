@@ -81,17 +81,16 @@ const RateButton = ({ type, onClick, isSelected }: RateButtonProps) => {
 			className="btn-rate"
 			onClick={onClick}
 			style={{
-				width: `${120 * scaleRatio}px`,
-				height: `${120 * scaleRatio}px`,
 				fontSize: `${80 * scaleRatio}px`,
-				outline: `${3 * scaleRatio}px solid ${isSelected ? "#555555" : "#aaaaaa"}`,
-				backgroundColor: isSelected ? "#eeeeee" : "#ffffff",
+				outline: `${3 * scaleRatio}px solid ${isSelected ? "#aaaaaa" : "#ffffff"}`,
+				backgroundColor: "transparent",
 				cursor: isSelected ? "default" : "pointer",
-				transform: isSelected ? "scale(1.05)" : "scale(1)"
+				transform: isSelected ? "scale(1.1)" : "scale(1)",
+				padding: `${16 * scaleRatio}px`
 			}}
 			disabled={isSelected}
 		>
-			<div>{type === "thumbs-up" ? "👍" : "👎"}</div>
+			{type === "thumbs-up" ? "👍" : "👎"}
 		</button>
 	);
 };

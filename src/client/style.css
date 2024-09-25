@@ -216,11 +216,11 @@ button:focus {
 }
 
 .btn-rate:hover {
-	transform: scale(1.05) !important;
+	transform: scale(1.1) !important;
 }
 
 .btn-rate:focus {
-	transform: scale(1.05) !important;
+	transform: scale(1.1) !important;
 }
 
 .btn-rate:disabled {
