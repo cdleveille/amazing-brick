@@ -4,8 +4,7 @@ import { PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
 import { useAppContext, useLocalStorage } from "@hooks";
 
 export const useSyncGame = () => {
-	const ctx = useAppContext();
-	const { canvas, player_id, game, isPaused, isPausedAtStart, score, screen } = ctx;
+	const { canvas, player_id, game, isPaused, isPausedAtStart, score, screen } = useAppContext();
 
 	const { setLocalStorageItem } = useLocalStorage();
 
@@ -31,7 +30,7 @@ export const useSyncGame = () => {
 
 	useEffect(() => {
 		if (!player_id) return;
-		setLocalStorageItem(PLAYER_ID_LOCAL_STORAGE_KEY, ctx.player_id);
+		setLocalStorageItem(PLAYER_ID_LOCAL_STORAGE_KEY, player_id);
 	}, [player_id]);
 
 	useEffect(() => {
