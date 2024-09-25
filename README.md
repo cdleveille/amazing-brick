@@ -1,5 +1,9 @@
 # amazing-brick
 
+## Play
+
+[amazingbrick.fly.dev](https://amazingbrick.fly.dev)
+
 ## Setup
 
 1. Install [Bun](https://bun.sh)
