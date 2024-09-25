@@ -13,7 +13,7 @@ const cacheName = "sw-cache";
 
 const cacheFirstHashPrefix = "~";
 
-const cacheFirstWithoutHashFileTypes = [".webp", ".ttf", ".woff", ".woff2"];
+const cacheFirstWithoutHashFileTypes = [".webp", ".ttf", ".woff", ".woff2", ".svg"];
 
 const urlsToPrecache = ["/"];
 
