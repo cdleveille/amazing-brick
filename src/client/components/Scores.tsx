@@ -57,7 +57,9 @@ export const Scores = () => {
 				</div>
 				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
 					<div>Top</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{getPercentileRank(68, highScores ?? [])}</div>
+					<div style={{ fontSize: `${48 * scaleRatio}px` }}>
+						{getPercentileRank(playerHighScore, highScores ?? [])}
+					</div>
 				</div>
 			</div>
 			<div style={{ width: "85%", textAlign: "center" }}>
