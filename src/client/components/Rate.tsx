@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Button, Text } from "@components";
 import { Color } from "@constants";
 import { useApi, useAppContext } from "@hooks";
+import { Textarea } from "@mui/joy";
 
 export const Rate = () => {
 	const [isThumbsUp, setIsThumbsUp] = useState<boolean>();
+	const [comments, setComments] = useState<string>("");
 
 	const { submitRating } = useApi();
 
@@ -21,12 +23,34 @@ export const Rate = () => {
 				<RateButton type="thumbs-up" onClick={() => setIsThumbsUp(true)} isSelected={isThumbsUp === true} />
 				<RateButton type="thumbs-down" onClick={() => setIsThumbsUp(false)} isSelected={isThumbsUp === false} />
 			</div>
+			<Textarea
+				className="text-area"
+				value={comments}
+				sx={{
+					width: "95%",
+					height: "20%",
+					pointerEvents: "auto !important",
+					userSelect: "auto !important",
+					fontSize: `${18 * scaleRatio}px`,
+					padding: `${8 * scaleRatio}px`
+				}}
+				onChange={e => setComments(e.target.value)}
+				placeholder={
+					isThumbsUp === true
+						? "What do you like about Amazing Brick?"
+						: isThumbsUp === false
+							? "What could be improved in Amazing Brick?"
+							: "What do you think about Amazing Brick?"
+				}
+				spellCheck={false}
+				autoComplete="off"
+			/>
 			<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
 				<Button
-					disabled={typeof isThumbsUp !== "boolean"}
+					disabled={typeof isThumbsUp !== "boolean" || comments.trim() === ""}
 					onClick={() => {
-						if (typeof isThumbsUp !== "boolean") return;
-						submitRating({ player_id, is_thumbs_up: isThumbsUp });
+						if (typeof isThumbsUp !== "boolean" || comments.trim() === "") return;
+						submitRating({ player_id, is_thumbs_up: isThumbsUp, comments: comments.trim() });
 						setScreen("home");
 					}}
 					backgroundColor={Color.Green}

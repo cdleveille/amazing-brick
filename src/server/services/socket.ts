@@ -32,7 +32,7 @@ export const initSocket = (httpServer: HttpServer) => {
 		});
 
 		socket.on(SocketEvent.Rating, async ({ player_id, is_thumbs_up, comments }: TRating) => {
-			if (!player_id || typeof is_thumbs_up !== "boolean") return;
+			if (!player_id || typeof is_thumbs_up !== "boolean" || typeof comments !== "string") return;
 			const existingRating = await Rating.findOne({ player_id });
 			if (existingRating) {
 				await Rating.updateOne({ player_id }, { is_thumbs_up, comments, updated_at: new Date() });

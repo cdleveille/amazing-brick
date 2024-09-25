@@ -110,5 +110,5 @@ export type TScoreRes = {
 export type TRating = {
 	player_id: string;
 	is_thumbs_up: boolean;
-	comments?: string;
+	comments: string;
 };

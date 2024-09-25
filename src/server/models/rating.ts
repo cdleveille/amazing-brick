@@ -15,8 +15,8 @@ const RatingSchema = new Schema<TRating>(
 			required: true
 		},
 		comments: {
-			type: Number,
-			required: false
+			type: String,
+			required: true
 		}
 	},
 	{ collection: "amazing_brick_rating" }
