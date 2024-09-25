@@ -7,7 +7,7 @@ import { useApi, useAppContext, useLocalStorage } from "@hooks";
 export const Scores = () => {
 	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
 
-	const [highScores, setHighScores] = useState<number[]>([]);
+	const [highScores, setHighScores] = useState<number[]>();
 	const [playerHighScore, setPlayerHighScore] = useState<number>(
 		getLocalStorageItem<number>(HIGH_SCORE_LOCAL_STORAGE_KEY) ?? 0
 	);
@@ -28,6 +28,8 @@ export const Scores = () => {
 			setLocalStorageItem(HIGH_SCORE_LOCAL_STORAGE_KEY, playerHiScore);
 		})();
 	}, []);
+
+	if (!highScores) return null;
 
 	return (
 		<div className="scores-container" style={{ rowGap: `${36 * scaleRatio}px`, marginTop: `${36 * scaleRatio}px` }}>
@@ -51,17 +53,17 @@ export const Scores = () => {
 				</div>
 				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
 					<div>Rank</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{getRank(playerHighScore, highScores)}</div>
+					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{getRank(playerHighScore, highScores ?? [])}</div>
 				</div>
 				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
 					<div>Top</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{getPercentileRank(68, highScores)}</div>
+					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{getPercentileRank(68, highScores ?? [])}</div>
 				</div>
 			</div>
 			<div style={{ width: "85%", textAlign: "center" }}>
 				<Text size={42}>Top 10</Text>
 				<div style={{ marginTop: `${16 * scaleRatio}px` }}>
-					{highScores.slice(0, 10).map((score, index) => (
+					{highScores?.slice(0, 10).map((score, index) => (
 						<div
 							key={index}
 							style={{
