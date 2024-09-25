@@ -21,8 +21,18 @@ export const initSocket = (httpServer: HttpServer) => {
 			if (score > 0) {
 				if (!existingHighScore) {
 					await Score.create({ player_id, score });
+					const highScores = await Score.find().sort({ score: -1 });
+					socket.broadcast.emit(
+						SocketEvent.NewScore,
+						highScores.map(({ score }) => score)
+					);
 				} else if (score > existingHighScore.score) {
 					await Score.updateOne({ player_id }, { score, updated_at: new Date() });
+					const highScores = await Score.find().sort({ score: -1 });
+					socket.broadcast.emit(
+						SocketEvent.NewScore,
+						highScores.map(({ score }) => score)
+					);
 				}
 			}
 			socket.emit(SocketEvent.Score, {

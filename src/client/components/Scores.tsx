@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { Button, Text } from "@components";
-import { Color, HIGH_SCORE_LOCAL_STORAGE_KEY } from "@constants";
-import { useApi, useAppContext, useLocalStorage } from "@hooks";
+import { Color, HIGH_SCORE_LOCAL_STORAGE_KEY, SocketEvent } from "@constants";
+import { useApi, useAppContext, useLocalStorage, useSocket } from "@hooks";
 
 export const Scores = () => {
 	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
@@ -20,13 +20,20 @@ export const Scores = () => {
 
 	const { getHighScores, getPlayerHighScore } = useApi();
 
+	const { socket } = useSocket();
+
 	useEffect(() => {
 		(async () => {
-			const [hiScores, playerHiScore] = await Promise.all([getHighScores(), getPlayerHighScore(player_id)]);
-			setHighScores(hiScores.sort((a, b) => b - a));
+			const [scores, playerHiScore] = await Promise.all([getHighScores(), getPlayerHighScore(player_id)]);
+			setHighScores(scores.sort((a, b) => b - a));
 			setPlayerHighScore(playerHiScore);
 			setLocalStorageItem(HIGH_SCORE_LOCAL_STORAGE_KEY, playerHiScore);
 		})();
+		const onNewScore = (scores: number[]) => setHighScores(scores.sort((a, b) => b - a));
+		socket.on(SocketEvent.NewScore, onNewScore);
+		return () => {
+			socket.off(SocketEvent.NewScore, onNewScore);
+		};
 	}, []);
 
 	if (!highScores) return null;
