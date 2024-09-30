@@ -108,7 +108,7 @@ const getRank = (score: number, scores: number[]) => {
 
 const getPercentileRank = (score: number, scores: number[]) => {
 	if (score === 0 || scores.length === 0) return "N/A";
-	const numScoresBelow = scores.filter(s => s < score).length;
-	const percentileRank = (numScoresBelow / scores.length) * 100;
-	return `${Math.max(Math.round(100 - percentileRank), 1)}%`;
+	const numScoresEqualOrAbove = scores.filter(s => s >= score).length;
+	const percentileRank = (numScoresEqualOrAbove / scores.length) * 100;
+	return `${Math.max(Math.round(percentileRank), 1)}%`;
 };
