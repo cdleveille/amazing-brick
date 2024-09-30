@@ -23,6 +23,10 @@ COPY --link . .
 RUN bun i --ignore-scripts && \
     bun build:prod
 
+# Install production dependencies only
+RUN rm -rf node_modules && \
+    bun i --ignore-scripts --production
+
 # Final stage for app image
 FROM base
 
