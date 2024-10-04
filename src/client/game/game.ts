@@ -26,12 +26,13 @@ export class Game {
 		this.ctx.setScore(0);
 		this.stopGameLoop = false;
 		document.getElementsByClassName("canvas").item(0)?.classList.remove("shake");
-		let current: number, last: number, delta: number;
+		let current: number,
+			last = now(),
+			delta: number;
 		const frame = () => {
 			if (this.stopGameLoop) return;
 			current = now();
-			// eslint-disable-next-line no-constant-binary-expression
-			delta = (current - last ?? now()) / 1000 || 0;
+			delta = (current - last) / 1000;
 			requestAnimationFrame(frame);
 			this.update(delta);
 			last = current;

@@ -85,12 +85,18 @@ const RateButton = ({ type, onClick, isSelected }: RateButtonProps) => {
 				outline: `${3 * scaleRatio}px solid ${isSelected ? "#aaaaaa" : "#ffffff"}`,
 				backgroundColor: "transparent",
 				cursor: isSelected ? "default" : "pointer",
-				transform: isSelected ? "scale(1.1)" : "scale(1)",
+				transform: isSelected ? "scale(1.2)" : "scale(1)",
 				padding: `${16 * scaleRatio}px`
 			}}
 			disabled={isSelected}
 		>
-			{type === "thumbs-up" ? "👍" : "👎"}
+			<img
+				src={`./assets/${type === "thumbs-up" ? "thumbs_up" : "thumbs_down"}.svg`}
+				width={120 * scaleRatio}
+				height={120 * scaleRatio}
+				alt={type}
+				style={{}}
+			/>
 		</button>
 	);
 };

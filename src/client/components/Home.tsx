@@ -47,6 +47,8 @@ export const Home = () => {
 				</div>
 			</div>
 			<img src="./assets/jump.svg" alt="jump" style={{ display: "none" }} />
+			<img src="./assets/thumbs_up.svg" alt="thumbs up" style={{ display: "none" }} />
+			<img src="./assets/thumbs_down.svg" alt="thumbs down" style={{ display: "none" }} />
 		</>
 	);
 };
