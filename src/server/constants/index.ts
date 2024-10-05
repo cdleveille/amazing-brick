@@ -8,8 +8,6 @@ export enum SocketEvent {
 
 export const PLAYER_ID_LOCAL_STORAGE_KEY = "player_id";
 
-export const HIGH_SCORE_LOCAL_STORAGE_KEY = "high_score";
-
 export enum Color {
 	White = "#FFFFFF",
 	Black = "#000000",

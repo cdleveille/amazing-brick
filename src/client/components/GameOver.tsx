@@ -1,9 +1,9 @@
 import CryptoJS from "crypto-js";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Button, Text } from "@components";
-import { Color, HIGH_SCORE_LOCAL_STORAGE_KEY } from "@constants";
-import { useApi, useAppContext, useLocalStorage, useSocket } from "@hooks";
+import { Color } from "@constants";
+import { useApi, useAppContext, useSocket } from "@hooks";
 
 export const GameOver = () => {
 	const {
@@ -13,26 +13,20 @@ export const GameOver = () => {
 		player_id
 	} = useAppContext();
 
-	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
-
-	const [highScore, setHighScore] = useState<number>(getLocalStorageItem<number>(HIGH_SCORE_LOCAL_STORAGE_KEY) ?? 0);
-	const [existingHighScore, setExistingHighScore] = useState<number>(
-		getLocalStorageItem<number>(HIGH_SCORE_LOCAL_STORAGE_KEY) ?? 0
-	);
-
-	const { submitScore } = useApi();
+	const { useSubmitScore } = useApi();
 
 	const { socket } = useSocket();
 
-	useEffect(() => {
-		(async () => {
-			const encryptedScore = CryptoJS.AES.encrypt(score.toString(), socket.id as string).toString();
-			const { score: hiScore, existingHighScore } = await submitScore({ player_id, score: encryptedScore });
-			setHighScore(hiScore);
-			setExistingHighScore(existingHighScore);
-			setLocalStorageItem(HIGH_SCORE_LOCAL_STORAGE_KEY, hiScore);
-		})();
-	}, []);
+	const { data, mutate: submitScore } = useSubmitScore({
+		player_id,
+		score: CryptoJS.AES.encrypt(score.toString(), socket.id as string).toString()
+	});
+
+	useEffect(submitScore, []);
+
+	if (!data) return null;
+
+	const { highScore, existingHighScore } = data;
 
 	return (
 		<div className="game-over" style={{ rowGap: `${64 * scaleRatio}px` }}>

@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 
 import { Button, Text } from "@components";
-import { Color, HIGH_SCORE_LOCAL_STORAGE_KEY, SocketEvent } from "@constants";
-import { useApi, useAppContext, useLocalStorage, useSocket } from "@hooks";
+import { Color, SocketEvent } from "@constants";
+import { useApi, useAppContext, useSocket } from "@hooks";
 
 export const Scores = () => {
-	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
-
 	const [highScores, setHighScores] = useState<number[]>();
-	const [playerHighScore, setPlayerHighScore] = useState<number>(
-		getLocalStorageItem<number>(HIGH_SCORE_LOCAL_STORAGE_KEY) ?? 0
-	);
 
 	const {
 		canvas: { scaleRatio },
@@ -18,23 +13,24 @@ export const Scores = () => {
 		setScreen
 	} = useAppContext();
 
-	const { getHighScores, getPlayerHighScore } = useApi();
+	const { getPlayerHighScore, getHighScores } = useApi();
 
 	const { socket } = useSocket();
 
+	const { data: playerHighScore = 0 } = getPlayerHighScore(player_id);
+	const { data: fetchedHighScores } = getHighScores();
+
 	useEffect(() => {
-		(async () => {
-			const [scores, playerHiScore] = await Promise.all([getHighScores(), getPlayerHighScore(player_id)]);
-			setHighScores(scores.sort((a, b) => b - a));
-			setPlayerHighScore(playerHiScore);
-			setLocalStorageItem(HIGH_SCORE_LOCAL_STORAGE_KEY, playerHiScore);
-		})();
 		const onNewScore = (scores: number[]) => setHighScores(scores.sort((a, b) => b - a));
 		socket.on(SocketEvent.NewScore, onNewScore);
 		return () => {
 			socket.off(SocketEvent.NewScore, onNewScore);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (fetchedHighScores) setHighScores(fetchedHighScores);
+	}, [fetchedHighScores]);
 
 	if (!highScores) return null;
 

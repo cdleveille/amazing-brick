@@ -17,6 +17,8 @@ export const Rate = () => {
 		player_id
 	} = useAppContext();
 
+	const isSubmitDisabled = typeof isThumbsUp !== "boolean" || comments.trim() === "";
+
 	return (
 		<div className="rate-container" style={{ rowGap: `${64 * scaleRatio}px` }}>
 			<div style={{ display: "flex", flexDirection: "row", columnGap: `${40 * scaleRatio}px` }}>
@@ -47,9 +49,9 @@ export const Rate = () => {
 			/>
 			<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
 				<Button
-					disabled={typeof isThumbsUp !== "boolean" || comments.trim() === ""}
+					disabled={isSubmitDisabled}
 					onClick={() => {
-						if (typeof isThumbsUp !== "boolean" || comments.trim() === "") return;
+						if (isSubmitDisabled) return;
 						submitRating({ player_id, is_thumbs_up: isThumbsUp, comments: comments.trim() });
 						setScreen("thanks");
 					}}

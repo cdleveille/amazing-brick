@@ -36,7 +36,7 @@ export const initSocket = (httpServer: HttpServer) => {
 				}
 			}
 			socket.emit(SocketEvent.Score, {
-				score: Math.max(score, existingHighScore?.score ?? score),
+				highScore: Math.max(score, existingHighScore?.score ?? score),
 				existingHighScore: existingHighScore?.score ?? 0
 			} as TScoreRes);
 		});

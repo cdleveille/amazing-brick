@@ -94,5 +94,5 @@ try {
 
 	console.log(`Build completed in ${IS_PROD ? "production" : "development"} mode (${Date.now() - start}ms)`);
 } catch (error) {
-	console.error(error);
+	throw new AggregateError(error instanceof Array ? error : [error]);
 }

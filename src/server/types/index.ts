@@ -103,7 +103,7 @@ export type TEncryptedScore = {
 };
 
 export type TScoreRes = {
-	score: number;
+	highScore: number;
 	existingHighScore: number;
 };
 
