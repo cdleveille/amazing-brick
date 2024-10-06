@@ -38,7 +38,7 @@ export const Pause = () => {
 				</div>
 			)}
 			<button
-				className="btn-pause"
+				className={`btn-pause ${isPaused ? "blink" : ""}`}
 				style={{
 					width: `${44 * scaleRatio}px`,
 					height: `${44 * scaleRatio}px`,
