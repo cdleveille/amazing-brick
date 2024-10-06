@@ -10,7 +10,8 @@ export const Pause = () => {
 		setScreen,
 		game,
 		isPaused,
-		setIsPaused
+		setIsPaused,
+		isDarkMode
 	} = useAppContext();
 
 	useEffect(() => {
@@ -41,9 +42,9 @@ export const Pause = () => {
 				style={{
 					width: `${44 * scaleRatio}px`,
 					height: `${44 * scaleRatio}px`,
-					border: `${1 * scaleRatio}px solid black`,
+					border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
 					margin: `${14 * scaleRatio}px`,
-					boxShadow: `0 0 ${2 * scaleRatio}px rgba(0, 0, 0, 0.5)`
+					boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`
 				}}
 				onClick={() => setIsPaused(isPaused => !isPaused)}
 				onTouchStart={e => e.stopPropagation()}
@@ -53,8 +54,8 @@ export const Pause = () => {
 					style={{
 						width: `${12 * scaleRatio}px`,
 						height: `${18 * scaleRatio}px`,
-						borderLeft: `${1 * scaleRatio}px solid black`,
-						borderRight: `${1 * scaleRatio}px solid black`
+						borderLeft: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
+						borderRight: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`
 					}}
 				></div>
 			</button>

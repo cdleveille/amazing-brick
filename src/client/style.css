@@ -55,7 +55,6 @@ button:focus {
 
 .canvas {
 	position: fixed;
-	background-color: white;
 }
 
 .home-container {
@@ -127,7 +126,6 @@ button:focus {
 }
 
 .brick {
-	background-color: black;
 	rotate: 45deg;
 }
 
@@ -249,6 +247,19 @@ button:focus {
 	flex-direction: row;
 	font-family: "Roboto-Thin";
 	font-weight: bold;
+}
+
+.btn-dark-mode {
+	border-radius: 50%;
+	position: absolute;
+	transition: 0.2s ease-in-out;
+	border: none;
+	background-color: transparent;
+}
+
+.btn-dark-mode:hover {
+	cursor: pointer;
+	transform: scale(1.2);
 }
 
 .spin {

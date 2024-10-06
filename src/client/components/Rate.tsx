@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, Text } from "@components";
+import { Button, DarkMode, Text } from "@components";
 import { Color } from "@constants";
 import { useApi, useAppContext } from "@hooks";
 import { Textarea } from "@mui/joy";
@@ -14,13 +14,15 @@ export const Rate = () => {
 	const {
 		canvas: { scaleRatio },
 		setScreen,
-		player_id
+		player_id,
+		isDarkMode
 	} = useAppContext();
 
 	const isSubmitDisabled = typeof isThumbsUp !== "boolean" || comments.trim() === "";
 
 	return (
 		<div className="rate-container" style={{ rowGap: `${64 * scaleRatio}px` }}>
+			<DarkMode />
 			<div style={{ display: "flex", flexDirection: "row", columnGap: `${40 * scaleRatio}px` }}>
 				<RateButton type="thumbs-up" onClick={() => setIsThumbsUp(true)} isSelected={isThumbsUp === true} />
 				<RateButton type="thumbs-down" onClick={() => setIsThumbsUp(false)} isSelected={isThumbsUp === false} />
@@ -34,7 +36,9 @@ export const Rate = () => {
 					pointerEvents: "auto !important",
 					userSelect: "auto !important",
 					fontSize: `${18 * scaleRatio}px`,
-					padding: `${8 * scaleRatio}px`
+					padding: `${8 * scaleRatio}px`,
+					backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
+					color: isDarkMode ? Color.White : Color.Black
 				}}
 				onChange={e => setComments(e.target.value)}
 				placeholder={
@@ -84,7 +88,7 @@ const RateButton = ({ type, onClick, isSelected }: RateButtonProps) => {
 			onClick={onClick}
 			style={{
 				fontSize: `${80 * scaleRatio}px`,
-				outline: `${3 * scaleRatio}px solid ${isSelected ? "#aaaaaa" : "#ffffff"}`,
+				outline: `${3 * scaleRatio}px solid ${isSelected ? Color.Gray : "transparent"}`,
 				backgroundColor: "transparent",
 				cursor: isSelected ? "default" : "pointer",
 				transform: isSelected ? "scale(1.2)" : "scale(1)",

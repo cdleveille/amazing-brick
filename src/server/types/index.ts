@@ -43,6 +43,8 @@ export type TAppContext = {
 	isPausedAtStart: boolean;
 	setIsPausedAtStart: Dispatch<SetStateAction<boolean>>;
 	player_id: string;
+	isDarkMode: boolean;
+	setIsDarkMode: Dispatch<SetStateAction<boolean>>;
 };
 
 export type TCanvas = {

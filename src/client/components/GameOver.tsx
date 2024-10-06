@@ -1,7 +1,7 @@
 import CryptoJS from "crypto-js";
 import { useEffect } from "react";
 
-import { Button, Text } from "@components";
+import { Button, DarkMode, Text } from "@components";
 import { Color } from "@constants";
 import { useApi, useAppContext, useSocket } from "@hooks";
 
@@ -10,7 +10,8 @@ export const GameOver = () => {
 		canvas: { scaleRatio },
 		score,
 		setScreen,
-		player_id
+		player_id,
+		isDarkMode
 	} = useAppContext();
 
 	const { useSubmitScore } = useApi();
@@ -30,6 +31,7 @@ export const GameOver = () => {
 
 	return (
 		<div className="game-over" style={{ rowGap: `${64 * scaleRatio}px` }}>
+			<DarkMode />
 			<h1
 				className="game-over-header"
 				style={{
@@ -39,18 +41,21 @@ export const GameOver = () => {
 				GAME OVER
 			</h1>
 			{score === highScore && score > 0 && score > existingHighScore && (
-				<div className="new-high-score blink" style={{ fontSize: `${32 * scaleRatio}px`, color: "#ff0000" }}>
+				<div
+					className="new-high-score blink"
+					style={{ fontSize: `${32 * scaleRatio}px`, color: Color.BrightRed }}
+				>
 					NEW HIGH SCORE!
 				</div>
 			)}
 			<div
 				className="game-over-box"
 				style={{
-					border: `${1 * scaleRatio}px solid black`,
+					border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
 					borderRadius: `${32 * scaleRatio}px`,
 					padding: `${48 * scaleRatio}px`,
 					columnGap: `${54 * scaleRatio}px`,
-					boxShadow: `0 0 ${2 * scaleRatio}px rgba(0, 0, 0, 0.5)`
+					boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`
 				}}
 			>
 				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>

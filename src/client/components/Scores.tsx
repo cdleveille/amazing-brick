@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Button, Text } from "@components";
+import { Button, DarkMode, Text } from "@components";
 import { Color, SocketEvent } from "@constants";
 import { useApi, useAppContext, useSocket } from "@hooks";
 
@@ -10,7 +10,8 @@ export const Scores = () => {
 	const {
 		canvas: { scaleRatio },
 		player_id,
-		setScreen
+		setScreen,
+		isDarkMode
 	} = useAppContext();
 
 	const { getPlayerHighScore, getHighScores } = useApi();
@@ -36,17 +37,18 @@ export const Scores = () => {
 
 	return (
 		<div className="scores-container" style={{ rowGap: `${36 * scaleRatio}px`, marginTop: `${36 * scaleRatio}px` }}>
+			<DarkMode />
 			<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
 				<Text size={26}>HOME</Text>
 			</Button>
 			<div
 				className="player-high-score-box"
 				style={{
-					border: `${1 * scaleRatio}px solid black`,
+					border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
 					borderRadius: `${32 * scaleRatio}px`,
 					padding: `${48 * scaleRatio}px`,
 					columnGap: `${54 * scaleRatio}px`,
-					boxShadow: `0 0 ${2 * scaleRatio}px rgba(0, 0, 0, 0.5)`,
+					boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`,
 					width: "85%"
 				}}
 			>
@@ -73,7 +75,12 @@ export const Scores = () => {
 							<div
 								key={index}
 								style={{
-									backgroundColor: index % 2 === 0 ? "#eeeeee" : "#ffffff",
+									backgroundColor:
+										index % 2 === 0
+											? isDarkMode
+												? Color.DarkGray
+												: Color.LightGray
+											: "transparent",
 									display: "flex",
 									flexDirection: "row",
 									justifyContent: "center",
