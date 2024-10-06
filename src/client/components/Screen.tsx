@@ -1,4 +1,4 @@
-import { GameOver, Home, Play, Rate, Scores, Thanks } from "@components";
+import { DarkMode, GameOver, Home, Play, Rate, Scores, Thanks } from "@components";
 import { useSyncGame } from "@hooks";
 
 import type { TScreen } from "@types";
@@ -6,6 +6,15 @@ import type { TScreen } from "@types";
 export const Screen = ({ screen }: { screen: TScreen }) => {
 	useSyncGame();
 
+	return (
+		<>
+			{screen !== "play" && <DarkMode />}
+			{getScreen(screen)}
+		</>
+	);
+};
+
+const getScreen = (screen: TScreen) => {
 	switch (screen) {
 		case "home":
 			return <Home />;

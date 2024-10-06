@@ -1,4 +1,4 @@
-import { Brick, Button, DarkMode, Text } from "@components";
+import { Brick, Button, Text } from "@components";
 import { Color } from "@constants";
 import { useAppContext } from "@hooks";
 
@@ -14,7 +14,6 @@ export const Home = () => {
 				className="home-container"
 				style={{ paddingTop: `${128 * scaleRatio}px`, rowGap: `${128 * scaleRatio}px` }}
 			>
-				<DarkMode />
 				<div className="header-container">
 					<h1
 						className="header"

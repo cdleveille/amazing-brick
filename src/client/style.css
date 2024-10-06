@@ -183,6 +183,7 @@ button:focus {
 .game-over-box {
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
 	font-family: "Roboto-Thin";
 	font-weight: bold;
 }

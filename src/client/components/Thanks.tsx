@@ -1,4 +1,4 @@
-import { Button, DarkMode, Text } from "@components";
+import { Button, Text } from "@components";
 import { Color } from "@constants";
 import { useAppContext } from "@hooks";
 
@@ -19,7 +19,6 @@ export const Thanks = () => {
 				rowGap: `${32 * scaleRatio}px`
 			}}
 		>
-			<DarkMode />
 			<div
 				style={{
 					fontSize: `${24 * scaleRatio}px`,

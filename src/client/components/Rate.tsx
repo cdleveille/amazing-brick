@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { Button, DarkMode, Text } from "@components";
+import { Button, Text } from "@components";
 import { Color } from "@constants";
-import { useApi, useAppContext } from "@hooks";
+import { useApi, useAppContext, useIsOffline } from "@hooks";
 import { Textarea } from "@mui/joy";
 
 export const Rate = () => {
@@ -10,6 +10,8 @@ export const Rate = () => {
 	const [comments, setComments] = useState<string>("");
 
 	const { submitRating } = useApi();
+
+	const { isOffline } = useIsOffline();
 
 	const {
 		canvas: { scaleRatio },
@@ -20,9 +22,33 @@ export const Rate = () => {
 
 	const isSubmitDisabled = typeof isThumbsUp !== "boolean" || comments.trim() === "";
 
+	if (isOffline)
+		return (
+			<div
+				className="scores-container"
+				style={{ rowGap: `${36 * scaleRatio}px`, marginTop: `${36 * scaleRatio}px` }}
+			>
+				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
+					<Text size={26}>HOME</Text>
+				</Button>
+				<div
+					className="blink"
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						fontFamily: "Roboto-Regular",
+						rowGap: `${16 * scaleRatio}px`
+					}}
+				>
+					<Text size={28}>OFFLINE</Text>
+					<Text size={20}>Internet connection required to submit rating</Text>
+				</div>
+			</div>
+		);
+
 	return (
 		<div className="rate-container" style={{ rowGap: `${64 * scaleRatio}px` }}>
-			<DarkMode />
 			<div style={{ display: "flex", flexDirection: "row", columnGap: `${40 * scaleRatio}px` }}>
 				<RateButton type="thumbs-up" onClick={() => setIsThumbsUp(true)} isSelected={isThumbsUp === true} />
 				<RateButton type="thumbs-down" onClick={() => setIsThumbsUp(false)} isSelected={isThumbsUp === false} />

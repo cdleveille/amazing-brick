@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { Button, DarkMode, Text } from "@components";
+import { Button, Text } from "@components";
 import { Color, SocketEvent } from "@constants";
-import { useApi, useAppContext, useSocket } from "@hooks";
+import { useApi, useAppContext, useIsOffline, useSocket } from "@hooks";
 
 export const Scores = () => {
 	const [highScores, setHighScores] = useState<number[]>();
@@ -18,8 +18,12 @@ export const Scores = () => {
 
 	const { socket } = useSocket();
 
-	const { data: playerHighScore = 0 } = getPlayerHighScore(player_id);
-	const { data: fetchedHighScores } = getHighScores();
+	const { isOffline } = useIsOffline();
+
+	const { data: playerHighScore = 0, failureCount: getPlayerHighScoreFailureCount } = getPlayerHighScore(player_id);
+	const { data: fetchedHighScores, failureCount: getHighScoresFailureCount } = getHighScores();
+
+	const failureCount = getPlayerHighScoreFailureCount + getHighScoresFailureCount;
 
 	useEffect(() => {
 		const onNewScore = (scores: number[]) => setHighScores(scores.sort((a, b) => b - a));
@@ -33,11 +37,35 @@ export const Scores = () => {
 		if (fetchedHighScores) setHighScores(fetchedHighScores);
 	}, [fetchedHighScores]);
 
+	if (isOffline && !highScores && failureCount > 0)
+		return (
+			<div
+				className="scores-container"
+				style={{ rowGap: `${36 * scaleRatio}px`, marginTop: `${36 * scaleRatio}px` }}
+			>
+				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
+					<Text size={26}>HOME</Text>
+				</Button>
+				<div
+					className="blink"
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						fontFamily: "Roboto-Regular",
+						rowGap: `${16 * scaleRatio}px`
+					}}
+				>
+					<Text size={28}>OFFLINE</Text>
+					<Text size={20}>Internet connection required to view scores</Text>
+				</div>
+			</div>
+		);
+
 	if (!highScores) return null;
 
 	return (
 		<div className="scores-container" style={{ rowGap: `${36 * scaleRatio}px`, marginTop: `${36 * scaleRatio}px` }}>
-			<DarkMode />
 			<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
 				<Text size={26}>HOME</Text>
 			</Button>
