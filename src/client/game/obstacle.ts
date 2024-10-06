@@ -182,8 +182,10 @@ export class Obstacle {
 			if (block.y >= this.game.canvas.height) {
 				block.y -= this.wallSpacing * 2;
 				const id = block.ele.id;
-				if (id === "block1" || id === "block 3") {
-					block.gapX = this.getHighestWall().gapX;
+				if (id === "block1") {
+					block.gapX = this.walls[0].gapX;
+				} else if (id === "block3") {
+					block.gapX = this.walls[1].gapX;
 				} else {
 					block.gapX = this.generateRandomGapX();
 				}
