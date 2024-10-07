@@ -96,7 +96,7 @@ export class Game {
 						x: 0,
 						y: wall.y - 1 * this.canvas.scaleRatio,
 						width: wall.gapX + 1 * this.canvas.scaleRatio,
-						height: this.obstacle.wallHeight + 7 * this.canvas.scaleRatio
+						height: this.obstacle.wallHeight + 5 * this.canvas.scaleRatio
 					},
 					{
 						cx: this.brick.x,
@@ -112,7 +112,7 @@ export class Game {
 						x: wall.gapX + this.obstacle.wallGapWidth - 1 * this.canvas.scaleRatio,
 						y: wall.y - 1 * this.canvas.scaleRatio,
 						width: this.canvas.width - wall.gapX - this.obstacle.wallGapWidth + 1 * this.canvas.scaleRatio,
-						height: this.obstacle.wallHeight + 7 * this.canvas.scaleRatio
+						height: this.obstacle.wallHeight + 5 * this.canvas.scaleRatio
 					},
 					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
 				)
