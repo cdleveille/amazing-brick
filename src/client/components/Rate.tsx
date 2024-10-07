@@ -64,7 +64,8 @@ export const Rate = () => {
 					fontSize: `${18 * scaleRatio}px`,
 					padding: `${8 * scaleRatio}px`,
 					backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
-					color: isDarkMode ? Color.White : Color.Black
+					color: isDarkMode ? Color.White : Color.Black,
+					transition: "0.2s ease-in-out"
 				}}
 				onChange={e => setComments(e.target.value)}
 				placeholder={

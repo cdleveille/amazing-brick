@@ -114,7 +114,8 @@ export const Scores = () => {
 									justifyContent: "center",
 									alignItems: "center",
 									columnGap: `${16 * scaleRatio}px`,
-									width: "100%"
+									width: "100%",
+									transition: "0.2s ease-in-out"
 								}}
 							>
 								<Text size={32}>{score}</Text>
