@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-import { IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
+import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
 import { useAppContext, useLocalStorage } from "@hooks";
 
-export const useSyncGame = () => {
-	const { canvas, player_id, game, isPaused, isPausedAtStart, score, screen, isDarkMode } = useAppContext();
+export const useSync = () => {
+	const { canvas, player_id, game, isPaused, isPausedAtStart, score, screen, isDarkMode, gameMode } = useAppContext();
 
 	const { setLocalStorageItem } = useLocalStorage();
 
@@ -36,6 +36,10 @@ export const useSyncGame = () => {
 	useEffect(() => {
 		setLocalStorageItem(IS_DARK_MODE_LOCAL_STORAGE_KEY, !!isDarkMode);
 	}, [isDarkMode]);
+
+	useEffect(() => {
+		setLocalStorageItem(GAME_MODE_LOCAL_STORAGE_KEY, gameMode);
+	}, [gameMode]);
 
 	useEffect(() => {
 		if (!game || screen === "play") return;

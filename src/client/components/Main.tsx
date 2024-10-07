@@ -1,11 +1,16 @@
 import { useMemo, useState } from "react";
 
 import { Screen } from "@components";
-import { Color, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
-import { Game } from "@game";
+import {
+	Color,
+	GAME_MODE_LOCAL_STORAGE_KEY,
+	IS_DARK_MODE_LOCAL_STORAGE_KEY,
+	PLAYER_ID_LOCAL_STORAGE_KEY
+} from "@constants";
+import { Game, gameModes } from "@game";
 import { AppContext, useLocalStorage, useResize } from "@hooks";
 
-import type { TCanvas, TScreen } from "@types";
+import type { TCanvas, TGameMode, TScreen } from "@types";
 
 export const Main = () => {
 	const { getLocalStorageItem } = useLocalStorage();
@@ -17,6 +22,9 @@ export const Main = () => {
 	const [isPaused, setIsPaused] = useState(false);
 	const [isPausedAtStart, setIsPausedAtStart] = useState(true);
 	const [isDarkMode, setIsDarkMode] = useState(getLocalStorageItem<boolean>(IS_DARK_MODE_LOCAL_STORAGE_KEY) ?? false);
+	const [gameMode, setGameMode] = useState(
+		getLocalStorageItem<TGameMode>(GAME_MODE_LOCAL_STORAGE_KEY) ?? gameModes[0]
+	);
 
 	const player_id = useMemo(
 		() => getLocalStorageItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID(),
@@ -43,7 +51,9 @@ export const Main = () => {
 				setIsPausedAtStart,
 				player_id,
 				isDarkMode,
-				setIsDarkMode
+				setIsDarkMode,
+				gameMode,
+				setGameMode
 			}}
 		>
 			<div

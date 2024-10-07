@@ -1,4 +1,6 @@
-import type { TPoint, TRectangle, TDiamond } from "@types";
+import { GameMode } from "@constants";
+
+import type { TPoint, TRectangle, TDiamond, TGameMode } from "@types";
 
 export const now = (): number => {
 	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
@@ -58,3 +60,26 @@ export const isRectangleIntersectingDiamond = (rect: TRectangle, diamond: TDiamo
 	// If no corners overlap, return false
 	return false;
 };
+
+export const gameModes = [
+	{
+		name: GameMode.Standard,
+		description: "How high can you climb?"
+	},
+	{
+		name: GameMode.Speed,
+		description: "Don't let the timer run out!"
+	},
+	{
+		name: GameMode.Shrouded,
+		description: "Climb as high as possible with reduced visibility!"
+	},
+	{
+		name: GameMode.Gotcha,
+		description: "Collect the bricks to score points!"
+	},
+	{
+		name: GameMode.Insanity,
+		description: "Good luck ;)"
+	}
+] as TGameMode[];

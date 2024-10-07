@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { Color, SocketEvent } from "@constants";
+import { Color, GameMode, SocketEvent } from "@constants";
 import { Game } from "@game";
 
 export interface IConfig {
@@ -45,6 +45,8 @@ export type TAppContext = {
 	player_id: string;
 	isDarkMode: boolean;
 	setIsDarkMode: Dispatch<SetStateAction<boolean>>;
+	gameMode: TGameMode;
+	setGameMode: Dispatch<SetStateAction<TGameMode>>;
 };
 
 export type TCanvas = {
@@ -113,4 +115,11 @@ export type TRating = {
 	player_id: string;
 	is_thumbs_up: boolean;
 	comments: string;
+};
+
+export type TGameModeName = ReverseMap<typeof GameMode>;
+
+export type TGameMode = {
+	name: TGameModeName;
+	description: string;
 };

@@ -1,18 +1,20 @@
-import { Brick, Button, Text } from "@components";
+import { Brick, Button, GameModeMenu, Text } from "@components";
 import { Color } from "@constants";
 import { useAppContext } from "@hooks";
 
 export const Home = () => {
 	const {
 		canvas: { scaleRatio },
-		setScreen
+		setScreen,
+		isDarkMode,
+		gameMode
 	} = useAppContext();
 
 	return (
 		<>
 			<div
 				className="home-container"
-				style={{ paddingTop: `${128 * scaleRatio}px`, rowGap: `${128 * scaleRatio}px` }}
+				style={{ paddingTop: `${128 * scaleRatio}px`, rowGap: `${64 * scaleRatio}px` }}
 			>
 				<div className="header-container">
 					<h1
@@ -33,6 +35,19 @@ export const Home = () => {
 							left: `${33 * scaleRatio}px`
 						}}
 					/>
+				</div>
+				<div
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						rowGap: `${16 * scaleRatio}px`
+					}}
+				>
+					<GameModeMenu />
+					<Text size={16} style={{ color: isDarkMode ? "#cccccc" : "#555555" }}>
+						{gameMode.description}
+					</Text>
 				</div>
 				<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
 					<Button onClick={() => setScreen("play")} backgroundColor={Color.Green} autoFocus>

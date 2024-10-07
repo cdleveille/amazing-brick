@@ -1,10 +1,10 @@
 import { DarkMode, GameOver, Home, Play, Rate, Scores, Thanks } from "@components";
-import { useSyncGame } from "@hooks";
+import { useSync } from "@hooks";
 
 import type { TScreen } from "@types";
 
 export const Screen = ({ screen }: { screen: TScreen }) => {
-	useSyncGame();
+	useSync();
 
 	return (
 		<>

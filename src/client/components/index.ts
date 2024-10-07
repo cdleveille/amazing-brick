@@ -1,6 +1,7 @@
 export * from "./Brick";
 export * from "./Button";
 export * from "./DarkMode";
+export * from "./GameMode";
 export * from "./GameOver";
 export * from "./Home";
 export * from "./Jump";
