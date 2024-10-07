@@ -51,7 +51,9 @@ export const GameOver = () => {
 					}}
 				>
 					<Text size={28}>OFFLINE</Text>
-					<Text size={20}>Internet connection required to submit score</Text>
+					<Text size={20} style={{ width: "70%", textAlign: "center" }}>
+						Internet connection required to submit and view high score
+					</Text>
 				</div>
 				<div
 					className="game-over-box"

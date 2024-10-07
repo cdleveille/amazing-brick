@@ -1,23 +1,19 @@
 import { useAppContext } from "@hooks";
 
-type JumpProps = {
-	style?: React.CSSProperties;
-};
-
-export const Jump = ({ style }: JumpProps) => {
+export const Jump = () => {
 	const {
 		canvas: { scaleRatio }
 	} = useAppContext();
 
 	return (
-		<div style={{ marginBottom: `${80 * scaleRatio}px` }}>
-			<img src="./assets/jump.svg" width={250 * scaleRatio} alt="jump" style={style} />
+		<div style={{ marginBottom: `${136 * scaleRatio}px` }}>
+			<object data="./assets/jump.svg" type="image/svg+xml" width={250 * scaleRatio} />
 			<div
 				style={{
 					display: "flex",
 					justifyContent: "center",
 					columnGap: `${100 * scaleRatio}px`,
-					marginTop: `${70 * scaleRatio}px`
+					marginTop: `${14 * scaleRatio}px`
 				}}
 			>
 				<div
