@@ -55,6 +55,7 @@ button:focus {
 
 .canvas {
 	position: fixed;
+	transition: 0.2s ease-in-out;
 }
 
 .home-container {
