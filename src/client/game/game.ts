@@ -92,18 +92,27 @@ export class Game {
 		for (const wall of this.obstacle.walls) {
 			if (
 				isRectangleIntersectingDiamond(
-					{ x: 0, y: wall.y, width: wall.gapX, height: this.obstacle.wallHeight },
-					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
+					{
+						x: 0,
+						y: wall.y - 1 * this.canvas.scaleRatio,
+						width: wall.gapX + 1 * this.canvas.scaleRatio,
+						height: this.obstacle.wallHeight + 7 * this.canvas.scaleRatio
+					},
+					{
+						cx: this.brick.x,
+						cy: this.brick.y,
+						size: this.brick.diagonalRadius
+					}
 				)
 			) {
 				this.crash();
 			} else if (
 				isRectangleIntersectingDiamond(
 					{
-						x: wall.gapX + this.obstacle.wallGapWidth,
-						y: wall.y,
-						width: this.canvas.width - wall.gapX - this.obstacle.wallGapWidth,
-						height: this.obstacle.wallHeight
+						x: wall.gapX + this.obstacle.wallGapWidth - 1 * this.canvas.scaleRatio,
+						y: wall.y - 1 * this.canvas.scaleRatio,
+						width: this.canvas.width - wall.gapX - this.obstacle.wallGapWidth + 1 * this.canvas.scaleRatio,
+						height: this.obstacle.wallHeight + 7 * this.canvas.scaleRatio
 					},
 					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
 				)
@@ -119,7 +128,7 @@ export class Game {
 						x: block.x,
 						y: block.y,
 						width: this.obstacle.blockWidth,
-						height: this.obstacle.blockWidth
+						height: this.obstacle.blockWidth + 5 * this.canvas.scaleRatio
 					},
 					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
 				)
@@ -130,6 +139,7 @@ export class Game {
 	}
 
 	crash() {
+		this.brick.ele.classList.add("spin");
 		this.isGameOver = true;
 		document.getElementsByClassName("canvas").item(0)?.classList.add("shake");
 	}

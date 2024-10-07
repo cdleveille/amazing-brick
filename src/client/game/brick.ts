@@ -66,17 +66,18 @@ export class Brick {
 	}
 
 	adjustPosition() {
-		this.ele.style.left = `${this.x + (this.diagonalWidth - this.sideLength) / 2 - this.diagonalRadius}px`;
-		this.ele.style.top = `${Math.max(this.y + (this.diagonalWidth - this.sideLength) / 2 - this.diagonalRadius, this.game.canvas.height / 2 - (this.diagonalWidth - this.sideLength) / 2 - this.diagonalRadius)}px`;
+		this.ele.style.left = `${this.x - this.sideLength / 2}px`;
+		this.ele.style.top = `${this.y - this.sideLength / 2}px`;
 	}
 
 	update(delta: number) {
 		if (this.game.isGameOver) {
 			this.xv = 0;
-			this.yv = 600 * this.game.canvas.scaleRatio;
-			this.ele.classList.add("spin");
+			this.yv = 550 * this.game.canvas.scaleRatio;
+		} else {
+			this.yv += this.game.gravity * delta;
 		}
-		this.yv += this.game.gravity * delta;
+
 		this.x += this.xv * delta;
 		this.y += this.yv * delta;
 		this.adjustPosition();
