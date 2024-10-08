@@ -56,14 +56,20 @@ const StyledMenu = styled(
 		minWidth: `${180 * scaleRatio}px`,
 		color: isDarkMode ? Color.White : Color.Black,
 		border: `1px solid ${isDarkMode ? Color.DarkGray : Color.Gray}`,
+		overflow: "hidden",
 		"& .MuiMenu-list": {
 			padding: `${4 * scaleRatio}px 0`,
-			backgroundColor: isDarkMode ? Color.DarkBlue : Color.White
+			backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
+			overflow: "hidden"
 		},
 		"& .MuiMenuItem-root": {
 			fontSize: 20 * scaleRatio,
 			fontFamily: "Roboto-Regular",
 			padding: `${8 * scaleRatio}px ${8 * scaleRatio}px`,
+			display: "flex",
+			alignItems: "center",
+			justifyContent: "center",
+			minHeight: `${48 * scaleRatio}px`,
 			"& .MuiSvgIcon-root": {
 				fontSize: 20 * scaleRatio,
 				color: isDarkMode ? Color.White : Color.Black,
