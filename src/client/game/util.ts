@@ -12,6 +12,12 @@ export const assertGetElementById = (id: string): HTMLElement => {
 	return ele;
 };
 
+export const assertFindArrayElement = <T>(arr: T[], predicate: (item: T) => boolean) => {
+	const ele = arr.find(predicate);
+	if (!ele) throw new Error("Element not found in array");
+	return ele;
+};
+
 const isPointInRectangle = (point: TPoint, rect: TRectangle) => {
 	return point.x >= rect.x && point.x <= rect.x + rect.width && point.y >= rect.y && point.y <= rect.y + rect.height;
 };
@@ -67,7 +73,7 @@ export const gameModes = [
 		description: "How high can you climb?"
 	},
 	{
-		name: GameMode.Speed,
+		name: GameMode.Sprint,
 		description: "Don't let the timer run out!"
 	},
 	{

@@ -51,7 +51,9 @@ export class Game {
 	jump(direction: TJumpDirection) {
 		if (this.isPaused) return;
 		if (this.isGameOver) return;
-		this.ctx.setIsPausedAtStart(false);
+		if (this.isPausedAtStart) {
+			this.ctx.setIsPausedAtStart(false);
+		}
 		this.brick.jump(direction);
 	}
 

@@ -1,4 +1,4 @@
-import { Color, OBSTACLE_COLORS } from "@constants";
+import { Color, GameMode, OBSTACLE_COLORS } from "@constants";
 import { assertGetElementById, Game } from "@game";
 
 import type { TWall, TBlock } from "@types";
@@ -144,6 +144,9 @@ export class Obstacle {
 			if (wall.y > this.game.canvas.height / 2 + this.game.brick.diagonalRadius && !wall.isScored) {
 				wall.isScored = true;
 				this.game.ctx.setScore(score => score + 1);
+				if (this.game.ctx.gameMode.name === GameMode.Sprint) {
+					this.game.ctx.setNetStartTime(time => time + 1250);
+				}
 			}
 
 			if (wall.y >= this.game.canvas.height) {

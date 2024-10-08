@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 
-import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
+import {
+	GAME_MODE_LOCAL_STORAGE_KEY,
+	GameMode,
+	IS_DARK_MODE_LOCAL_STORAGE_KEY,
+	PLAYER_ID_LOCAL_STORAGE_KEY
+} from "@constants";
 import { useAppContext, useLocalStorage } from "@hooks";
 
 export const useSync = () => {
@@ -39,6 +44,11 @@ export const useSync = () => {
 
 	useEffect(() => {
 		setLocalStorageItem(GAME_MODE_LOCAL_STORAGE_KEY, gameMode);
+		if (gameMode.name === GameMode.Insanity) {
+			document.getElementsByClassName("game-mode-select").item(0)?.classList.add("shake-hard");
+		} else {
+			document.getElementsByClassName("game-mode-select").item(0)?.classList.remove("shake-hard");
+		}
 	}, [gameMode]);
 
 	useEffect(() => {

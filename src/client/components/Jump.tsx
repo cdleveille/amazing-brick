@@ -2,7 +2,8 @@ import { useAppContext } from "@hooks";
 
 export const Jump = () => {
 	const {
-		canvas: { scaleRatio }
+		canvas: { scaleRatio },
+		isPaused
 	} = useAppContext();
 
 	return (
@@ -21,7 +22,8 @@ export const Jump = () => {
 					style={{
 						borderLeft: `${15 * scaleRatio}px solid transparent`,
 						borderRight: `${15 * scaleRatio}px solid transparent`,
-						borderTop: `${25 * scaleRatio}px solid #FF4445`
+						borderTop: `${25 * scaleRatio}px solid #FF4445`,
+						visibility: isPaused ? "hidden" : "visible"
 					}}
 				></div>
 				<div
@@ -29,7 +31,8 @@ export const Jump = () => {
 					style={{
 						borderLeft: `${15 * scaleRatio}px solid transparent`,
 						borderRight: `${15 * scaleRatio}px solid transparent`,
-						borderTop: `${25 * scaleRatio}px solid #FF4445`
+						borderTop: `${25 * scaleRatio}px solid #FF4445`,
+						visibility: isPaused ? "hidden" : "visible"
 					}}
 				></div>
 			</div>

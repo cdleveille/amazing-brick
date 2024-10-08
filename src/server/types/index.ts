@@ -47,6 +47,10 @@ export type TAppContext = {
 	setIsDarkMode: Dispatch<SetStateAction<boolean>>;
 	gameMode: TGameMode;
 	setGameMode: Dispatch<SetStateAction<TGameMode>>;
+	startTime: number;
+	setStartTime: Dispatch<SetStateAction<number>>;
+	netStartTime: number;
+	setNetStartTime: Dispatch<SetStateAction<number>>;
 };
 
 export type TCanvas = {

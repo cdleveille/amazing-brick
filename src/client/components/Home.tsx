@@ -37,6 +37,7 @@ export const Home = () => {
 					/>
 				</div>
 				<div
+					className="game-mode-select"
 					style={{
 						display: "flex",
 						flexDirection: "column",
@@ -45,7 +46,7 @@ export const Home = () => {
 					}}
 				>
 					<GameModeMenu />
-					<Text size={16} style={{ color: isDarkMode ? "#cccccc" : "#555555" }}>
+					<Text size={18} style={{ color: isDarkMode ? "#cccccc" : "#555555" }}>
 						{gameMode.description}
 					</Text>
 				</div>

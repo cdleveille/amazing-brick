@@ -32,7 +32,7 @@ export const OBSTACLE_COLORS = [Color.Blue, Color.Purple, Color.Red, Color.Yello
 
 export enum GameMode {
 	Standard = "Standard",
-	Speed = "Speed",
+	Sprint = "Sprint",
 	Shrouded = "Shrouded",
 	Gotcha = "Gotcha",
 	Insanity = "Insanity"

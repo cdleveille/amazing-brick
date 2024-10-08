@@ -25,6 +25,8 @@ export const Main = () => {
 	const [gameMode, setGameMode] = useState(
 		getLocalStorageItem<TGameMode>(GAME_MODE_LOCAL_STORAGE_KEY) ?? gameModes[0]
 	);
+	const [startTime, setStartTime] = useState(0);
+	const [netStartTime, setNetStartTime] = useState(0);
 
 	const player_id = useMemo(
 		() => getLocalStorageItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID(),
@@ -53,7 +55,11 @@ export const Main = () => {
 				isDarkMode,
 				setIsDarkMode,
 				gameMode,
-				setGameMode
+				setGameMode,
+				startTime,
+				setStartTime,
+				netStartTime,
+				setNetStartTime
 			}}
 		>
 			<div

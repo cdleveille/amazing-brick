@@ -118,7 +118,9 @@ export const Scores = () => {
 									transition: "0.2s ease-in-out"
 								}}
 							>
-								<Text size={32}>{score}</Text>
+								<Text size={32} style={{ transition: "unset !important" }}>
+									{score}
+								</Text>
 							</div>
 						))}
 					</div>

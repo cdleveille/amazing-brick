@@ -15,3 +15,4 @@ export * from "./Scores";
 export * from "./Screen";
 export * from "./Text";
 export * from "./Thanks";
+export * from "./Timer";

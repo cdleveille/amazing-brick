@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { Brick, Jump, Obstacle, Pause, Score } from "@components";
+import { Brick, Jump, Obstacle, Pause, Score, Timer } from "@components";
 import { assertGetElementById, Game } from "@game";
 import { useAppContext } from "@hooks";
 
@@ -22,6 +22,7 @@ export const Play = () => {
 			<Obstacle />
 			<div className="hud">
 				<Pause />
+				<Timer />
 				<Score />
 			</div>
 			{isPausedAtStart && (

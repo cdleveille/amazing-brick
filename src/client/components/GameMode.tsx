@@ -3,7 +3,6 @@ import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
 import { Color } from "@constants";
 import { gameModes } from "@game";
 import { useAppContext } from "@hooks";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -53,7 +52,6 @@ const StyledMenu = styled(
 	)
 )(({ scaleRatio, isDarkMode }) => ({
 	"& .MuiPaper-root": {
-		// borderRadius: 6 * scaleRatio,
 		marginTop: `${0 * scaleRatio}px`,
 		minWidth: `${180 * scaleRatio}px`,
 		color: isDarkMode ? Color.White : Color.Black,
@@ -64,14 +62,14 @@ const StyledMenu = styled(
 		},
 		"& .MuiMenuItem-root": {
 			fontSize: 20 * scaleRatio,
-			fontFamily: "Roboto-Thin",
-			fontWeight: "bold",
+			fontFamily: "Roboto-Regular",
 			padding: `${8 * scaleRatio}px ${8 * scaleRatio}px`,
 			"& .MuiSvgIcon-root": {
 				fontSize: 20 * scaleRatio,
 				color: isDarkMode ? Color.White : Color.Black,
 				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
-				marginRight: `${8 * scaleRatio}px`
+				marginRight: `${8 * scaleRatio}px`,
+				padding: `${8 * scaleRatio}px ${8 * scaleRatio}px`
 			},
 			"&:active": {
 				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White
@@ -111,7 +109,15 @@ export const GameModeMenu = () => {
 				variant="outlined"
 				disableElevation
 				onClick={handleClick}
-				endIcon={<KeyboardArrowDownIcon fontSize="small" />}
+				endIcon={
+					<span
+						style={{
+							borderLeft: `${6 * scaleRatio}px solid transparent`,
+							borderRight: `${6 * scaleRatio}px solid transparent`,
+							borderTop: `${10 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`
+						}}
+					></span>
+				}
 				color="inherit"
 				sx={{
 					fontFamily: "Roboto-Regular",
@@ -120,7 +126,11 @@ export const GameModeMenu = () => {
 					borderRadius: `${32 * scaleRatio}px`,
 					boxShadow: "none",
 					width: `${224 * scaleRatio}px`,
-					height: `${56 * scaleRatio}px`
+					height: `${56 * scaleRatio}px`,
+					transition: "inherit",
+					":active": {
+						transform: "none"
+					}
 				}}
 			>
 				{gameMode.name}

@@ -310,3 +310,55 @@ button:focus {
 		transform: translate(-3px, 3px);
 	}
 }
+
+.shake-hard {
+	animation: shake-hard 0.3s ease-in-out;
+}
+
+@keyframes shake-hard {
+	0%,
+	100% {
+		transform: translate(0, 0);
+	}
+	12.5% {
+		transform: translate(-6px, -6px);
+	}
+	25% {
+		transform: translate(6px, -6px);
+	}
+	37.5% {
+		transform: translate(6px, 6px);
+	}
+	50% {
+		transform: translate(6px, 6px);
+	}
+	62.5% {
+		transform: translate(-6px, -6px);
+	}
+	75% {
+		transform: translate(-6px, 6px);
+	}
+}
+
+.rocking {
+	display: inline-block;
+	animation: rocking 2s infinite linear;
+}
+
+@keyframes rocking {
+	0% {
+		transform: rotate(0deg);
+	}
+	25% {
+		transform: rotate(20deg);
+	}
+	50% {
+		transform: rotate(0deg);
+	}
+	75% {
+		transform: rotate(-20deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
