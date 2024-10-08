@@ -99,30 +99,33 @@ export const Scores = () => {
 				<div style={{ width: "85%", textAlign: "center" }}>
 					<Text size={42}>Top 10</Text>
 					<div style={{ marginTop: `${16 * scaleRatio}px` }}>
-						{highScores?.slice(0, 10).map((score, index) => (
-							<div
-								key={index}
-								style={{
-									backgroundColor:
-										index % 2 === 0
-											? isDarkMode
-												? Color.DarkGray
-												: Color.LightGray
-											: "transparent",
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: "center",
-									alignItems: "center",
-									columnGap: `${16 * scaleRatio}px`,
-									width: "100%",
-									transition: "0.2s ease-in-out"
-								}}
-							>
-								<Text size={32} style={{ transition: "unset !important" }}>
-									{score}
-								</Text>
-							</div>
-						))}
+						{highScores
+							?.sort((a, b) => b - a)
+							.slice(0, 10)
+							.map((score, index) => (
+								<div
+									key={index}
+									style={{
+										backgroundColor:
+											index % 2 === 0
+												? isDarkMode
+													? Color.DarkGray
+													: Color.LightGray
+												: "transparent",
+										display: "flex",
+										flexDirection: "row",
+										justifyContent: "center",
+										alignItems: "center",
+										columnGap: `${16 * scaleRatio}px`,
+										width: "100%",
+										transition: "0.2s ease-in-out"
+									}}
+								>
+									<Text size={32} style={{ transition: "unset !important" }}>
+										{score}
+									</Text>
+								</div>
+							))}
 					</div>
 				</div>
 			)}

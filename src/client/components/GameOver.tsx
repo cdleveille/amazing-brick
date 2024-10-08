@@ -11,7 +11,8 @@ export const GameOver = () => {
 		score,
 		setScreen,
 		player_id,
-		isDarkMode
+		isDarkMode,
+		gameMode
 	} = useAppContext();
 
 	const { useSubmitScore } = useApi();
@@ -22,7 +23,8 @@ export const GameOver = () => {
 
 	const { data, mutate: submitScore } = useSubmitScore({
 		player_id,
-		score: !isOffline ? CryptoJS.AES.encrypt(score.toString(), socket.id as string).toString() : ""
+		score: !isOffline ? CryptoJS.AES.encrypt(score.toString(), socket.id as string).toString() : "",
+		game_mode_name: !isOffline ? CryptoJS.AES.encrypt(gameMode.name.toString(), socket.id as string).toString() : ""
 	});
 
 	useEffect(() => {
@@ -60,15 +62,18 @@ export const GameOver = () => {
 					style={{
 						border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
 						borderRadius: `${32 * scaleRatio}px`,
-						padding: `${48 * scaleRatio}px`,
-						columnGap: `${54 * scaleRatio}px`,
+						padding: `${32 * scaleRatio}px`,
+						rowGap: `${24 * scaleRatio}px`,
 						boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`,
-						minWidth: "40%"
+						minWidth: "50%"
 					}}
 				>
-					<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
-						<div>Score</div>
-						<div style={{ fontSize: `${48 * scaleRatio}px` }}>{score}</div>
+					<Text size={20}>{gameMode.name.toUpperCase()}</Text>
+					<div style={{ display: "flex", columnGap: `${54 * scaleRatio}px` }}>
+						<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
+							<div>Score</div>
+							<div style={{ fontSize: `${48 * scaleRatio}px` }}>{score}</div>
+						</div>
 					</div>
 				</div>
 				<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
@@ -109,18 +114,21 @@ export const GameOver = () => {
 				style={{
 					border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
 					borderRadius: `${32 * scaleRatio}px`,
-					padding: `${48 * scaleRatio}px`,
-					columnGap: `${54 * scaleRatio}px`,
+					padding: `${32 * scaleRatio}px`,
+					rowGap: `${24 * scaleRatio}px`,
 					boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`
 				}}
 			>
-				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
-					<div>Score</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{score}</div>
-				</div>
-				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
-					<div>Best</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{highScore}</div>
+				<Text size={20}>{gameMode.name.toUpperCase()}</Text>
+				<div style={{ display: "flex", columnGap: `${54 * scaleRatio}px` }}>
+					<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
+						<div>Score</div>
+						<div style={{ fontSize: `${48 * scaleRatio}px` }}>{score}</div>
+					</div>
+					<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
+						<div>Best</div>
+						<div style={{ fontSize: `${48 * scaleRatio}px` }}>{highScore}</div>
+					</div>
 				</div>
 			</div>
 			<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>

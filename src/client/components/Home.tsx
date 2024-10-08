@@ -14,7 +14,7 @@ export const Home = () => {
 		<>
 			<div
 				className="home-container"
-				style={{ paddingTop: `${128 * scaleRatio}px`, rowGap: `${64 * scaleRatio}px` }}
+				style={{ paddingTop: `${128 * scaleRatio}px`, rowGap: `${72 * scaleRatio}px` }}
 			>
 				<div className="header-container">
 					<h1

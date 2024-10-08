@@ -103,11 +103,14 @@ export type TDiamond = {
 export type TScore = {
 	player_id: string;
 	score: number;
+	sprint_score: number;
+	shrouded_score: number;
 };
 
 export type TEncryptedScore = {
 	player_id: string;
 	score: string;
+	game_mode_name: string;
 };
 
 export type TScoreRes = {

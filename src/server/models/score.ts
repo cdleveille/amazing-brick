@@ -12,7 +12,18 @@ const ScoreSchema = new Schema<TScore>(
 		},
 		score: {
 			type: Number,
-			required: true
+			required: false,
+			default: 0
+		},
+		sprint_score: {
+			type: Number,
+			required: false,
+			default: 0
+		},
+		shrouded_score: {
+			type: Number,
+			required: false,
+			default: 0
 		}
 	},
 	{ collection: "amazing_brick_score" }
