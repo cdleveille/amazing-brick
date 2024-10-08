@@ -148,6 +148,7 @@ button:focus {
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
+	z-index: 1000;
 }
 
 .absolute-center {
