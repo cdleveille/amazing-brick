@@ -58,6 +58,10 @@ button:focus {
 	transition: 0.2s ease-in-out;
 }
 
+.clip-path {
+	clip-path: circle(45%);
+}
+
 .home-container {
 	display: flex;
 	flex-direction: column;

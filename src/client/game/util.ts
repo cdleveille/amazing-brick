@@ -75,11 +75,11 @@ export const gameModes = [
 	{
 		name: GameMode.Sprint,
 		description: "Don't let the timer run out!"
+	},
+	{
+		name: GameMode.Shrouded,
+		description: "Climb as high as possible with reduced visibility!"
 	}
-	// {
-	// 	name: GameMode.Shrouded,
-	// 	description: "Climb as high as possible with reduced visibility!"
-	// },
 	// {
 	// 	name: GameMode.Gotcha,
 	// 	description: "Collect the bricks to score points!"

@@ -4,6 +4,7 @@ import { Screen } from "@components";
 import {
 	Color,
 	GAME_MODE_LOCAL_STORAGE_KEY,
+	GameMode,
 	IS_DARK_MODE_LOCAL_STORAGE_KEY,
 	PLAYER_ID_LOCAL_STORAGE_KEY
 } from "@constants";
@@ -69,7 +70,12 @@ export const Main = () => {
 					left: canvas.xOffset,
 					width: canvas.width,
 					height: canvas.height,
-					backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
+					backgroundColor:
+						gameMode.name === GameMode.Shrouded && screen === "play"
+							? "#000000"
+							: isDarkMode
+								? Color.DarkBlue
+								: Color.White,
 					color: isDarkMode ? Color.White : Color.Black
 				}}
 			>

@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 
 import { Brick, Jump, Obstacle, Pause, Score, Timer } from "@components";
+import { GameMode } from "@constants";
 import { assertGetElementById, Game } from "@game";
 import { useAppContext } from "@hooks";
 
 export const Play = () => {
 	const ctx = useAppContext();
-	const { setGame, setIsPaused, isPausedAtStart, setIsPausedAtStart } = ctx;
+	const { setGame, setIsPaused, isPausedAtStart, setIsPausedAtStart, gameMode } = ctx;
 
 	useEffect(() => {
 		const game = new Game(ctx);
@@ -14,17 +15,22 @@ export const Play = () => {
 		setGame(game);
 		setIsPaused(false);
 		setIsPausedAtStart(true);
+
+		if (gameMode.name === GameMode.Shrouded) {
+			document.getElementsByClassName("obstacle-container").item(0)?.classList.add("clip-path");
+		}
+
 		return initInputEventListeners(game);
 	}, []);
 
 	return (
 		<div id="play-container" className="play-container">
-			<Obstacle />
 			<div className="hud">
 				<Pause />
 				<Timer />
 				<Score />
 			</div>
+			<Obstacle />
 			{isPausedAtStart && (
 				<div className="absolute-center">
 					<Jump />
@@ -80,5 +86,7 @@ const initInputEventListeners = (game: Game) => {
 		document.removeEventListener("touchstart", onTouchStart);
 		document.removeEventListener("touchend", onTouchEnd);
 		document.removeEventListener("mousemove", onMouseMove);
+
+		document.getElementsByClassName("obstacle-container").item(0)?.classList.remove("clip-path");
 	};
 };
