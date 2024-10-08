@@ -72,7 +72,7 @@ export const Main = () => {
 					height: canvas.height,
 					backgroundColor:
 						gameMode.name === GameMode.Shrouded && screen === "play"
-							? "#000000"
+							? Color.Black
 							: isDarkMode
 								? Color.DarkBlue
 								: Color.White,

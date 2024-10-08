@@ -8,7 +8,13 @@ export const GameObject = () => {
 	return (
 		<div
 			className="game-object-container"
-			style={{ width: "100%", height: "100%", backgroundColor: isDarkMode ? Color.DarkBlue : Color.White }}
+			style={{
+				width: "100%",
+				height: "100%",
+				background: isDarkMode
+					? `radial-gradient(circle, ${Color.DarkBlue} 50%, rgba(0,0,0,1) 65%)`
+					: `radial-gradient(circle, ${Color.White} 0%, rgba(0,0,0,1) 65%)`
+			}}
 		>
 			<div id="wall1-left" className="wall"></div>
 			<div id="wall1-right" className="wall"></div>
