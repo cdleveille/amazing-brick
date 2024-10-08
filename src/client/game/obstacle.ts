@@ -145,7 +145,7 @@ export class Obstacle {
 				wall.isScored = true;
 				this.game.ctx.setScore(score => score + 1);
 				if (this.game.ctx.gameMode.name === GameMode.Sprint) {
-					this.game.ctx.setNetStartTime(time => time + 1250);
+					this.game.ctx.setNetStartTime(time => time + 1100);
 				}
 			}
 
