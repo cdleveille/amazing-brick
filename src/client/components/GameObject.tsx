@@ -1,9 +1,9 @@
 import { Brick } from "@components";
-import { Color } from "@constants";
+import { Color, GameMode } from "@constants";
 import { useAppContext } from "@hooks";
 
 export const GameObject = () => {
-	const { isDarkMode } = useAppContext();
+	const { isDarkMode, gameMode } = useAppContext();
 
 	return (
 		<div
@@ -11,9 +11,13 @@ export const GameObject = () => {
 			style={{
 				width: "100%",
 				height: "100%",
-				background: isDarkMode
-					? `radial-gradient(circle, ${Color.DarkBlue} 50%, rgba(0,0,0,1) 65%)`
-					: `radial-gradient(circle, ${Color.White} 0%, rgba(0,0,0,1) 65%)`
+				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
+				background:
+					gameMode.name === GameMode.Shrouded
+						? isDarkMode
+							? `radial-gradient(circle, ${Color.DarkBlue} 50%, rgba(0,0,0,1) 65%)`
+							: `radial-gradient(circle, ${Color.White} -10%, rgba(0,0,0,1) 65%)`
+						: ""
 			}}
 		>
 			<div id="wall1-left" className="wall"></div>
