@@ -3,12 +3,19 @@ import { MouseEvent, useState } from "react";
 import { Color } from "@constants";
 import { gameModes } from "@game";
 import { useAppContext } from "@hooks";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
 
 import type { TGameMode } from "@types";
+
+const getNextGameMode = (gameMode: TGameMode) => {
+	const nextIndex = gameModes.findIndex(mode => mode.name === gameMode.name) + 1;
+	return gameModes[nextIndex % gameModes.length];
+};
 
 const GameModeOptions = ({
 	handleClose,
@@ -111,7 +118,20 @@ export const GameModeMenu = ({
 	};
 
 	return (
-		<div>
+		<div
+			style={{
+				display: "flex",
+				flexDirection: "row",
+				justifyContent: "center",
+				alignItems: "center",
+				columnGap: `${8 * scaleRatio}px`
+			}}
+		>
+			<button className="arrow-btn" onClick={() => onSelectOption(getNextGameMode(value))}>
+				<ChevronLeftIcon
+					sx={{ fontSize: `${36 * scaleRatio}px`, color: isDarkMode ? Color.White : Color.Black }}
+				/>
+			</button>
 			<Button
 				id="demo-customized-button"
 				aria-controls={open ? "demo-customized-menu" : undefined}
@@ -146,6 +166,11 @@ export const GameModeMenu = ({
 			>
 				{value.name}
 			</Button>
+			<button className="arrow-btn" onClick={() => onSelectOption(getNextGameMode(value))}>
+				<ChevronRightIcon
+					sx={{ fontSize: `${36 * scaleRatio}px`, color: isDarkMode ? Color.White : Color.Black }}
+				/>
+			</button>
 			<StyledMenu
 				id="demo-customized-menu"
 				MenuListProps={{

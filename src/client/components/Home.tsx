@@ -34,7 +34,8 @@ export const Home = () => {
 							width: `${36 * scaleRatio}px`,
 							height: `${36 * scaleRatio}px`,
 							top: `${76 * scaleRatio}px`,
-							left: `${33 * scaleRatio}px`
+							left: `${33 * scaleRatio}px`,
+							backgroundColor: isDarkMode ? Color.White : Color.Black
 						}}
 					/>
 				</div>
