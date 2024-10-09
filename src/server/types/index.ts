@@ -137,5 +137,4 @@ export type TGotchaBrick = {
 	x: number;
 	y: number;
 	ele: HTMLElement;
-	isScored: boolean;
 };

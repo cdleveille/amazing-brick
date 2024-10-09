@@ -31,8 +31,7 @@ export class Game {
 						-this.obstacle.wallSpacing * (i + 1) -
 						this.obstacle.wallHeight / 2 +
 						this.obstacle.wallSpacing / 2,
-					ele: ele as HTMLElement,
-					isScored: false
+					ele: ele as HTMLElement
 				} as TGotchaBrick;
 			});
 			this.gotchaBrickWidth = 20 * this.canvas.scaleRatio;
@@ -172,7 +171,6 @@ export class Game {
 		if (this.ctx.gameMode.name === GameMode.Gotcha && !this.isGameOver) {
 			const gotchaBrickDiagonalWidth = (this.gotchaBrickWidth ** 2 * 2) ** 0.5;
 			for (const gotchaBrick of this.gotchaBricks) {
-				if (gotchaBrick.isScored) continue;
 				const isColliding = isRectangleIntersectingDiamond(
 					{
 						x: gotchaBrick.x - gotchaBrickDiagonalWidth / 2,
@@ -184,8 +182,8 @@ export class Game {
 				);
 				if (isColliding) {
 					this.ctx.setScore(score => score + 1);
-					gotchaBrick.isScored = true;
-					gotchaBrick.ele.style.visibility = "hidden";
+					gotchaBrick.y -= this.obstacle.wallSpacing * 2;
+					gotchaBrick.x = this.generateRandomGotchaBrickX();
 				}
 			}
 		}
@@ -215,13 +213,6 @@ export class Game {
 			gotchaBrick.ele.style.width = `${this.gotchaBrickWidth}px`;
 			gotchaBrick.ele.style.height = `${this.gotchaBrickWidth}px`;
 			this.adjustGotchaBrickPosition();
-
-			if (gotchaBrick.y + (this.gotchaBrickWidth ** 2 * 2) ** 0.5 / 2 >= this.canvas.height) {
-				gotchaBrick.y -= this.obstacle.wallSpacing * 2;
-				gotchaBrick.x = this.generateRandomGotchaBrickX();
-				gotchaBrick.isScored = false;
-				gotchaBrick.ele.style.visibility = "visible";
-			}
 		}
 	}
 
