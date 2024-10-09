@@ -200,14 +200,6 @@ button:focus {
 	position: absolute;
 }
 
-.arrow-left {
-	rotate: 90deg;
-}
-
-.arrow-right {
-	rotate: 270deg;
-}
-
 .game-over {
 	display: flex;
 	flex-direction: column;

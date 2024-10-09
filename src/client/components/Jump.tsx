@@ -1,4 +1,5 @@
 import { useAppContext } from "@hooks";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 export const Jump = () => {
 	const {
@@ -20,27 +21,26 @@ export const Jump = () => {
 				style={{
 					display: "flex",
 					justifyContent: "center",
-					columnGap: `${100 * scaleRatio}px`
+					columnGap: `${90 * scaleRatio}px`
 				}}
 			>
-				<div
-					className="arrow-left blink"
-					style={{
-						borderLeft: `${15 * scaleRatio}px solid transparent`,
-						borderRight: `${15 * scaleRatio}px solid transparent`,
-						borderTop: `${25 * scaleRatio}px solid #FF4445`,
-						visibility: isPaused ? "hidden" : "visible"
+				<PlayArrowIcon
+					className="blink"
+					sx={{
+						rotate: "180deg",
+						color: "#ff0000",
+						visibility: isPaused ? "hidden" : "visible",
+						fontSize: `${40 * scaleRatio}px`
 					}}
-				></div>
-				<div
-					className="arrow-right blink"
-					style={{
-						borderLeft: `${15 * scaleRatio}px solid transparent`,
-						borderRight: `${15 * scaleRatio}px solid transparent`,
-						borderTop: `${25 * scaleRatio}px solid #FF4445`,
-						visibility: isPaused ? "hidden" : "visible"
+				/>
+				<PlayArrowIcon
+					className="blink"
+					sx={{
+						color: "#ff0000",
+						visibility: isPaused ? "hidden" : "visible",
+						fontSize: `${40 * scaleRatio}px`
 					}}
-				></div>
+				></PlayArrowIcon>
 			</div>
 		</>
 	);
