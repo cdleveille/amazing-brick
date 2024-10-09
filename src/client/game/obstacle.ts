@@ -135,10 +135,10 @@ export class Obstacle {
 			wall.eleRight.style.backgroundColor = wall.color;
 
 			wall.eleLeft.style.width = `${wall.gapX}px`;
-			wall.eleLeft.style.top = `${Math.max(0, wall.y)}px`;
+			wall.eleLeft.style.top = `${wall.y}px`;
 
 			wall.eleRight.style.width = `${this.game.canvas.width - wall.gapX - this.wallGapWidth}px`;
-			wall.eleRight.style.top = `${Math.max(0, wall.y)}px`;
+			wall.eleRight.style.top = `${wall.y}px`;
 			wall.eleRight.style.left = `${wall.gapX + this.wallGapWidth}px`;
 
 			if (
@@ -164,16 +164,8 @@ export class Obstacle {
 				wall.color = this.obstacleColor;
 			}
 
-			if (wall.y < 0) {
-				wall.eleLeft.style.height = `${Math.ceil(Math.max(0, this.wallHeight + wall.y))}px`;
-				wall.eleRight.style.height = `${Math.ceil(Math.max(0, this.wallHeight + wall.y))}px`;
-			} else if (wall.y >= this.game.canvas.height) {
-				wall.eleLeft.style.height = "0px";
-				wall.eleRight.style.height = "0px";
-			} else {
-				wall.eleLeft.style.height = `${Math.ceil(Math.min(this.wallHeight, this.game.canvas.height - wall.y))}px`;
-				wall.eleRight.style.height = `${Math.ceil(Math.min(this.wallHeight, this.game.canvas.height - wall.y))}px`;
-			}
+			wall.eleLeft.style.height = `${this.wallHeight}px`;
+			wall.eleRight.style.height = `${this.wallHeight}px`;
 		}
 
 		for (const block of this.blocks) {
@@ -183,7 +175,7 @@ export class Obstacle {
 
 			block.ele.style.backgroundColor = block.color;
 			block.ele.style.width = `${this.blockWidth}px`;
-			block.ele.style.top = `${Math.max(0, block.y)}px`;
+			block.ele.style.top = `${block.y}px`;
 			block.ele.style.left = `${block.x}px`;
 
 			if (block.y >= this.game.canvas.height) {
@@ -200,13 +192,7 @@ export class Obstacle {
 				block.color = this.obstacleColor;
 			}
 
-			if (block.y < 0) {
-				block.ele.style.height = `${Math.ceil(Math.max(0, this.blockWidth + block.y))}px`;
-			} else if (block.y >= this.game.canvas.height) {
-				block.ele.style.height = "0px";
-			} else {
-				block.ele.style.height = `${Math.ceil(Math.min(this.blockWidth, this.game.canvas.height - block.y))}px`;
-			}
+			block.ele.style.height = `${this.blockWidth}px`;
 		}
 	}
 }
