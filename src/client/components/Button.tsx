@@ -37,7 +37,7 @@ export const Button = ({
 			className={`btn ${className}`}
 			style={{
 				backgroundColor: backgroundColor,
-				width: `${192 * scaleRatio}px`,
+				width: `${224 * scaleRatio}px`,
 				height: `${56 * scaleRatio}px`,
 				borderRadius: `${32 * scaleRatio}px`
 			}}

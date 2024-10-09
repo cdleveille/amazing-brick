@@ -10,6 +10,8 @@ export const PLAYER_ID_LOCAL_STORAGE_KEY = "player_id";
 
 export const IS_DARK_MODE_LOCAL_STORAGE_KEY = "is_dark_mode";
 
+export const GAME_MODE_LOCAL_STORAGE_KEY = "game_mode";
+
 export enum Color {
 	White = "#FFFFFF",
 	Black = "#000000",
@@ -27,3 +29,11 @@ export enum Color {
 }
 
 export const OBSTACLE_COLORS = [Color.Blue, Color.Purple, Color.Red, Color.Yellow, Color.LightGreen];
+
+export enum GameMode {
+	Standard = "Standard",
+	Sprint = "Sprint",
+	Shrouded = "Shrouded",
+	Gotcha = "Gotcha",
+	Insanity = "Insanity"
+}

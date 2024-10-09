@@ -1,11 +1,17 @@
 import { useMemo, useState } from "react";
 
 import { Screen } from "@components";
-import { Color, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
-import { Game } from "@game";
+import {
+	Color,
+	GAME_MODE_LOCAL_STORAGE_KEY,
+	GameMode,
+	IS_DARK_MODE_LOCAL_STORAGE_KEY,
+	PLAYER_ID_LOCAL_STORAGE_KEY
+} from "@constants";
+import { Game, gameModes } from "@game";
 import { AppContext, useLocalStorage, useResize } from "@hooks";
 
-import type { TCanvas, TScreen } from "@types";
+import type { TCanvas, TGameMode, TScreen } from "@types";
 
 export const Main = () => {
 	const { getLocalStorageItem } = useLocalStorage();
@@ -17,6 +23,11 @@ export const Main = () => {
 	const [isPaused, setIsPaused] = useState(false);
 	const [isPausedAtStart, setIsPausedAtStart] = useState(true);
 	const [isDarkMode, setIsDarkMode] = useState(getLocalStorageItem<boolean>(IS_DARK_MODE_LOCAL_STORAGE_KEY) ?? false);
+	const [gameMode, setGameMode] = useState(
+		getLocalStorageItem<TGameMode>(GAME_MODE_LOCAL_STORAGE_KEY) ?? gameModes[0]
+	);
+	const [startTime, setStartTime] = useState(0);
+	const [netStartTime, setNetStartTime] = useState(0);
 
 	const player_id = useMemo(
 		() => getLocalStorageItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID(),
@@ -43,9 +54,16 @@ export const Main = () => {
 				setIsPausedAtStart,
 				player_id,
 				isDarkMode,
-				setIsDarkMode
+				setIsDarkMode,
+				gameMode,
+				setGameMode,
+				startTime,
+				setStartTime,
+				netStartTime,
+				setNetStartTime
 			}}
 		>
+			<div className="cover" style={{ top: 0, left: 0, height: canvas.yOffset }}></div>
 			<div
 				className="canvas"
 				style={{
@@ -53,12 +71,21 @@ export const Main = () => {
 					left: canvas.xOffset,
 					width: canvas.width,
 					height: canvas.height,
-					backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
+					backgroundColor:
+						gameMode.name === GameMode.Shrouded && screen === "play"
+							? Color.Black
+							: isDarkMode
+								? Color.DarkBlue
+								: Color.White,
 					color: isDarkMode ? Color.White : Color.Black
 				}}
 			>
 				<Screen screen={screen} />
 			</div>
+			<div
+				className="cover"
+				style={{ top: canvas.yOffset + canvas.height, left: 0, height: canvas.yOffset }}
+			></div>
 		</AppContext.Provider>
 	);
 };

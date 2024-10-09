@@ -1,6 +1,7 @@
+import { GameMode } from "@constants";
 import { Brick, isRectangleIntersectingDiamond, now, Obstacle } from "@game";
 
-import type { TAppContext, TCanvas, TJumpDirection } from "@types";
+import type { TAppContext, TCanvas, TJumpDirection, TGotchaBrick } from "@types";
 
 export class Game {
 	ctx: TAppContext;
@@ -13,6 +14,8 @@ export class Game {
 	isGameOver = false;
 	stopGameLoop = false;
 	score = 0;
+	gotchaBricks = [] as TGotchaBrick[];
+	gotchaBrickWidth = 0;
 
 	constructor(ctx: TAppContext) {
 		this.ctx = ctx;
@@ -20,6 +23,19 @@ export class Game {
 		this.brick = new Brick(this);
 		this.obstacle = new Obstacle(this);
 		this.gravity = 1500 * this.canvas.scaleRatio;
+		if (this.ctx.gameMode.name === GameMode.Gotcha) {
+			this.gotchaBricks = Array.from(document.getElementsByClassName("gotcha-brick")).map((ele, i) => {
+				return {
+					x: this.generateRandomGotchaBrickX(),
+					y:
+						-this.obstacle.wallSpacing * (i + 1) -
+						this.obstacle.wallHeight / 2 +
+						this.obstacle.wallSpacing / 2,
+					ele: ele as HTMLElement
+				} as TGotchaBrick;
+			});
+			this.gotchaBrickWidth = 20 * this.canvas.scaleRatio;
+		}
 	}
 
 	start() {
@@ -48,10 +64,17 @@ export class Game {
 		this.obstacle = new Obstacle(this);
 	}
 
+	generateRandomGotchaBrickX() {
+		const margin = 25 * this.canvas.scaleRatio;
+		return Math.random() * (this.canvas.width - margin * 2) + margin;
+	}
+
 	jump(direction: TJumpDirection) {
 		if (this.isPaused) return;
 		if (this.isGameOver) return;
-		this.ctx.setIsPausedAtStart(false);
+		if (this.isPausedAtStart) {
+			this.ctx.setIsPausedAtStart(false);
+		}
 		this.brick.jump(direction);
 	}
 
@@ -61,6 +84,14 @@ export class Game {
 		this.gravity = this.gravity * resizeRatio;
 		this.brick.resize(resizeRatio);
 		this.obstacle.resize(resizeRatio);
+		if (this.ctx.gameMode.name === GameMode.Gotcha) {
+			for (const gotchaBrick of this.gotchaBricks) {
+				gotchaBrick.x = gotchaBrick.x * resizeRatio;
+				gotchaBrick.y = gotchaBrick.y * resizeRatio;
+			}
+			this.gotchaBrickWidth = this.gotchaBrickWidth * resizeRatio;
+			this.adjustGotchaBrickPosition();
+		}
 	}
 
 	handleCollisions() {
@@ -136,6 +167,27 @@ export class Game {
 				this.crash();
 			}
 		}
+
+		if (this.ctx.gameMode.name === GameMode.Gotcha && !this.isGameOver) {
+			const gotchaBrickDiagonalWidth = (this.gotchaBrickWidth ** 2 * 2) ** 0.5;
+			for (const gotchaBrick of this.gotchaBricks) {
+				const isColliding = isRectangleIntersectingDiamond(
+					{
+						x: gotchaBrick.x - gotchaBrickDiagonalWidth / 2,
+						y: gotchaBrick.y - gotchaBrickDiagonalWidth / 2,
+						width: gotchaBrickDiagonalWidth,
+						height: gotchaBrickDiagonalWidth
+					},
+					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
+				);
+				if (isColliding) {
+					this.ctx.setScore(score => score + 1);
+					gotchaBrick.y -= this.obstacle.wallSpacing * 2;
+					gotchaBrick.x = this.generateRandomGotchaBrickX();
+					break;
+				}
+			}
+		}
 	}
 
 	crash() {
@@ -144,10 +196,38 @@ export class Game {
 		document.getElementsByClassName("canvas").item(0)?.classList.add("shake");
 	}
 
+	adjustGotchaBrickPosition() {
+		if (this.ctx.gameMode.name !== GameMode.Gotcha) return;
+		for (const gotchaBrick of this.gotchaBricks) {
+			gotchaBrick.ele.style.top = `${gotchaBrick.y - this.gotchaBrickWidth / 2}px`;
+			gotchaBrick.ele.style.left = `${gotchaBrick.x - this.gotchaBrickWidth / 2}px`;
+		}
+	}
+
+	updateGotchaBricks(delta: number) {
+		if (this.ctx.gameMode.name !== GameMode.Gotcha) return;
+		for (const gotchaBrick of this.gotchaBricks) {
+			if (this.brick.isCollidingTop) {
+				gotchaBrick.y -= this.brick.yv * delta;
+			}
+
+			gotchaBrick.ele.style.width = `${this.gotchaBrickWidth}px`;
+			gotchaBrick.ele.style.height = `${this.gotchaBrickWidth}px`;
+
+			if (gotchaBrick.y + (this.gotchaBrickWidth ** 2 * 2) ** 0.5 / 2 >= this.canvas.height) {
+				gotchaBrick.y -= this.obstacle.wallSpacing * 2;
+				gotchaBrick.x = this.generateRandomGotchaBrickX();
+			}
+
+			this.adjustGotchaBrickPosition();
+		}
+	}
+
 	update(delta: number) {
 		if (this.isPaused || this.isPausedAtStart) return;
 		this.brick.update(delta);
 		this.obstacle.update(delta);
+		this.updateGotchaBricks(delta);
 		this.handleCollisions();
 	}
 }

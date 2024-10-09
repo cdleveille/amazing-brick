@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { Button, Text } from "@components";
-import { Color } from "@constants";
+import { Color, GameMode } from "@constants";
 import { useAppContext } from "@hooks";
 
 export const Pause = () => {
@@ -11,7 +11,8 @@ export const Pause = () => {
 		game,
 		isPaused,
 		setIsPaused,
-		isDarkMode
+		isDarkMode,
+		gameMode
 	} = useAppContext();
 
 	useEffect(() => {
@@ -22,6 +23,8 @@ export const Pause = () => {
 		document.addEventListener("keypress", onKeyPress);
 		return () => document.removeEventListener("keypress", onKeyPress);
 	}, []);
+
+	const isShroudedMode = gameMode.name === GameMode.Shrouded;
 
 	if (!game) return null;
 
@@ -42,9 +45,9 @@ export const Pause = () => {
 				style={{
 					width: `${44 * scaleRatio}px`,
 					height: `${44 * scaleRatio}px`,
-					border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
+					border: `${1 * scaleRatio}px solid ${isDarkMode || isShroudedMode ? Color.White : Color.Black}`,
 					margin: `${14 * scaleRatio}px`,
-					boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`
+					boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode || isShroudedMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`
 				}}
 				onClick={() => setIsPaused(isPaused => !isPaused)}
 				onTouchStart={e => e.stopPropagation()}
@@ -54,8 +57,8 @@ export const Pause = () => {
 					style={{
 						width: `${12 * scaleRatio}px`,
 						height: `${18 * scaleRatio}px`,
-						borderLeft: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
-						borderRight: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`
+						borderLeft: `${1 * scaleRatio}px solid ${isDarkMode || isShroudedMode ? Color.White : Color.Black}`,
+						borderRight: `${1 * scaleRatio}px solid ${isDarkMode || isShroudedMode ? Color.White : Color.Black}`
 					}}
 				></div>
 			</button>

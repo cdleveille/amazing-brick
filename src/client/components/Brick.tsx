@@ -1,13 +1,9 @@
-import { useAppContext } from "@hooks";
-
 type BrickProps = {
 	id?: string;
+	className?: string;
 	style?: React.CSSProperties;
 };
 
-export const Brick = ({ id, style }: BrickProps) => {
-	const { isDarkMode } = useAppContext();
-	return (
-		<div id={id} className="brick" style={{ ...style, backgroundColor: isDarkMode ? "#ffffff" : "#000000" }}></div>
-	);
+export const Brick = ({ id, className, style }: BrickProps) => {
+	return <div id={id} className={`brick ${className}`} style={style}></div>;
 };

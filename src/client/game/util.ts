@@ -1,4 +1,6 @@
-import type { TPoint, TRectangle, TDiamond } from "@types";
+import { GameMode } from "@constants";
+
+import type { TPoint, TRectangle, TDiamond, TGameMode } from "@types";
 
 export const now = (): number => {
 	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
@@ -7,6 +9,12 @@ export const now = (): number => {
 export const assertGetElementById = (id: string): HTMLElement => {
 	const ele = document.getElementById(id);
 	if (!ele) throw new Error(`Element with id "${id}" not found`);
+	return ele;
+};
+
+export const assertFindArrayElement = <T>(arr: T[], predicate: (item: T) => boolean) => {
+	const ele = arr.find(predicate);
+	if (!ele) throw new Error("Element not found in array");
 	return ele;
 };
 
@@ -58,3 +66,26 @@ export const isRectangleIntersectingDiamond = (rect: TRectangle, diamond: TDiamo
 	// If no corners overlap, return false
 	return false;
 };
+
+export const gameModes = [
+	{
+		name: GameMode.Standard,
+		description: "How high can you climb?"
+	},
+	{
+		name: GameMode.Sprint,
+		description: "Don't let the timer run out!"
+	},
+	{
+		name: GameMode.Shrouded,
+		description: "Caution: reduced visibility!"
+	},
+	{
+		name: GameMode.Gotcha,
+		description: "Collect the golden bricks to score points!"
+	}
+	// {
+	// 	name: GameMode.Insanity,
+	// 	description: "Good luck ;)"
+	// }
+] as TGameMode[];

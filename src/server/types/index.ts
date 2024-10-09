@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { Color, SocketEvent } from "@constants";
+import { Color, GameMode, SocketEvent } from "@constants";
 import { Game } from "@game";
 
 export interface IConfig {
@@ -45,6 +45,12 @@ export type TAppContext = {
 	player_id: string;
 	isDarkMode: boolean;
 	setIsDarkMode: Dispatch<SetStateAction<boolean>>;
+	gameMode: TGameMode;
+	setGameMode: Dispatch<SetStateAction<TGameMode>>;
+	startTime: number;
+	setStartTime: Dispatch<SetStateAction<number>>;
+	netStartTime: number;
+	setNetStartTime: Dispatch<SetStateAction<number>>;
 };
 
 export type TCanvas = {
@@ -97,11 +103,16 @@ export type TDiamond = {
 export type TScore = {
 	player_id: string;
 	score: number;
+	sprint_score: number;
+	shrouded_score: number;
+	gotcha_score: number;
+	insanity_score: number;
 };
 
 export type TEncryptedScore = {
 	player_id: string;
 	score: string;
+	game_mode_name: string;
 };
 
 export type TScoreRes = {
@@ -109,8 +120,37 @@ export type TScoreRes = {
 	existingHighScore: number;
 };
 
+export type THighScoresRes = {
+	standardScores: number[];
+	sprintScores: number[];
+	shroudedScores: number[];
+	gotchaScores: number[];
+	insanityScores: number[];
+};
+
+export type TPlayerHighScoreRes = {
+	standardScore: number;
+	sprintScore: number;
+	shroudedScore: number;
+	gotchaScore: number;
+	insanityScore: number;
+};
+
 export type TRating = {
 	player_id: string;
 	is_thumbs_up: boolean;
 	comments: string;
+};
+
+export type TGameModeName = ReverseMap<typeof GameMode>;
+
+export type TGameMode = {
+	name: TGameModeName;
+	description: string;
+};
+
+export type TGotchaBrick = {
+	x: number;
+	y: number;
+	ele: HTMLElement;
 };
