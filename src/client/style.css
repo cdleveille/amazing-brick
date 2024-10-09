@@ -58,6 +58,13 @@ button:focus {
 	transition: 0.2s ease-in-out;
 }
 
+.cover {
+	position: fixed;
+	background-color: #000000;
+	width: 100vw;
+	z-index: 10000;
+}
+
 .clip-path {
 	clip-path: circle(45%);
 }
@@ -131,7 +138,12 @@ button:focus {
 }
 
 .brick {
+	position: absolute;
 	rotate: 45deg;
+}
+
+.gotcha-brick {
+	background-color: #f8a502;
 }
 
 .pause-overlay {

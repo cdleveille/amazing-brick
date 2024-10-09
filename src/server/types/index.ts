@@ -105,6 +105,8 @@ export type TScore = {
 	score: number;
 	sprint_score: number;
 	shrouded_score: number;
+	gotcha_score: number;
+	insanity_score: number;
 };
 
 export type TEncryptedScore = {
@@ -129,4 +131,11 @@ export type TGameModeName = ReverseMap<typeof GameMode>;
 export type TGameMode = {
 	name: TGameModeName;
 	description: string;
+};
+
+export type TGotchaBrick = {
+	x: number;
+	y: number;
+	ele: HTMLElement;
+	isScored: boolean;
 };

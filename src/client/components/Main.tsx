@@ -63,6 +63,7 @@ export const Main = () => {
 				setNetStartTime
 			}}
 		>
+			<div className="cover" style={{ top: 0, left: 0, height: canvas.yOffset }}></div>
 			<div
 				className="canvas"
 				style={{
@@ -81,6 +82,10 @@ export const Main = () => {
 			>
 				<Screen screen={screen} />
 			</div>
+			<div
+				className="cover"
+				style={{ top: canvas.yOffset + canvas.height, left: 0, height: canvas.yOffset }}
+			></div>
 		</AppContext.Provider>
 	);
 };

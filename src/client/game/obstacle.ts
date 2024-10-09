@@ -141,7 +141,11 @@ export class Obstacle {
 			wall.eleRight.style.top = `${Math.max(0, wall.y)}px`;
 			wall.eleRight.style.left = `${wall.gapX + this.wallGapWidth}px`;
 
-			if (wall.y > this.game.canvas.height / 2 + this.game.brick.diagonalRadius && !wall.isScored) {
+			if (
+				wall.y > this.game.canvas.height / 2 + this.game.brick.diagonalRadius &&
+				!wall.isScored &&
+				this.game.ctx.gameMode.name !== GameMode.Gotcha
+			) {
 				wall.isScored = true;
 				this.game.ctx.setScore(score => score + 1);
 				if (this.game.ctx.gameMode.name === GameMode.Sprint) {

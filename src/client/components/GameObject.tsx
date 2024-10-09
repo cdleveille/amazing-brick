@@ -16,7 +16,7 @@ export const GameObject = () => {
 					gameMode.name === GameMode.Shrouded
 						? isDarkMode
 							? `radial-gradient(circle, ${Color.DarkBlue} 50%, rgba(0,0,0,1) 65%)`
-							: `radial-gradient(circle, ${Color.White} -10%, rgba(0,0,0,1) 65%)`
+							: `radial-gradient(circle, ${Color.White} 50%, rgba(0,0,0,1) 65%)`
 						: ""
 			}}
 		>
@@ -28,7 +28,14 @@ export const GameObject = () => {
 			<div id="block2" className="block"></div>
 			<div id="block3" className="block"></div>
 			<div id="block4" className="block"></div>
-			<Brick id="brick" />
+
+			<Brick id="brick" style={{ backgroundColor: isDarkMode ? Color.White : Color.Black }} />
+			{gameMode.name === GameMode.Gotcha && (
+				<>
+					<Brick className="gotcha-brick" />
+					<Brick className="gotcha-brick" />
+				</>
+			)}
 		</div>
 	);
 };

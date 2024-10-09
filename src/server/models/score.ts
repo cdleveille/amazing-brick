@@ -24,6 +24,16 @@ const ScoreSchema = new Schema<TScore>(
 			type: Number,
 			required: false,
 			default: 0
+		},
+		gotcha_score: {
+			type: Number,
+			required: false,
+			default: 0
+		},
+		insanity_score: {
+			type: Number,
+			required: false,
+			default: 0
 		}
 	},
 	{ collection: "amazing_brick_score" }

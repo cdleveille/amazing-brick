@@ -78,12 +78,12 @@ export const gameModes = [
 	},
 	{
 		name: GameMode.Shrouded,
-		description: "Climb as high as possible with reduced visibility!"
+		description: "Caution: reduced visibility!"
+	},
+	{
+		name: GameMode.Gotcha,
+		description: "Collect the golden bricks to score points!"
 	}
-	// {
-	// 	name: GameMode.Gotcha,
-	// 	description: "Collect the bricks to score points!"
-	// },
 	// {
 	// 	name: GameMode.Insanity,
 	// 	description: "Good luck ;)"
