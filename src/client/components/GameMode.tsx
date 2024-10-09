@@ -17,6 +17,11 @@ const getNextGameMode = (gameMode: TGameMode) => {
 	return gameModes[nextIndex % gameModes.length];
 };
 
+const getPreviousGameMode = (gameMode: TGameMode) => {
+	const previousIndex = gameModes.findIndex(mode => mode.name === gameMode.name) - 1;
+	return gameModes[(previousIndex + gameModes.length) % gameModes.length];
+};
+
 const GameModeOptions = ({
 	handleClose,
 	onSelectOption
@@ -127,7 +132,7 @@ export const GameModeMenu = ({
 				columnGap: `${8 * scaleRatio}px`
 			}}
 		>
-			<button className="arrow-btn" onClick={() => onSelectOption(getNextGameMode(value))}>
+			<button className="arrow-btn" onClick={() => onSelectOption(getPreviousGameMode(value))}>
 				<ChevronLeftIcon
 					sx={{ fontSize: `${36 * scaleRatio}px`, color: isDarkMode ? Color.White : Color.Black }}
 				/>
