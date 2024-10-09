@@ -120,6 +120,22 @@ export type TScoreRes = {
 	existingHighScore: number;
 };
 
+export type THighScoresRes = {
+	standardScores: number[];
+	sprintScores: number[];
+	shroudedScores: number[];
+	gotchaScores: number[];
+	insanityScores: number[];
+};
+
+export type TPlayerHighScoreRes = {
+	standardScore: number;
+	sprintScore: number;
+	shroudedScore: number;
+	gotchaScore: number;
+	insanityScore: number;
+};
+
 export type TRating = {
 	player_id: string;
 	is_thumbs_up: boolean;

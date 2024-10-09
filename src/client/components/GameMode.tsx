@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
+import { MouseEvent, useState } from "react";
 
 import { Color } from "@constants";
 import { gameModes } from "@game";
@@ -9,19 +9,20 @@ import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
 
 import type { TGameMode } from "@types";
+
 const GameModeOptions = ({
 	handleClose,
-	setGameMode
+	onSelectOption
 }: {
 	handleClose: () => void;
-	setGameMode: Dispatch<SetStateAction<TGameMode>>;
+	onSelectOption: (gameMode: TGameMode) => void;
 }) => {
 	return (
 		<>
 			{gameModes.map(mode => (
 				<MenuItem
 					onClick={() => {
-						setGameMode(mode);
+						onSelectOption(mode);
 						handleClose();
 					}}
 					disableRipple
@@ -87,14 +88,18 @@ const StyledMenu = styled(
 	}
 }));
 
-export const GameModeMenu = () => {
+export const GameModeMenu = ({
+	value,
+	onSelectOption
+}: {
+	value: TGameMode;
+	onSelectOption: (gameMode: TGameMode) => void;
+}) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
 	const {
 		canvas: { scaleRatio },
-		isDarkMode,
-		gameMode,
-		setGameMode
+		isDarkMode
 	} = useAppContext();
 
 	const open = Boolean(anchorEl);
@@ -139,7 +144,7 @@ export const GameModeMenu = () => {
 					}
 				}}
 			>
-				{gameMode.name}
+				{value.name}
 			</Button>
 			<StyledMenu
 				id="demo-customized-menu"
@@ -152,7 +157,7 @@ export const GameModeMenu = () => {
 				scaleRatio={scaleRatio}
 				isDarkMode={isDarkMode}
 			>
-				<GameModeOptions handleClose={handleClose} setGameMode={setGameMode} />
+				<GameModeOptions handleClose={handleClose} onSelectOption={onSelectOption} />
 			</StyledMenu>
 		</div>
 	);

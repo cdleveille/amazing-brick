@@ -1,13 +1,15 @@
 import { Brick, Button, GameModeMenu, Text } from "@components";
 import { Color } from "@constants";
 import { useAppContext } from "@hooks";
+import { TGameMode } from "@types";
 
 export const Home = () => {
 	const {
 		canvas: { scaleRatio },
 		setScreen,
 		isDarkMode,
-		gameMode
+		gameMode,
+		setGameMode
 	} = useAppContext();
 
 	return (
@@ -45,7 +47,7 @@ export const Home = () => {
 						rowGap: `${16 * scaleRatio}px`
 					}}
 				>
-					<GameModeMenu />
+					<GameModeMenu value={gameMode} onSelectOption={(gameMode: TGameMode) => setGameMode(gameMode)} />
 					<Text size={18} style={{ color: isDarkMode ? "#cccccc" : "#555555" }}>
 						{gameMode.description}
 					</Text>

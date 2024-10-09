@@ -1,18 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { Button, Text } from "@components";
-import { Color, SocketEvent } from "@constants";
+import { Button, GameModeMenu, Text } from "@components";
+import { Color, GameMode, SocketEvent } from "@constants";
 import { useApi, useAppContext, useIsOffline, useSocket } from "@hooks";
+import { TGameMode, THighScoresRes } from "@types";
 
 export const Scores = () => {
-	const [highScores, setHighScores] = useState<number[]>();
-
 	const {
 		canvas: { scaleRatio },
 		player_id,
 		setScreen,
-		isDarkMode
+		isDarkMode,
+		gameMode
 	} = useAppContext();
+
+	const [selectedGameMode, setSelectedGameMode] = useState(gameMode);
+	const [highScores, setHighScores] = useState<THighScoresRes>();
 
 	const { getPlayerHighScore, getHighScores } = useApi();
 
@@ -20,13 +23,22 @@ export const Scores = () => {
 
 	const { isOffline } = useIsOffline();
 
-	const { data: playerHighScore = 0, failureCount: getPlayerHighScoreFailureCount } = getPlayerHighScore(player_id);
+	const {
+		data: playerHighScore = {
+			standardScore: 0,
+			sprintScore: 0,
+			shroudedScore: 0,
+			gotchaScore: 0,
+			insanityScore: 0
+		},
+		failureCount: getPlayerHighScoreFailureCount
+	} = getPlayerHighScore(player_id);
 	const { data: fetchedHighScores, failureCount: getHighScoresFailureCount } = getHighScores();
 
 	const failureCount = getPlayerHighScoreFailureCount + getHighScoresFailureCount;
 
 	useEffect(() => {
-		const onNewScore = (scores: number[]) => setHighScores(scores.sort((a, b) => b - a));
+		const onNewScore = (scores: THighScoresRes) => setHighScores(scores);
 		socket.on(SocketEvent.NewScore, onNewScore);
 		return () => {
 			socket.off(SocketEvent.NewScore, onNewScore);
@@ -37,15 +49,55 @@ export const Scores = () => {
 		if (fetchedHighScores) setHighScores(fetchedHighScores);
 	}, [fetchedHighScores]);
 
+	const selectedGameModePlayerHighScore = useMemo(() => {
+		if (!selectedGameMode || !playerHighScore) return 0;
+		switch (selectedGameMode.name) {
+			case GameMode.Standard:
+				return playerHighScore.standardScore;
+			case GameMode.Sprint:
+				return playerHighScore.sprintScore;
+			case GameMode.Shrouded:
+				return playerHighScore.shroudedScore;
+			case GameMode.Gotcha:
+				return playerHighScore.gotchaScore;
+			case GameMode.Insanity:
+				return playerHighScore.insanityScore;
+			default:
+				return 0;
+		}
+	}, [selectedGameMode, playerHighScore]);
+
+	const selectedGameModeHighScores = useMemo(() => {
+		if (!selectedGameMode || !highScores) return [];
+		switch (selectedGameMode.name) {
+			case GameMode.Standard:
+				return highScores.standardScores;
+			case GameMode.Sprint:
+				return highScores.sprintScores;
+			case GameMode.Shrouded:
+				return highScores.shroudedScores;
+			case GameMode.Gotcha:
+				return highScores.gotchaScores;
+			case GameMode.Insanity:
+				return highScores.insanityScores;
+			default:
+				return [];
+		}
+	}, [selectedGameMode, highScores]);
+
 	if (isOffline && !highScores && failureCount > 0)
 		return (
 			<div
 				className="scores-container"
-				style={{ rowGap: `${36 * scaleRatio}px`, marginTop: `${36 * scaleRatio}px` }}
+				style={{ rowGap: `${28 * scaleRatio}px`, marginTop: `${28 * scaleRatio}px` }}
 			>
 				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
 					<Text size={26}>HOME</Text>
 				</Button>
+				<GameModeMenu
+					value={selectedGameMode}
+					onSelectOption={(gameMode: TGameMode) => setSelectedGameMode(gameMode)}
+				/>
 				<div
 					className="blink"
 					style={{
@@ -62,13 +114,17 @@ export const Scores = () => {
 			</div>
 		);
 
-	if (!highScores) return null;
+	if (!selectedGameMode || !highScores) return null;
 
 	return (
-		<div className="scores-container" style={{ rowGap: `${36 * scaleRatio}px`, marginTop: `${36 * scaleRatio}px` }}>
+		<div className="scores-container" style={{ rowGap: `${28 * scaleRatio}px`, marginTop: `${28 * scaleRatio}px` }}>
 			<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
 				<Text size={26}>HOME</Text>
 			</Button>
+			<GameModeMenu
+				value={selectedGameMode}
+				onSelectOption={(gameMode: TGameMode) => setSelectedGameMode(gameMode)}
+			/>
 			<div
 				className="player-high-score-box"
 				style={{
@@ -82,24 +138,26 @@ export const Scores = () => {
 			>
 				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
 					<div>Best</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{playerHighScore}</div>
+					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{selectedGameModePlayerHighScore}</div>
 				</div>
 				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
 					<div>Rank</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{getRank(playerHighScore, highScores ?? [])}</div>
+					<div style={{ fontSize: `${48 * scaleRatio}px` }}>
+						{getRank(selectedGameModePlayerHighScore, selectedGameModeHighScores ?? [])}
+					</div>
 				</div>
 				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
 					<div>Top</div>
 					<div style={{ fontSize: `${48 * scaleRatio}px` }}>
-						{getPercentileRank(playerHighScore, highScores ?? [])}
+						{getPercentileRank(selectedGameModePlayerHighScore, selectedGameModeHighScores ?? [])}
 					</div>
 				</div>
 			</div>
-			{highScores?.length > 0 && (
+			{selectedGameModeHighScores?.length > 0 ? (
 				<div style={{ width: "85%", textAlign: "center" }}>
-					<Text size={42}>Top 10</Text>
+					<Text size={36}>Top 10</Text>
 					<div style={{ marginTop: `${16 * scaleRatio}px` }}>
-						{highScores
+						{selectedGameModeHighScores
 							?.sort((a, b) => b - a)
 							.slice(0, 10)
 							.map((score, index) => (
@@ -121,13 +179,15 @@ export const Scores = () => {
 										transition: "0.2s ease-in-out"
 									}}
 								>
-									<Text size={32} style={{ transition: "unset !important" }}>
+									<Text size={28} style={{ transition: "unset !important" }}>
 										{score}
 									</Text>
 								</div>
 							))}
 					</div>
 				</div>
+			) : (
+				<Text size={28}>No scores yet!</Text>
 			)}
 		</div>
 	);

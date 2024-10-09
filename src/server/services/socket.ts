@@ -5,8 +5,9 @@ import { Server, Socket } from "socket.io";
 import { GameMode, SocketEvent } from "@constants";
 import { Rating, Score } from "@models";
 
-import type { TEncryptedScore, TScoreRes, TRating, TGameModeName } from "@types";
+import { THighScoresRes } from "../types/index";
 
+import type { TEncryptedScore, TScoreRes, TRating, TGameModeName, TPlayerHighScoreRes, TScore } from "@types";
 export const initSocket = (httpServer: HttpServer) => {
 	const io = new Server(httpServer);
 
@@ -56,23 +57,47 @@ export const initSocket = (httpServer: HttpServer) => {
 
 		socket.on(SocketEvent.PlayerHighScore, async (player_id: string) => {
 			const existingHighScore = await Score.findOne({ player_id });
-			socket.emit(SocketEvent.PlayerHighScore, existingHighScore?.score ?? 0);
+			socket.emit(SocketEvent.PlayerHighScore, {
+				standardScore: existingHighScore?.score ?? 0,
+				sprintScore: existingHighScore?.sprint_score ?? 0,
+				shroudedScore: existingHighScore?.shrouded_score ?? 0,
+				gotchaScore: existingHighScore?.gotcha_score ?? 0,
+				insanityScore: existingHighScore?.insanity_score ?? 0
+			} as TPlayerHighScoreRes);
 		});
 
 		socket.on(SocketEvent.HighScores, async () => {
 			const highScores = await Score.find();
-			socket.emit(
-				SocketEvent.HighScores,
-				highScores.map(({ score }) => score)
-			);
+			socket.emit(SocketEvent.HighScores, assembleHighScoresRes(highScores) as THighScoresRes);
 		});
 	});
 };
 
 const broadcastHighScores = async (socket: Socket) => {
 	const highScores = await Score.find();
-	socket.broadcast.emit(
-		SocketEvent.NewScore,
-		highScores.map(({ score }) => score)
-	);
+	socket.broadcast.emit(SocketEvent.NewScore, assembleHighScoresRes(highScores) as THighScoresRes);
 };
+
+const assembleHighScoresRes = (highScores: TScore[]) =>
+	({
+		standardScores: highScores
+			.map(({ score }) => score)
+			.filter(score => score > 0)
+			.sort((a, b) => b - a),
+		sprintScores: highScores
+			.map(({ sprint_score }) => sprint_score)
+			.filter(score => score > 0)
+			.sort((a, b) => b - a),
+		shroudedScores: highScores
+			.map(({ shrouded_score }) => shrouded_score)
+			.filter(score => score > 0)
+			.sort((a, b) => b - a),
+		gotchaScores: highScores
+			.map(({ gotcha_score }) => gotcha_score)
+			.filter(score => score > 0)
+			.sort((a, b) => b - a),
+		insanityScores: highScores
+			.map(({ insanity_score }) => insanity_score)
+			.filter(score => score > 0)
+			.sort((a, b) => b - a)
+	}) as THighScoresRes;

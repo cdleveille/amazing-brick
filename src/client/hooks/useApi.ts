@@ -2,7 +2,7 @@ import { SocketEvent } from "@constants";
 import { useSocket } from "@hooks";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import type { SocketEventName, TEncryptedScore, TRating, TScoreRes } from "@types";
+import type { SocketEventName, TEncryptedScore, TRating, TScoreRes, THighScoresRes, TPlayerHighScoreRes } from "@types";
 
 const TIMEOUT_MS = 5000;
 
@@ -43,13 +43,13 @@ export const useApi = () => {
 	const getPlayerHighScore = (player_id: string) =>
 		useQuery({
 			queryKey: ["getPlayerHighScore", player_id],
-			queryFn: () => toAndFrom<number>({ event: SocketEvent.PlayerHighScore, data: player_id })
+			queryFn: () => toAndFrom<TPlayerHighScoreRes>({ event: SocketEvent.PlayerHighScore, data: player_id })
 		});
 
 	const getHighScores = () =>
 		useQuery({
 			queryKey: ["getHighScores"],
-			queryFn: () => toAndFrom<number[]>({ event: SocketEvent.HighScores })
+			queryFn: () => toAndFrom<THighScoresRes>({ event: SocketEvent.HighScores })
 		});
 
 	return { useSubmitScore, submitRating, getPlayerHighScore, getHighScores };
