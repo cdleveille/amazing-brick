@@ -7,14 +7,20 @@ export const Jump = () => {
 	} = useAppContext();
 
 	return (
-		<div style={{ marginBottom: `${136 * scaleRatio}px` }}>
-			<object data="./assets/jump.svg" type="image/svg+xml" width={250 * scaleRatio} />
+		<>
+			<object
+				data="./assets/jump.svg"
+				type="image/svg+xml"
+				width={250 * scaleRatio}
+				className="absolute-center"
+				style={{ marginTop: `${-92 * scaleRatio}px` }}
+			/>
 			<div
+				className="absolute-center"
 				style={{
 					display: "flex",
 					justifyContent: "center",
-					columnGap: `${100 * scaleRatio}px`,
-					marginTop: `${14 * scaleRatio}px`
+					columnGap: `${100 * scaleRatio}px`
 				}}
 			>
 				<div
@@ -36,6 +42,6 @@ export const Jump = () => {
 					}}
 				></div>
 			</div>
-		</div>
+		</>
 	);
 };

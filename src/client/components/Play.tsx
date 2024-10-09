@@ -31,11 +31,7 @@ export const Play = () => {
 				<Score />
 			</div>
 			<GameObject />
-			{isPausedAtStart && (
-				<div className="absolute-center">
-					<Jump />
-				</div>
-			)}
+			{isPausedAtStart && <Jump />}
 		</div>
 	);
 };
