@@ -184,6 +184,7 @@ export class Game {
 					this.ctx.setScore(score => score + 1);
 					gotchaBrick.y -= this.obstacle.wallSpacing * 2;
 					gotchaBrick.x = this.generateRandomGotchaBrickX();
+					break;
 				}
 			}
 		}
@@ -212,6 +213,12 @@ export class Game {
 
 			gotchaBrick.ele.style.width = `${this.gotchaBrickWidth}px`;
 			gotchaBrick.ele.style.height = `${this.gotchaBrickWidth}px`;
+
+			if (gotchaBrick.y + (this.gotchaBrickWidth ** 2 * 2) ** 0.5 / 2 >= this.canvas.height) {
+				gotchaBrick.y -= this.obstacle.wallSpacing * 2;
+				gotchaBrick.x = this.generateRandomGotchaBrickX();
+			}
+
 			this.adjustGotchaBrickPosition();
 		}
 	}
