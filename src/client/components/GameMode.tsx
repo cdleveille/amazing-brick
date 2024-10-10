@@ -22,31 +22,6 @@ const getPreviousGameMode = (gameMode: TGameMode) => {
 	return gameModes[(previousIndex + gameModes.length) % gameModes.length];
 };
 
-const GameModeOptions = ({
-	handleClose,
-	onSelectOption
-}: {
-	handleClose: () => void;
-	onSelectOption: (gameMode: TGameMode) => void;
-}) => {
-	return (
-		<>
-			{gameModes.map(mode => (
-				<MenuItem
-					onClick={() => {
-						onSelectOption(mode);
-						handleClose();
-					}}
-					disableRipple
-					key={mode.name}
-				>
-					{mode.name}
-				</MenuItem>
-			))}
-		</>
-	);
-};
-
 const StyledMenu = styled(
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	({ scaleRatio, isDarkMode, ...props }: MenuProps & { scaleRatio: number; isDarkMode: boolean }) => (
@@ -94,7 +69,10 @@ const StyledMenu = styled(
 				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White
 			},
 			"&:hover": {
-				backgroundColor: isDarkMode ? Color.DarkGray : Color.LightGray
+				backgroundColor: isDarkMode ? Color.DarkGray : Color.Gray
+			},
+			"&:focus": {
+				backgroundColor: isDarkMode ? Color.DarkGray : Color.Gray
 			}
 		}
 	}
@@ -138,7 +116,7 @@ export const GameModeMenu = ({
 				/>
 			</button>
 			<Button
-				id="demo-customized-button"
+				id="game-mode-menu-btn"
 				aria-controls={open ? "demo-customized-menu" : undefined}
 				aria-haspopup="true"
 				aria-expanded={open ? "true" : undefined}
@@ -177,9 +155,9 @@ export const GameModeMenu = ({
 				/>
 			</button>
 			<StyledMenu
-				id="demo-customized-menu"
+				id="game-mode-menu"
 				MenuListProps={{
-					"aria-labelledby": "demo-customized-button"
+					"aria-labelledby": "game-mode-menu-btn"
 				}}
 				anchorEl={anchorEl}
 				open={open}
@@ -187,7 +165,18 @@ export const GameModeMenu = ({
 				scaleRatio={scaleRatio}
 				isDarkMode={isDarkMode}
 			>
-				<GameModeOptions handleClose={handleClose} onSelectOption={onSelectOption} />
+				{gameModes.map(mode => (
+					<MenuItem
+						onClick={() => {
+							onSelectOption(mode);
+							handleClose();
+						}}
+						disableRipple
+						key={mode.name}
+					>
+						{mode.name}
+					</MenuItem>
+				))}
 			</StyledMenu>
 		</div>
 	);
