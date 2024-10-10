@@ -108,15 +108,15 @@ export class Game {
 			this.brick.x = this.brick.diagonalRadius;
 			this.brick.xv = 0;
 			this.brick.isCollidingLeft = true;
-			if (this.brick.yv > 300 * this.canvas.scaleRatio) {
-				this.brick.yv = 300 * this.canvas.scaleRatio;
+			if (this.brick.yv > 250 * this.canvas.scaleRatio) {
+				this.brick.yv = 250 * this.canvas.scaleRatio;
 			}
 		} else if (this.brick.x + this.brick.diagonalRadius >= this.canvas.width) {
 			this.brick.x = this.canvas.width - this.brick.diagonalRadius;
 			this.brick.xv = 0;
 			this.brick.isCollidingRight = true;
-			if (this.brick.yv > 300 * this.canvas.scaleRatio) {
-				this.brick.yv = 300 * this.canvas.scaleRatio;
+			if (this.brick.yv > 250 * this.canvas.scaleRatio) {
+				this.brick.yv = 250 * this.canvas.scaleRatio;
 			}
 		}
 
