@@ -84,8 +84,4 @@ export const gameModes = [
 		name: GameMode.Gotcha,
 		description: "Collect the golden bricks to score points!"
 	}
-	// {
-	// 	name: GameMode.Insanity,
-	// 	description: "Good luck ;)"
-	// }
 ] as TGameMode[];

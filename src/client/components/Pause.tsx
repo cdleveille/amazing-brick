@@ -1,19 +1,12 @@
 import { useEffect } from "react";
 
 import { Button, Text } from "@components";
-import { Color, GameMode } from "@constants";
-import { useAppContext } from "@hooks";
+import { Color } from "@constants";
+import { useAppContext, useStyles } from "@hooks";
 
 export const Pause = () => {
-	const {
-		canvas: { width, height, scaleRatio },
-		setScreen,
-		game,
-		isPaused,
-		setIsPaused,
-		isDarkMode,
-		gameMode
-	} = useAppContext();
+	const { setScreen, game, isPaused, setIsPaused } = useAppContext();
+	const { styles } = useStyles();
 
 	useEffect(() => {
 		const onKeyPress = (e: KeyboardEvent) => {
@@ -24,14 +17,12 @@ export const Pause = () => {
 		return () => document.removeEventListener("keypress", onKeyPress);
 	}, []);
 
-	const isShroudedMode = gameMode.name === GameMode.Shrouded;
-
 	if (!game) return null;
 
 	return (
 		<>
 			{isPaused && (
-				<div className="pause-overlay" style={{ width, height, rowGap: `${32 * scaleRatio}px` }}>
+				<div className="pause-overlay" style={styles.pauseOverlay}>
 					<Button onClick={() => setIsPaused(false)} backgroundColor={Color.Green} forceTouch autoFocus>
 						<Text size={26}>RESUME</Text>
 					</Button>
@@ -42,25 +33,12 @@ export const Pause = () => {
 			)}
 			<button
 				className={`btn-pause ${isPaused ? "blink" : ""}`}
-				style={{
-					width: `${44 * scaleRatio}px`,
-					height: `${44 * scaleRatio}px`,
-					border: `${1 * scaleRatio}px solid ${isDarkMode || isShroudedMode ? Color.White : Color.Black}`,
-					margin: `${14 * scaleRatio}px`,
-					boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode || isShroudedMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`
-				}}
+				style={styles.pauseBtnOuter}
 				onClick={() => setIsPaused(isPaused => !isPaused)}
 				onTouchStart={e => e.stopPropagation()}
 				onTouchEnd={() => setIsPaused(isPaused => !isPaused)}
 			>
-				<div
-					style={{
-						width: `${12 * scaleRatio}px`,
-						height: `${18 * scaleRatio}px`,
-						borderLeft: `${1 * scaleRatio}px solid ${isDarkMode || isShroudedMode ? Color.White : Color.Black}`,
-						borderRight: `${1 * scaleRatio}px solid ${isDarkMode || isShroudedMode ? Color.White : Color.Black}`
-					}}
-				></div>
+				<div style={styles.pauseBtnInner}></div>
 			</button>
 		</>
 	);

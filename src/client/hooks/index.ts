@@ -5,4 +5,5 @@ export * from "./useIsOffline";
 export * from "./useLocalStorage";
 export * from "./useResize";
 export * from "./useSocket";
+export * from "./useStyles";
 export * from "./useSync";

@@ -2,23 +2,16 @@ import { useEffect, useState } from "react";
 
 import { GameMode } from "@constants";
 import { now } from "@game";
-import { useAppContext } from "@hooks";
+import { useAppContext, useStyles } from "@hooks";
 import TimerRoundedIcon from "@mui/icons-material/TimerRounded";
 
 const INITIAL_SEC = 10;
 
 export const Timer = () => {
-	const {
-		canvas: { scaleRatio },
-		isPausedAtStart,
-		isPaused,
-		setScreen,
-		isDarkMode,
-		gameMode,
-		setStartTime,
-		netStartTime,
-		setNetStartTime
-	} = useAppContext();
+	const { isPausedAtStart, isPaused, setScreen, gameMode, setStartTime, netStartTime, setNetStartTime } =
+		useAppContext();
+
+	const { styles } = useStyles();
 
 	const [currentTime, setCurrentTime] = useState(0);
 	const [timePausedAt, setTimePausedAt] = useState(0);
@@ -64,25 +57,8 @@ export const Timer = () => {
 	if (!isTimerUsed) return null;
 
 	return (
-		<div
-			style={{
-				fontSize: `${40 * scaleRatio}px`,
-				fontFamily: "Roboto-Thin",
-				fontWeight: "bold",
-				margin: `${8 * scaleRatio}px ${16 * scaleRatio}px`,
-				marginLeft: `${-4 * scaleRatio}px`,
-				color: isDarkMode ? "#cccccc" : "#888888"
-			}}
-		>
-			<TimerRoundedIcon
-				className={isPaused || isPausedAtStart ? "" : "rocking"}
-				sx={{
-					color: isDarkMode ? "#cccccc" : "#888888",
-					fontSize: `${28 * scaleRatio}px`,
-
-					marginRight: `${8 * scaleRatio}px`
-				}}
-			/>
+		<div style={styles.timerContainer}>
+			<TimerRoundedIcon className={isPaused || isPausedAtStart ? "" : "rocking"} sx={styles.timerIcon} />
 			{isPausedAtStart ? INITIAL_SEC : secondsLeft}
 		</div>
 	);

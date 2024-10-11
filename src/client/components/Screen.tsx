@@ -1,15 +1,21 @@
 import { DarkMode, GameOver, Home, Play, Rate, Scores, Thanks } from "@components";
-import { useSync } from "@hooks";
+import { useAppContext, useStyles, useSync } from "@hooks";
 
 import type { TScreen } from "@types";
 
-export const Screen = ({ screen }: { screen: TScreen }) => {
+export const Screen = () => {
+	const { screen } = useAppContext();
+	const { styles } = useStyles();
 	useSync();
 
 	return (
 		<>
-			{screen !== "play" && <DarkMode />}
-			{getScreen(screen)}
+			<div className="cover" style={styles.coverTop}></div>
+			<div className="canvas" style={styles.canvas}>
+				{screen !== "play" && <DarkMode />}
+				{getScreen(screen)}
+			</div>
+			<div className="cover" style={styles.coverBottom}></div>
 		</>
 	);
 };

@@ -1,13 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { Screen } from "@components";
-import {
-	Color,
-	GAME_MODE_LOCAL_STORAGE_KEY,
-	GameMode,
-	IS_DARK_MODE_LOCAL_STORAGE_KEY,
-	PLAYER_ID_LOCAL_STORAGE_KEY
-} from "@constants";
+import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
 import { Game, gameModes } from "@game";
 import { AppContext, useLocalStorage, useResize } from "@hooks";
 
@@ -63,29 +57,7 @@ export const Main = () => {
 				setNetStartTime
 			}}
 		>
-			<div className="cover" style={{ top: 0, left: 0, height: canvas.yOffset }}></div>
-			<div
-				className="canvas"
-				style={{
-					top: canvas.yOffset,
-					left: canvas.xOffset,
-					width: canvas.width,
-					height: canvas.height,
-					backgroundColor:
-						gameMode.name === GameMode.Shrouded && screen === "play"
-							? Color.Black
-							: isDarkMode
-								? Color.DarkBlue
-								: Color.White,
-					color: isDarkMode ? Color.White : Color.Black
-				}}
-			>
-				<Screen screen={screen} />
-			</div>
-			<div
-				className="cover"
-				style={{ top: canvas.yOffset + canvas.height, left: 0, height: canvas.yOffset }}
-			></div>
+			<Screen />
 		</AppContext.Provider>
 	);
 };

@@ -1,25 +1,13 @@
 import { Brick } from "@components";
-import { Color, GameMode } from "@constants";
-import { useAppContext } from "@hooks";
+import { GameMode } from "@constants";
+import { useAppContext, useStyles } from "@hooks";
 
 export const GameObject = () => {
-	const { isDarkMode, gameMode } = useAppContext();
+	const { gameMode } = useAppContext();
+	const { styles } = useStyles();
 
 	return (
-		<div
-			className="game-object-container"
-			style={{
-				width: "100%",
-				height: "100%",
-				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
-				background:
-					gameMode.name === GameMode.Shrouded
-						? isDarkMode
-							? `radial-gradient(circle, ${Color.DarkBlue} 50%, rgba(0,0,0,1) 65%)`
-							: `radial-gradient(circle, ${Color.White} 50%, rgba(0,0,0,1) 65%)`
-						: ""
-			}}
-		>
+		<div className="game-object-container" style={styles.gameObjectContainer}>
 			<div id="wall1-left" className="wall"></div>
 			<div id="wall1-right" className="wall"></div>
 			<div id="wall2-left" className="wall"></div>
@@ -28,8 +16,7 @@ export const GameObject = () => {
 			<div id="block2" className="block"></div>
 			<div id="block3" className="block"></div>
 			<div id="block4" className="block"></div>
-
-			<Brick id="brick" style={{ backgroundColor: isDarkMode ? Color.White : Color.Black }} />
+			<Brick id="brick" style={styles.brick} />
 			{gameMode.name === GameMode.Gotcha && (
 				<>
 					<Brick className="gotcha-brick" />
