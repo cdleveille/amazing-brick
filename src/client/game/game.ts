@@ -1,5 +1,6 @@
 import { GameMode } from "@constants";
-import { Brick, isRectangleIntersectingDiamond, now, Obstacle } from "@game";
+import { Brick, Obstacle } from "@game";
+import { executeOnClass, isRectangleIntersectingDiamond, now } from "@util";
 
 import type { TAppContext, TCanvas, TJumpDirection, TGotchaBrick } from "@types";
 
@@ -23,7 +24,7 @@ export class Game {
 		this.brick = new Brick(this);
 		this.obstacle = new Obstacle(this);
 		this.gravity = 1500 * this.canvas.scaleRatio;
-		if (this.ctx.gameMode.name === GameMode.Gotcha) {
+		if (this.ctx.isGameMode(GameMode.Gotcha)) {
 			this.gotchaBricks = Array.from(document.getElementsByClassName("gotcha-brick")).map((ele, i) => {
 				return {
 					x: this.generateRandomGotchaBrickX(),
@@ -41,7 +42,7 @@ export class Game {
 	start() {
 		this.ctx.setScore(0);
 		this.stopGameLoop = false;
-		document.getElementsByClassName("canvas").item(0)?.classList.remove("shake");
+		executeOnClass("canvas", ele => ele.classList.remove("shake"));
 		let current: number,
 			last = now(),
 			delta: number;
@@ -84,7 +85,7 @@ export class Game {
 		this.gravity = this.gravity * resizeRatio;
 		this.brick.resize(resizeRatio);
 		this.obstacle.resize(resizeRatio);
-		if (this.ctx.gameMode.name === GameMode.Gotcha) {
+		if (this.ctx.isGameMode(GameMode.Gotcha)) {
 			for (const gotchaBrick of this.gotchaBricks) {
 				gotchaBrick.x = gotchaBrick.x * resizeRatio;
 				gotchaBrick.y = gotchaBrick.y * resizeRatio;
@@ -168,7 +169,7 @@ export class Game {
 			}
 		}
 
-		if (this.ctx.gameMode.name === GameMode.Gotcha && !this.isGameOver) {
+		if (this.ctx.isGameMode(GameMode.Gotcha) && !this.isGameOver) {
 			const gotchaBrickDiagonalWidth = (this.gotchaBrickWidth ** 2 * 2) ** 0.5;
 			for (const gotchaBrick of this.gotchaBricks) {
 				const isColliding = isRectangleIntersectingDiamond(
@@ -193,7 +194,7 @@ export class Game {
 	crash() {
 		this.brick.ele.classList.add("spin");
 		this.isGameOver = true;
-		document.getElementsByClassName("canvas").item(0)?.classList.add("shake");
+		executeOnClass("canvas", ele => ele.classList.add("shake"));
 	}
 
 	adjustGotchaBrickPosition() {

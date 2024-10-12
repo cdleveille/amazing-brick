@@ -7,9 +7,22 @@ import {
 	PLAYER_ID_LOCAL_STORAGE_KEY
 } from "@constants";
 import { useAppContext, useLocalStorage } from "@hooks";
+import { executeOnClass } from "@util";
 
 export const useSync = () => {
-	const { canvas, player_id, game, isPaused, isPausedAtStart, score, screen, isDarkMode, gameMode } = useAppContext();
+	const {
+		canvas,
+		player_id,
+		game,
+		isPaused,
+		isPausedAtStart,
+		score,
+		screen,
+		isScreen,
+		isDarkMode,
+		gameMode,
+		isGameMode
+	} = useAppContext();
 
 	const { setLocalStorageItem } = useLocalStorage();
 
@@ -44,15 +57,15 @@ export const useSync = () => {
 
 	useEffect(() => {
 		setLocalStorageItem(GAME_MODE_LOCAL_STORAGE_KEY, gameMode);
-		if (gameMode.name === GameMode.Insanity) {
-			document.getElementsByClassName("game-mode-select").item(0)?.classList.add("shake-hard");
+		if (isGameMode(GameMode.Insanity)) {
+			executeOnClass("game-mode-select", ele => ele.classList.add("shake-hard"));
 		} else {
-			document.getElementsByClassName("game-mode-select").item(0)?.classList.remove("shake-hard");
+			executeOnClass("game-mode-select", ele => ele.classList.remove("shake-hard"));
 		}
 	}, [gameMode]);
 
 	useEffect(() => {
-		if (!game || screen === "play") return;
+		if (!game || isScreen("play")) return;
 		game.stopGameLoop = true;
 	}, [screen]);
 };

@@ -35,6 +35,7 @@ export type TAppContext = {
 	setGame: Dispatch<SetStateAction<Game | undefined>>;
 	screen: TScreen;
 	setScreen: Dispatch<SetStateAction<TScreen>>;
+	isScreen: (s: TScreen) => boolean;
 	canvas: TCanvas;
 	score: number;
 	setScore: Dispatch<SetStateAction<number>>;
@@ -47,6 +48,7 @@ export type TAppContext = {
 	setIsDarkMode: Dispatch<SetStateAction<boolean>>;
 	gameMode: TGameMode;
 	setGameMode: Dispatch<SetStateAction<TGameMode>>;
+	isGameMode: (gm: TGameModeName) => boolean;
 	startTime: number;
 	setStartTime: Dispatch<SetStateAction<number>>;
 	netStartTime: number;

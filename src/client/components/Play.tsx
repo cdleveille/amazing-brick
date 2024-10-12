@@ -2,12 +2,13 @@ import { useEffect } from "react";
 
 import { GameObject, Jump, Pause, Score, Timer } from "@components";
 import { GameMode } from "@constants";
-import { assertGetElementById, Game } from "@game";
+import { Game } from "@game";
 import { useAppContext } from "@hooks";
+import { assertGetElementById, executeOnClass } from "@util";
 
 export const Play = () => {
 	const ctx = useAppContext();
-	const { setGame, setIsPaused, isPausedAtStart, setIsPausedAtStart, gameMode } = ctx;
+	const { setGame, setIsPaused, isPausedAtStart, setIsPausedAtStart, isGameMode } = ctx;
 
 	useEffect(() => {
 		const game = new Game(ctx);
@@ -16,9 +17,8 @@ export const Play = () => {
 		setIsPaused(false);
 		setIsPausedAtStart(true);
 
-		if (gameMode.name === GameMode.Shrouded) {
-			document.getElementsByClassName("game-object-container").item(0)?.classList.add("clip-path");
-		}
+		if (isGameMode(GameMode.Shrouded))
+			executeOnClass("game-object-container", ele => ele.classList.add("clip-path"));
 
 		return initInputEventListeners(game);
 	}, []);
@@ -82,6 +82,6 @@ const initInputEventListeners = (game: Game) => {
 		document.removeEventListener("touchend", onTouchEnd);
 		document.removeEventListener("mousemove", onMouseMove);
 
-		document.getElementsByClassName("game-object-container").item(0)?.classList.remove("clip-path");
+		executeOnClass("game-object-container", ele => ele.classList.remove("clip-path"));
 	};
 };

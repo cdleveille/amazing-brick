@@ -2,10 +2,11 @@ import { useMemo, useState } from "react";
 
 import { Screen } from "@components";
 import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
-import { Game, gameModes } from "@game";
+import { Game } from "@game";
 import { AppContext, useLocalStorage, useResize } from "@hooks";
+import { gameModes } from "@util";
 
-import type { TCanvas, TGameMode, TScreen } from "@types";
+import type { TCanvas, TGameMode, TGameModeName, TScreen } from "@types";
 
 export const Main = () => {
 	const { getLocalStorageItem } = useLocalStorage();
@@ -28,6 +29,10 @@ export const Main = () => {
 		[]
 	);
 
+	const isScreen = (s: TScreen) => screen === s;
+
+	const isGameMode = (gm: TGameModeName) => gameMode.name === gm;
+
 	useResize(setCanvas);
 
 	if (!canvas) return null;
@@ -39,6 +44,7 @@ export const Main = () => {
 				setGame,
 				screen,
 				setScreen,
+				isScreen,
 				canvas,
 				score,
 				setScore,
@@ -51,6 +57,7 @@ export const Main = () => {
 				setIsDarkMode,
 				gameMode,
 				setGameMode,
+				isGameMode,
 				startTime,
 				setStartTime,
 				netStartTime,

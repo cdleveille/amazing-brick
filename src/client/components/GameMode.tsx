@@ -1,7 +1,6 @@
 import { MouseEvent, useState } from "react";
 
 import { Color } from "@constants";
-import { gameModes } from "@game";
 import { useAppContext } from "@hooks";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -9,18 +8,9 @@ import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
+import { gameModes } from "@util";
 
 import type { TGameMode } from "@types";
-
-const getNextGameMode = (gameMode: TGameMode) => {
-	const nextIndex = gameModes.findIndex(mode => mode.name === gameMode.name) + 1;
-	return gameModes[nextIndex % gameModes.length];
-};
-
-const getPreviousGameMode = (gameMode: TGameMode) => {
-	const previousIndex = gameModes.findIndex(mode => mode.name === gameMode.name) - 1;
-	return gameModes[(previousIndex + gameModes.length) % gameModes.length];
-};
 
 const StyledMenu = styled(
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -98,6 +88,16 @@ export const GameModeMenu = ({
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
+	};
+
+	const getNextGameMode = (gameMode: TGameMode) => {
+		const nextIndex = gameModes.findIndex(mode => mode.name === gameMode.name) + 1;
+		return gameModes[nextIndex % gameModes.length];
+	};
+
+	const getPreviousGameMode = (gameMode: TGameMode) => {
+		const previousIndex = gameModes.findIndex(mode => mode.name === gameMode.name) - 1;
+		return gameModes[(previousIndex + gameModes.length) % gameModes.length];
 	};
 
 	return (

@@ -4,7 +4,7 @@ import { useAppContext, useStyles, useSync } from "@hooks";
 import type { TScreen } from "@types";
 
 export const Screen = () => {
-	const { screen } = useAppContext();
+	const { screen, isScreen } = useAppContext();
 	const { styles } = useStyles();
 	useSync();
 
@@ -12,7 +12,7 @@ export const Screen = () => {
 		<>
 			<div className="cover" style={styles.coverTop}></div>
 			<div className="canvas" style={styles.canvas}>
-				{screen !== "play" && <DarkMode />}
+				{!isScreen("play") && <DarkMode />}
 				{getScreen(screen)}
 			</div>
 			<div className="cover" style={styles.coverBottom}></div>

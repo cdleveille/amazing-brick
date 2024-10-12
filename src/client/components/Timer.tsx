@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 import { GameMode } from "@constants";
-import { now } from "@game";
 import { useAppContext, useStyles } from "@hooks";
 import TimerRoundedIcon from "@mui/icons-material/TimerRounded";
+import { now } from "@util";
 
 const INITIAL_SEC = 10;
 

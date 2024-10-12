@@ -3,7 +3,7 @@ import { GameMode } from "@constants";
 import { useAppContext, useStyles } from "@hooks";
 
 export const GameObject = () => {
-	const { gameMode } = useAppContext();
+	const { isGameMode } = useAppContext();
 	const { styles } = useStyles();
 
 	return (
@@ -17,7 +17,7 @@ export const GameObject = () => {
 			<div id="block3" className="block"></div>
 			<div id="block4" className="block"></div>
 			<Brick id="brick" style={styles.brick} />
-			{gameMode.name === GameMode.Gotcha && (
+			{isGameMode(GameMode.Gotcha) && (
 				<>
 					<Brick className="gotcha-brick" />
 					<Brick className="gotcha-brick" />

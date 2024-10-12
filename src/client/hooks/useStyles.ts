@@ -4,7 +4,7 @@ import { Color, GameMode } from "@constants";
 import { useAppContext } from "@hooks";
 
 export const useStyles = () => {
-	const { canvas, screen, isDarkMode, gameMode, isPaused } = useAppContext();
+	const { canvas, screen, isDarkMode, gameMode, isGameMode, isPaused } = useAppContext();
 	const { scaleRatio } = canvas;
 
 	const styles = useMemo(() => {
@@ -15,7 +15,7 @@ export const useStyles = () => {
 				width: canvas.width,
 				height: canvas.height,
 				backgroundColor:
-					gameMode.name === GameMode.Shrouded && screen === "play"
+					isGameMode(GameMode.Shrouded) && screen === "play"
 						? Color.Black
 						: isDarkMode
 							? Color.DarkBlue
@@ -70,15 +70,15 @@ export const useStyles = () => {
 			pauseBtnOuter: {
 				width: `${44 * scaleRatio}px`,
 				height: `${44 * scaleRatio}px`,
-				border: `${1 * scaleRatio}px solid ${isDarkMode || gameMode.name === GameMode.Shrouded ? Color.White : Color.Black}`,
+				border: `${1 * scaleRatio}px solid ${isDarkMode || isGameMode(GameMode.Shrouded) ? Color.White : Color.Black}`,
 				margin: `${14 * scaleRatio}px`,
-				boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode || gameMode.name === GameMode.Shrouded ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`
+				boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode || isGameMode(GameMode.Shrouded) ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`
 			} as CSSProperties,
 			pauseBtnInner: {
 				width: `${12 * scaleRatio}px`,
 				height: `${18 * scaleRatio}px`,
-				borderLeft: `${1 * scaleRatio}px solid ${isDarkMode || gameMode.name === GameMode.Shrouded ? Color.White : Color.Black}`,
-				borderRight: `${1 * scaleRatio}px solid ${isDarkMode || gameMode.name === GameMode.Shrouded ? Color.White : Color.Black}`
+				borderLeft: `${1 * scaleRatio}px solid ${isDarkMode || isGameMode(GameMode.Shrouded) ? Color.White : Color.Black}`,
+				borderRight: `${1 * scaleRatio}px solid ${isDarkMode || isGameMode(GameMode.Shrouded) ? Color.White : Color.Black}`
 			} as CSSProperties,
 			jumpContainer: {
 				display: "flex",
@@ -177,7 +177,7 @@ export const useStyles = () => {
 			score: {
 				fontSize: `${40 * scaleRatio}px`,
 				margin: `${8 * scaleRatio}px ${16 * scaleRatio}px`,
-				color: isDarkMode || gameMode.name === GameMode.Shrouded ? Color.White : Color.Black
+				color: isDarkMode || isGameMode(GameMode.Shrouded) ? Color.White : Color.Black
 			} as CSSProperties,
 			darkModeBtn: {
 				top: 0,
@@ -189,12 +189,11 @@ export const useStyles = () => {
 				width: "100%",
 				height: "100%",
 				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
-				background:
-					gameMode.name === GameMode.Shrouded
-						? isDarkMode
-							? `radial-gradient(circle, ${Color.DarkBlue} 50%, rgba(0,0,0,1) 65%)`
-							: `radial-gradient(circle, ${Color.White} 50%, rgba(0,0,0,1) 65%)`
-						: ""
+				background: isGameMode(GameMode.Shrouded)
+					? isDarkMode
+						? `radial-gradient(circle, ${Color.DarkBlue} 50%, rgba(0,0,0,1) 65%)`
+						: `radial-gradient(circle, ${Color.White} 50%, rgba(0,0,0,1) 65%)`
+					: ""
 			} as CSSProperties,
 			brick: {
 				backgroundColor: isDarkMode ? Color.White : Color.Black
