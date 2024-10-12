@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, Text } from "@components";
+import { Button, Offline, Text } from "@components";
 import { Color } from "@constants";
 import { useApi, useAppContext, useIsOffline, useStyles } from "@hooks";
 import { Textarea } from "@mui/joy";
@@ -17,18 +17,7 @@ export const Rate = () => {
 
 	const isSubmitDisabled = typeof isThumbsUp !== "boolean" || comments.trim() === "";
 
-	if (isOffline)
-		return (
-			<div className="scores-container" style={styles.rateOfflineContainerOuter}>
-				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
-					<Text size={26}>HOME</Text>
-				</Button>
-				<div className="blink" style={styles.rateOfflineContainerInner}>
-					<Text size={28}>OFFLINE</Text>
-					<Text size={20}>Internet connection required to submit rating</Text>
-				</div>
-			</div>
-		);
+	if (isOffline) return <Offline message="Internet connection required to submit rating" />;
 
 	const placeholder =
 		isThumbsUp === true

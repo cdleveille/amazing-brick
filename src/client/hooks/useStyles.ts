@@ -100,17 +100,6 @@ export const useStyles = () => {
 				marginTop: `${-90 * scaleRatio}px`,
 				width: `${250 * scaleRatio}px`
 			} as CSSProperties,
-			rateOfflineContainerOuter: {
-				rowGap: `${36 * scaleRatio}px`,
-				marginTop: `${36 * scaleRatio}px`
-			} as CSSProperties,
-			rateOfflineContainerInner: {
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
-				fontFamily: "Roboto-Regular",
-				rowGap: `${16 * scaleRatio}px`
-			} as CSSProperties,
 			rateContainer: {
 				rowGap: `${64 * scaleRatio}px`
 			} as CSSProperties,
@@ -145,6 +134,13 @@ export const useStyles = () => {
 			rateThumbSvg: {
 				width: `${120 * scaleRatio}px`,
 				height: `${120 * scaleRatio}px`
+			} as CSSProperties,
+			offline: {
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+				fontFamily: "Roboto-Regular",
+				rowGap: `${16 * scaleRatio}px`
 			} as CSSProperties,
 			thanksContainer: {
 				display: "flex",
@@ -197,7 +193,40 @@ export const useStyles = () => {
 			} as CSSProperties,
 			brick: {
 				backgroundColor: isDarkMode ? Color.White : Color.Black
-			} as CSSProperties
+			} as CSSProperties,
+			scoresContainer: {
+				rowGap: `${28 * scaleRatio}px`,
+				marginTop: `${28 * scaleRatio}px`
+			} as CSSProperties,
+			scoresBox: {
+				border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
+				borderRadius: `${32 * scaleRatio}px`,
+				padding: `${48 * scaleRatio}px`,
+				columnGap: `${54 * scaleRatio}px`,
+				boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`,
+				width: "85%"
+			} as CSSProperties,
+			scoresBoxLabel: {
+				fontSize: `${24 * scaleRatio}px`,
+				textAlign: "center"
+			} as CSSProperties,
+			scoresBoxValue: {
+				fontSize: `${48 * scaleRatio}px`
+			} as CSSProperties,
+			scoresTopTenContainer: {
+				marginTop: `${16 * scaleRatio}px`
+			} as CSSProperties,
+			scoresTopTenItem: (index: number) =>
+				({
+					backgroundColor: index % 2 === 0 ? (isDarkMode ? Color.DarkGray : Color.LightGray) : "transparent",
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "center",
+					alignItems: "center",
+					columnGap: `${16 * scaleRatio}px`,
+					width: "100%",
+					transition: "0.2s ease-in-out"
+				}) as CSSProperties
 		};
 	}, [canvas, screen, isDarkMode, gameMode, scaleRatio, isPaused]);
 

@@ -173,6 +173,7 @@ export const GameModeMenu = ({
 						}}
 						disableRipple
 						key={mode.name}
+						autoFocus={mode.name === value.name}
 					>
 						{mode.name}
 					</MenuItem>

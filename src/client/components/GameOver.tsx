@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { Button, Text } from "@components";
 import { Color } from "@constants";
-import { useApi, useAppContext, useIsOffline, useSocket } from "@hooks";
+import { useApi, useAppContext, useIsOffline, useSocket, useStyles } from "@hooks";
 
 export const GameOver = () => {
 	const {
@@ -20,6 +20,8 @@ export const GameOver = () => {
 	const { socket } = useSocket();
 
 	const { isOffline } = useIsOffline();
+
+	const { styles } = useStyles();
 
 	const { data, mutate: submitScore } = useSubmitScore({
 		player_id,
@@ -42,16 +44,7 @@ export const GameOver = () => {
 				>
 					GAME OVER
 				</h1>
-				<div
-					className="blink"
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-						fontFamily: "Roboto-Regular",
-						rowGap: `${16 * scaleRatio}px`
-					}}
-				>
+				<div className="blink" style={styles.offline}>
 					<Text size={28}>OFFLINE</Text>
 					<Text size={20} style={{ width: "70%", textAlign: "center" }}>
 						Internet connection required to submit and view high score

@@ -268,6 +268,15 @@ button:focus {
 	border: none;
 }
 
+.offline-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	font-family: "Roboto-Thin";
+	font-weight: bold;
+}
+
 .scores-container {
 	display: flex;
 	flex-direction: column;

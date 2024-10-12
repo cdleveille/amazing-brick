@@ -1,18 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { Button, GameModeMenu, Text } from "@components";
+import { Button, GameModeMenu, Offline, Text } from "@components";
 import { Color, GameMode, SocketEvent } from "@constants";
-import { useApi, useAppContext, useIsOffline, useSocket } from "@hooks";
+import { useApi, useAppContext, useIsOffline, useSocket, useStyles } from "@hooks";
 import { TGameMode, THighScoresRes } from "@types";
 
 export const Scores = () => {
-	const {
-		canvas: { scaleRatio },
-		player_id,
-		setScreen,
-		isDarkMode,
-		gameMode
-	} = useAppContext();
+	const { player_id, setScreen, gameMode } = useAppContext();
 
 	const [selectedGameMode, setSelectedGameMode] = useState(gameMode);
 	const [highScores, setHighScores] = useState<THighScoresRes>();
@@ -23,6 +17,8 @@ export const Scores = () => {
 
 	const { isOffline } = useIsOffline();
 
+	const { styles } = useStyles();
+
 	const {
 		data: playerHighScore = {
 			standardScore: 0,
@@ -30,12 +26,9 @@ export const Scores = () => {
 			shroudedScore: 0,
 			gotchaScore: 0,
 			insanityScore: 0
-		},
-		failureCount: getPlayerHighScoreFailureCount
+		}
 	} = getPlayerHighScore(player_id);
-	const { data: fetchedHighScores, failureCount: getHighScoresFailureCount } = getHighScores();
-
-	const failureCount = getPlayerHighScoreFailureCount + getHighScoresFailureCount;
+	const { data: fetchedHighScores } = getHighScores();
 
 	useEffect(() => {
 		const onNewScore = (scores: THighScoresRes) => setHighScores(scores);
@@ -85,39 +78,12 @@ export const Scores = () => {
 		}
 	}, [selectedGameMode, highScores]);
 
-	if (isOffline && !highScores && failureCount > 0)
-		return (
-			<div
-				className="scores-container"
-				style={{ rowGap: `${28 * scaleRatio}px`, marginTop: `${28 * scaleRatio}px` }}
-			>
-				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
-					<Text size={26}>HOME</Text>
-				</Button>
-				<GameModeMenu
-					value={selectedGameMode}
-					onSelectOption={(gameMode: TGameMode) => setSelectedGameMode(gameMode)}
-				/>
-				<div
-					className="blink"
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-						fontFamily: "Roboto-Regular",
-						rowGap: `${16 * scaleRatio}px`
-					}}
-				>
-					<Text size={28}>OFFLINE</Text>
-					<Text size={20}>Internet connection required to view scores</Text>
-				</div>
-			</div>
-		);
+	if (isOffline) return <Offline message="Internet connection required to view scores" />;
 
 	if (!selectedGameMode || !highScores) return null;
 
 	return (
-		<div className="scores-container" style={{ rowGap: `${28 * scaleRatio}px`, marginTop: `${28 * scaleRatio}px` }}>
+		<div className="scores-container" style={styles.scoresContainer}>
 			<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
 				<Text size={26}>HOME</Text>
 			</Button>
@@ -125,30 +91,20 @@ export const Scores = () => {
 				value={selectedGameMode}
 				onSelectOption={(gameMode: TGameMode) => setSelectedGameMode(gameMode)}
 			/>
-			<div
-				className="player-high-score-box"
-				style={{
-					border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
-					borderRadius: `${32 * scaleRatio}px`,
-					padding: `${48 * scaleRatio}px`,
-					columnGap: `${54 * scaleRatio}px`,
-					boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`,
-					width: "85%"
-				}}
-			>
-				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
+			<div className="player-high-score-box" style={styles.scoresBox}>
+				<div style={styles.scoresBoxLabel}>
 					<div>Best</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>{selectedGameModePlayerHighScore}</div>
+					<div style={styles.scoresBoxValue}>{selectedGameModePlayerHighScore}</div>
 				</div>
-				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
+				<div style={styles.scoresBoxLabel}>
 					<div>Rank</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>
+					<div style={styles.scoresBoxValue}>
 						{getRank(selectedGameModePlayerHighScore, selectedGameModeHighScores ?? [])}
 					</div>
 				</div>
-				<div style={{ fontSize: `${24 * scaleRatio}px`, textAlign: "center" }}>
+				<div style={styles.scoresBoxLabel}>
 					<div>Top</div>
-					<div style={{ fontSize: `${48 * scaleRatio}px` }}>
+					<div style={styles.scoresBoxValue}>
 						{getPercentileRank(selectedGameModePlayerHighScore, selectedGameModeHighScores ?? [])}
 					</div>
 				</div>
@@ -156,29 +112,12 @@ export const Scores = () => {
 			{selectedGameModeHighScores?.length > 0 ? (
 				<div style={{ width: "85%", textAlign: "center" }}>
 					<Text size={36}>Top 10</Text>
-					<div style={{ marginTop: `${16 * scaleRatio}px` }}>
+					<div style={styles.scoresTopTenContainer}>
 						{selectedGameModeHighScores
 							?.sort((a, b) => b - a)
 							.slice(0, 10)
 							.map((score, index) => (
-								<div
-									key={index}
-									style={{
-										backgroundColor:
-											index % 2 === 0
-												? isDarkMode
-													? Color.DarkGray
-													: Color.LightGray
-												: "transparent",
-										display: "flex",
-										flexDirection: "row",
-										justifyContent: "center",
-										alignItems: "center",
-										columnGap: `${16 * scaleRatio}px`,
-										width: "100%",
-										transition: "0.2s ease-in-out"
-									}}
-								>
+								<div key={index} style={styles.scoresTopTenItem(index)}>
 									<Text size={28} style={{ transition: "unset !important" }}>
 										{score}
 									</Text>
