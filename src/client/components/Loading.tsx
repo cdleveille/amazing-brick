@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { Button, Text } from "@components";
+import { Button } from "@components";
 import { Color } from "@constants";
-import { useAppContext, useStyles } from "@hooks";
+import { useStyles } from "@hooks";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export const Loading = () => {
 	const [isShowLoadingIndicator, setIsShowLoadingIndicator] = useState(false);
-
-	const { setScreen } = useAppContext();
 
 	const { styles } = useStyles();
 
@@ -21,8 +19,8 @@ export const Loading = () => {
 
 	return (
 		<div style={styles.loadingContainer}>
-			<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
-				<Text size={26}>HOME</Text>
+			<Button screenTarget="home" backgroundColor={Color.Blue} autoFocus>
+				HOME
 			</Button>
 			<CircularProgress size={styles.loadingIndicator.size} sx={styles.loadingIndicator} />
 		</div>

@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 
-import { useAppContext } from "@hooks";
+import { Text } from "@components";
+import { useAppContext, useStyles } from "@hooks";
+
+import type { TScreen } from "@types";
 
 type ButtonProps = {
-	onClick: () => void;
 	backgroundColor: string;
-	className?: string;
+	screenTarget?: TScreen;
+	onClick?: () => void;
 	children?: React.ReactNode;
 	autoFocus?: boolean;
 	forceTouch?: boolean;
@@ -13,9 +16,9 @@ type ButtonProps = {
 };
 
 export const Button = ({
-	onClick,
 	backgroundColor,
-	className,
+	screenTarget,
+	onClick,
 	children,
 	autoFocus,
 	forceTouch,
@@ -23,33 +26,36 @@ export const Button = ({
 }: ButtonProps) => {
 	const [isClickable, setIsClickable] = useState(false);
 
-	const {
-		canvas: { scaleRatio }
-	} = useAppContext();
+	const { setScreen } = useAppContext();
+
+	const { styles } = useStyles();
 
 	useEffect(() => {
 		const timeout = setTimeout(() => setIsClickable(true), 100);
 		return () => clearTimeout(timeout);
 	}, []);
 
+	const handleClick = () => {
+		if (!isClickable) return;
+		if (screenTarget) setScreen(screenTarget);
+		onClick?.();
+	};
+
+	const handleTouch = () => {
+		if (!forceTouch) return;
+		handleClick();
+	};
+
 	return (
 		<button
-			className={`btn ${className}`}
-			style={{
-				backgroundColor: backgroundColor,
-				width: `${224 * scaleRatio}px`,
-				height: `${56 * scaleRatio}px`,
-				borderRadius: `${32 * scaleRatio}px`
-			}}
-			onClick={() => isClickable && onClick()}
+			className="btn"
+			style={styles.button(backgroundColor)}
+			onClick={handleClick}
 			autoFocus={autoFocus}
-			onTouchEnd={() => {
-				if (!forceTouch || !isClickable) return;
-				onClick();
-			}}
+			onTouchEnd={handleTouch}
 			disabled={disabled}
 		>
-			{children}
+			<Text size={26}>{children}</Text>
 		</button>
 	);
 };

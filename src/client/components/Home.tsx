@@ -5,7 +5,7 @@ import { useAppContext, useStyles } from "@hooks";
 import type { TGameMode } from "@types";
 
 export const Home = () => {
-	const { setScreen, gameMode, setGameMode } = useAppContext();
+	const { gameMode, setGameMode } = useAppContext();
 	const { styles } = useStyles();
 
 	return (
@@ -23,14 +23,14 @@ export const Home = () => {
 				</Text>
 			</div>
 			<div style={styles.homeButtonStack}>
-				<Button onClick={() => setScreen("play")} backgroundColor={Color.Green} autoFocus>
-					<Text size={26}>PLAY</Text>
+				<Button screenTarget="play" backgroundColor={Color.Green} autoFocus>
+					PLAY
 				</Button>
-				<Button onClick={() => setScreen("scores")} backgroundColor={Color.Blue}>
-					<Text size={26}>SCORES</Text>
+				<Button screenTarget="scores" backgroundColor={Color.Blue}>
+					SCORES
 				</Button>
-				<Button onClick={() => setScreen("rate")} backgroundColor={Color.Red}>
-					<Text size={26}>RATE</Text>
+				<Button screenTarget="rate" backgroundColor={Color.Red}>
+					RATE
 				</Button>
 			</div>
 		</div>

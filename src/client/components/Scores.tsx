@@ -8,7 +8,7 @@ import { socket } from "@utils";
 import type { TGameMode, THighScoresRes } from "@types";
 
 export const Scores = () => {
-	const { player_id, setScreen, gameMode } = useAppContext();
+	const { player_id, gameMode } = useAppContext();
 
 	const [selectedGameMode, setSelectedGameMode] = useState(gameMode);
 	const [highScores, setHighScores] = useState<THighScoresRes>();
@@ -84,8 +84,8 @@ export const Scores = () => {
 
 	return (
 		<div className="scores-container" style={styles.scoresContainer}>
-			<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
-				<Text size={26}>HOME</Text>
+			<Button screenTarget="home" backgroundColor={Color.Blue} autoFocus>
+				HOME
 			</Button>
 			<GameModeMenu
 				value={selectedGameMode}

@@ -105,7 +105,7 @@ button:focus {
 
 .btn:disabled {
 	transform: scale(1) !important;
-	opacity: 0.8 !important;
+	opacity: 0.5 !important;
 }
 
 .btn:disabled:hover {

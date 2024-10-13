@@ -10,7 +10,6 @@ export const GameOver = () => {
 	const {
 		canvas: { scaleRatio },
 		score,
-		setScreen,
 		player_id,
 		isDarkMode,
 		gameMode
@@ -69,11 +68,11 @@ export const GameOver = () => {
 					</div>
 				</div>
 				<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
-					<Button onClick={() => setScreen("play")} backgroundColor={Color.Green} autoFocus>
-						<Text size={26}>RETRY</Text>
+					<Button screenTarget="play" backgroundColor={Color.Green} autoFocus>
+						RETRY
 					</Button>
-					<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue}>
-						<Text size={26}>HOME</Text>
+					<Button screenTarget="home" backgroundColor={Color.Blue}>
+						HOME
 					</Button>
 				</div>
 			</div>
@@ -124,11 +123,11 @@ export const GameOver = () => {
 				</div>
 			</div>
 			<div style={{ display: "flex", flexDirection: "column", rowGap: `${32 * scaleRatio}px` }}>
-				<Button onClick={() => setScreen("play")} backgroundColor={Color.Green} autoFocus>
-					<Text size={26}>RETRY</Text>
+				<Button screenTarget="play" backgroundColor={Color.Green} autoFocus>
+					RETRY
 				</Button>
-				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue}>
-					<Text size={26}>HOME</Text>
+				<Button screenTarget="home" backgroundColor={Color.Blue}>
+					HOME
 				</Button>
 			</div>
 		</div>

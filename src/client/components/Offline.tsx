@@ -1,16 +1,15 @@
 import { Button, Text } from "@components";
 import { Color } from "@constants";
-import { useAppContext, useStyles } from "@hooks";
+import { useStyles } from "@hooks";
 
 export const Offline = ({ message, isHideHomeBtn }: { message: string; isHideHomeBtn?: boolean }) => {
-	const { setScreen } = useAppContext();
 	const { styles } = useStyles();
 
 	return (
 		<div className="offline-container" style={styles.scoresContainer}>
 			{!isHideHomeBtn && (
-				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue} autoFocus>
-					<Text size={26}>HOME</Text>
+				<Button screenTarget="home" backgroundColor={Color.Blue} autoFocus>
+					HOME
 				</Button>
 			)}
 			<div className="blink" style={styles.offline}>

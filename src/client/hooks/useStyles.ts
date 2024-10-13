@@ -151,6 +151,13 @@ export const useStyles = () => {
 				fontFamily: "Roboto-Thin",
 				fontWeight: "bolder"
 			} as CSSProperties,
+			button: (backgroundColor: string) =>
+				({
+					backgroundColor,
+					width: `${224 * scaleRatio}px`,
+					height: `${56 * scaleRatio}px`,
+					borderRadius: `${32 * scaleRatio}px`
+				}) as CSSProperties,
 			text: (size: number) => ({ fontSize: `${size * scaleRatio}px` }) as CSSProperties,
 			timerContainer: {
 				fontSize: `${40 * scaleRatio}px`,

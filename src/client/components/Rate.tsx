@@ -53,8 +53,8 @@ export const Rate = () => {
 				>
 					<Text size={26}>SUBMIT</Text>
 				</Button>
-				<Button onClick={() => setScreen("home")} backgroundColor={Color.Blue}>
-					<Text size={26}>BACK</Text>
+				<Button screenTarget="home" backgroundColor={Color.Blue}>
+					BACK
 				</Button>
 			</div>
 		</div>
