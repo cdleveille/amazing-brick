@@ -222,7 +222,19 @@ export const useStyles = () => {
 				width: "102%",
 				height: "102%",
 				zIndex: 500
-			} as CSSProperties
+			} as CSSProperties,
+			loadingContainer: {
+				marginTop: `${28 * scaleRatio}px`,
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "space-between",
+				alignItems: "center",
+				height: "50%"
+			} as CSSProperties,
+			loadingIndicator: {
+				color: isDarkMode ? Color.White : Color.Black,
+				size: `${100 * scaleRatio}px`
+			} as CSSProperties & { size: string }
 		};
 	}, [canvas, screen, isDarkMode, gameMode, scaleRatio, isPaused]);
 

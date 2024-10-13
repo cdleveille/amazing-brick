@@ -1,7 +1,7 @@
 import CryptoJS from "crypto-js";
 import { useEffect } from "react";
 
-import { Button, Text } from "@components";
+import { Button, Loading, Text } from "@components";
 import { Color } from "@constants";
 import { useApi, useAppContext, useIsOffline, useStyles } from "@hooks";
 import { socket } from "@utils";
@@ -79,7 +79,7 @@ export const GameOver = () => {
 			</div>
 		);
 
-	if (!data) return null;
+	if (!data) return <Loading />;
 
 	const { highScore, existingHighScore } = data;
 

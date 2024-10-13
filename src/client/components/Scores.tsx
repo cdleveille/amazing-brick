@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { Button, GameModeMenu, Offline, Text } from "@components";
+import { Button, GameModeMenu, Loading, Offline, Text } from "@components";
 import { Color, GameMode, SocketEvent } from "@constants";
 import { useApi, useAppContext, useIsOffline, useStyles } from "@hooks";
 import { socket } from "@utils";
@@ -80,7 +80,7 @@ export const Scores = () => {
 
 	if (isOffline) return <Offline message="Internet connection required to view scores" />;
 
-	if (!selectedGameMode || !highScores) return null;
+	if (!selectedGameMode || !highScores) return <Loading />;
 
 	return (
 		<div className="scores-container" style={styles.scoresContainer}>

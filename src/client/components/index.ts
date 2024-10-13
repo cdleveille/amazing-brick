@@ -7,6 +7,7 @@ export * from "./GameObject";
 export * from "./GameOver";
 export * from "./Home";
 export * from "./Jump";
+export * from "./Loading";
 export * from "./Offline";
 export * from "./Pause";
 export * from "./Play";
