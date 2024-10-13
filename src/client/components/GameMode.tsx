@@ -128,7 +128,8 @@ export const GameModeMenu = ({
 						style={{
 							borderLeft: `${6 * scaleRatio}px solid transparent`,
 							borderRight: `${6 * scaleRatio}px solid transparent`,
-							borderTop: `${10 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`
+							borderTop: `${10 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
+							rotate: open ? "180deg" : "0deg"
 						}}
 					></span>
 				}
@@ -143,6 +144,9 @@ export const GameModeMenu = ({
 					height: `${56 * scaleRatio}px`,
 					transition: "inherit",
 					":active": {
+						transform: "none"
+					},
+					":focus": {
 						transform: "none"
 					}
 				}}
