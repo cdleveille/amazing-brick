@@ -65,10 +65,6 @@ button:focus {
 	z-index: 10000;
 }
 
-.clip-path {
-	clip-path: circle(45%);
-}
-
 .home-container {
 	display: flex;
 	flex-direction: column;

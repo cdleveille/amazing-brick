@@ -4,7 +4,7 @@ import { GameObject, Jump, Pause, Score, Timer } from "@components";
 import { GameMode } from "@constants";
 import { Game } from "@game";
 import { useAppContext } from "@hooks";
-import { assertGetElementById, executeOnClass } from "@utils";
+import { assertGetElementById } from "@utils";
 
 export const Play = () => {
 	const ctx = useAppContext();
@@ -16,9 +16,6 @@ export const Play = () => {
 		setGame(game);
 		setIsPaused(false);
 		setIsPausedAtStart(true);
-
-		if (isGameMode(GameMode.Shrouded))
-			executeOnClass("game-object-container", ele => ele.classList.add("clip-path"));
 
 		return initInputEventListeners(game);
 	}, []);
@@ -81,7 +78,5 @@ const initInputEventListeners = (game: Game) => {
 		document.removeEventListener("touchstart", onTouchStart);
 		document.removeEventListener("touchend", onTouchEnd);
 		document.removeEventListener("mousemove", onMouseMove);
-
-		executeOnClass("game-object-container", ele => ele.classList.remove("clip-path"));
 	};
 };

@@ -14,12 +14,7 @@ export const useStyles = () => {
 				left: canvas.xOffset,
 				width: canvas.width,
 				height: canvas.height,
-				backgroundColor:
-					isGameMode(GameMode.Shrouded) && screen === "play"
-						? Color.Black
-						: isDarkMode
-							? Color.DarkBlue
-							: Color.White,
+				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
 				color: isDarkMode ? Color.White : Color.Black
 			} as CSSProperties,
 			coverTop: {
@@ -223,10 +218,10 @@ export const useStyles = () => {
 					transition: "0.2s ease-in-out"
 				}) as CSSProperties,
 			shroud: {
-				background: `radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,1) 65%)`,
-				width: "105%",
-				height: "105%",
-				zIndex: 2000
+				background: `radial-gradient(circle, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 65%)`,
+				width: "102%",
+				height: "102%",
+				zIndex: 500
 			} as CSSProperties
 		};
 	}, [canvas, screen, isDarkMode, gameMode, scaleRatio, isPaused]);
