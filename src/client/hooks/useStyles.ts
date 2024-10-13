@@ -259,7 +259,80 @@ export const useStyles = () => {
 			} as CSSProperties,
 			gameOverBoxValue: {
 				fontSize: `${48 * scaleRatio}px`
-			} as CSSProperties
+			} as CSSProperties,
+			gameModeContainer: {
+				display: "flex",
+				flexDirection: "row",
+				justifyContent: "center",
+				alignItems: "center",
+				columnGap: `${8 * scaleRatio}px`
+			} as CSSProperties,
+			gameModeArrowBtn: {
+				fontSize: `${36 * scaleRatio}px`,
+				color: isDarkMode ? Color.White : Color.Black
+			} as CSSProperties,
+			gameModeEndIcon: (open: boolean) =>
+				({
+					borderLeft: `${6 * scaleRatio}px solid transparent`,
+					borderRight: `${6 * scaleRatio}px solid transparent`,
+					borderTop: `${10 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
+					rotate: open ? "180deg" : "0deg"
+				}) as CSSProperties,
+			gameModeMenuBtn: {
+				fontFamily: "Roboto-Regular",
+				fontSize: `${20 * scaleRatio}px`,
+				padding: 0,
+				borderRadius: `${32 * scaleRatio}px`,
+				boxShadow: "none",
+				width: `${224 * scaleRatio}px`,
+				height: `${56 * scaleRatio}px`,
+				transition: "inherit",
+				":active": {
+					transform: "none"
+				},
+				":focus": {
+					transform: "none"
+				}
+			} as CSSProperties,
+			gameModeDropdown: {
+				"& .MuiPaper-root": {
+					marginTop: `${0 * scaleRatio}px`,
+					minWidth: `${180 * scaleRatio}px`,
+					color: isDarkMode ? Color.White : Color.Black,
+					border: `1px solid ${isDarkMode ? Color.DarkGray : Color.Gray}`,
+					overflow: "hidden",
+					"& .MuiMenu-list": {
+						padding: `${4 * scaleRatio}px 0`,
+						backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
+						overflow: "hidden"
+					},
+					"& .MuiMenuItem-root": {
+						fontSize: 20 * scaleRatio,
+						fontFamily: "Roboto-Regular",
+						padding: `${8 * scaleRatio}px ${8 * scaleRatio}px`,
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+						minHeight: `${48 * scaleRatio}px`,
+						"& .MuiSvgIcon-root": {
+							fontSize: 20 * scaleRatio,
+							color: isDarkMode ? Color.White : Color.Black,
+							backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
+							marginRight: `${8 * scaleRatio}px`,
+							padding: `${8 * scaleRatio}px ${8 * scaleRatio}px`
+						},
+						"&:active": {
+							backgroundColor: isDarkMode ? Color.DarkBlue : Color.White
+						},
+						"&:hover": {
+							backgroundColor: isDarkMode ? Color.DarkGray : Color.Gray
+						},
+						"&:focus": {
+							backgroundColor: isDarkMode ? Color.DarkGray : Color.Gray
+						}
+					}
+				} as CSSProperties
+			}
 		};
 	}, [canvas, screen, isDarkMode, gameMode, scaleRatio, isPaused]);
 
