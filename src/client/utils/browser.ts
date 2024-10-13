@@ -1,6 +1,4 @@
-export const now = () => {
-	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
-};
+export const now = () => window.performance?.now?.() ?? new Date().getTime();
 
 export const registerServiceWorker = async () => {
 	if (!navigator.serviceWorker) return;
@@ -20,9 +18,8 @@ export const executeOnClass = (className: string, callback: (ele: Element) => vo
 	}
 };
 
-export const setLocalStorageItem = (key: string, data: unknown) => {
+export const setLocalStorageItem = (key: string, data: unknown) =>
 	window.localStorage.setItem(key, JSON.stringify(data));
-};
 
 export const getLocalStorageItem = <T = unknown>(key: string) => {
 	const data = window.localStorage.getItem(key);
@@ -30,6 +27,4 @@ export const getLocalStorageItem = <T = unknown>(key: string) => {
 	return null;
 };
 
-export const removeLocalStorageItem = (key: string) => {
-	window.localStorage.removeItem(key);
-};
+export const removeLocalStorageItem = (key: string) => window.localStorage.removeItem(key);

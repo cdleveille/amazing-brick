@@ -6,27 +6,28 @@ import type { SocketEventName, TEncryptedScore, TRating, TScoreRes, THighScoresR
 
 const TIMEOUT_MS = 5000;
 
-type IReqParams<T = unknown> = {
+type TReqParams<T = unknown> = {
 	event: SocketEventName;
 	data?: unknown;
 	callback?: ((res: T) => void) | (() => void);
 };
 
 export const useApi = () => {
-	const to = ({ event, data, callback }: IReqParams) => {
+	const to = ({ event, data, callback }: TReqParams) => {
 		socket.emit(event, data);
 		callback?.(null);
 	};
 
-	const toAndFrom = async <T>({ event, data, callback }: IReqParams<T>) => {
+	const toAndFrom = async <T>({ event, data, callback }: TReqParams<T>) => {
 		return new Promise<T>((resolve, reject) => {
 			const timeout = setTimeout(() => reject(`Request timed out after ${TIMEOUT_MS}ms.`), TIMEOUT_MS);
-			socket.once(event, res => {
-				socket.off(event);
+			const onRes = (res: T) => {
+				socket.off(event, onRes);
 				clearTimeout(timeout);
 				callback?.(res);
 				resolve(res);
-			});
+			};
+			socket.once(event, onRes);
 			to({ event, data });
 		});
 	};
