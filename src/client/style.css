@@ -285,6 +285,7 @@ button:focus {
 .player-high-score-box {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-evenly;
 	font-family: "Roboto-Thin";
 	font-weight: bold;
 }

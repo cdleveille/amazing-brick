@@ -198,10 +198,9 @@ export const useStyles = () => {
 			scoresBox: {
 				border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
 				borderRadius: `${32 * scaleRatio}px`,
-				padding: `${48 * scaleRatio}px`,
-				columnGap: `${54 * scaleRatio}px`,
+				padding: `${48 * scaleRatio}px 0`,
 				boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`,
-				width: "85%"
+				width: "90%"
 			} as CSSProperties,
 			scoresBoxLabel: {
 				fontSize: `${24 * scaleRatio}px`,
