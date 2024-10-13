@@ -3,7 +3,8 @@ import { useEffect } from "react";
 
 import { Button, Text } from "@components";
 import { Color } from "@constants";
-import { useApi, useAppContext, useIsOffline, useSocket, useStyles } from "@hooks";
+import { useApi, useAppContext, useIsOffline, useStyles } from "@hooks";
+import { socket } from "@utils";
 
 export const GameOver = () => {
 	const {
@@ -16,8 +17,6 @@ export const GameOver = () => {
 	} = useAppContext();
 
 	const { useSubmitScore } = useApi();
-
-	const { socket } = useSocket();
 
 	const { isOffline } = useIsOffline();
 

@@ -6,8 +6,8 @@ import {
 	IS_DARK_MODE_LOCAL_STORAGE_KEY,
 	PLAYER_ID_LOCAL_STORAGE_KEY
 } from "@constants";
-import { useAppContext, useLocalStorage } from "@hooks";
-import { executeOnClass } from "@utils";
+import { useAppContext } from "@hooks";
+import { executeOnClass, setLocalStorageItem } from "@utils";
 
 export const useSync = () => {
 	const {
@@ -23,8 +23,6 @@ export const useSync = () => {
 		gameMode,
 		isGameMode
 	} = useAppContext();
-
-	const { setLocalStorageItem } = useLocalStorage();
 
 	useEffect(() => {
 		if (!game) return;

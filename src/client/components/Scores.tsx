@@ -2,8 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 
 import { Button, GameModeMenu, Offline, Text } from "@components";
 import { Color, GameMode, SocketEvent } from "@constants";
-import { useApi, useAppContext, useIsOffline, useSocket, useStyles } from "@hooks";
-import { TGameMode, THighScoresRes } from "@types";
+import { useApi, useAppContext, useIsOffline, useStyles } from "@hooks";
+import { socket } from "@utils";
+
+import type { TGameMode, THighScoresRes } from "@types";
 
 export const Scores = () => {
 	const { player_id, setScreen, gameMode } = useAppContext();
@@ -12,8 +14,6 @@ export const Scores = () => {
 	const [highScores, setHighScores] = useState<THighScoresRes>();
 
 	const { getPlayerHighScore, getHighScores } = useApi();
-
-	const { socket } = useSocket();
 
 	const { isOffline } = useIsOffline();
 

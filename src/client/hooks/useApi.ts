@@ -1,6 +1,6 @@
 import { SocketEvent } from "@constants";
-import { useSocket } from "@hooks";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { socket } from "@utils";
 
 import type { SocketEventName, TEncryptedScore, TRating, TScoreRes, THighScoresRes, TPlayerHighScoreRes } from "@types";
 
@@ -13,8 +13,6 @@ interface IReqParams<T = unknown> {
 }
 
 export const useApi = () => {
-	const { socket } = useSocket();
-
 	const to = ({ event, data, callback }: IReqParams) => {
 		socket.emit(event, data);
 		callback?.(null);

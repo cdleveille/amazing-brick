@@ -5,8 +5,8 @@ import "./style.css";
 import { createRoot } from "react-dom/client";
 
 import { Main } from "@components";
-import { useConfig } from "@hooks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Config } from "@utils";
 
 const registerServiceWorker = async () => {
 	if (!navigator.serviceWorker) return;
@@ -14,10 +14,7 @@ const registerServiceWorker = async () => {
 };
 
 window.addEventListener("load", async () => {
-	const {
-		Config: { IS_PROD }
-	} = useConfig();
-	if (IS_PROD) await registerServiceWorker();
+	if (Config.IS_PROD) await registerServiceWorker();
 });
 
 const rootDiv = document.createElement("div");

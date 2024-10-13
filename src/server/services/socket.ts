@@ -8,6 +8,7 @@ import { Rating, Score } from "@models";
 import { THighScoresRes } from "../types/index";
 
 import type { TEncryptedScore, TScoreRes, TRating, TGameModeName, TPlayerHighScoreRes, TScore } from "@types";
+
 export const initSocket = (httpServer: HttpServer) => {
 	const io = new Server(httpServer);
 

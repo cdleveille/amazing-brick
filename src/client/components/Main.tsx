@@ -4,14 +4,12 @@ import { Screen } from "@components";
 import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
 import { AppContext } from "@contexts";
 import { Game } from "@game";
-import { useLocalStorage, useResize } from "@hooks";
-import { gameModes } from "@utils";
+import { useResize } from "@hooks";
+import { gameModes, getLocalStorageItem } from "@utils";
 
 import type { TCanvas, TGameMode, TGameModeName, TScreen } from "@types";
 
 export const Main = () => {
-	const { getLocalStorageItem } = useLocalStorage();
-
 	const [game, setGame] = useState<Game>();
 	const [screen, setScreen] = useState<TScreen>("home");
 	const [canvas, setCanvas] = useState<TCanvas>();
