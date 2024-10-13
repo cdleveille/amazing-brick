@@ -183,11 +183,6 @@ export const useStyles = () => {
 				padding: `${8 * scaleRatio}px`
 			} as CSSProperties,
 			darkModeBtnIcon: (color: string) => ({ color, fontSize: `${40 * scaleRatio}px` }) as CSSProperties,
-			gameObjectContainer: {
-				width: "100%",
-				height: "100%",
-				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White
-			} as CSSProperties,
 			brick: {
 				backgroundColor: isDarkMode ? Color.White : Color.Black
 			} as CSSProperties,

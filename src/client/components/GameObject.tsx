@@ -7,7 +7,7 @@ export const GameObject = () => {
 	const { styles } = useStyles();
 
 	return (
-		<div className="game-object-container" style={styles.gameObjectContainer}>
+		<>
 			<div id="wall1-left" className="wall"></div>
 			<div id="wall1-right" className="wall"></div>
 			<div id="wall2-left" className="wall"></div>
@@ -24,6 +24,6 @@ export const GameObject = () => {
 			)}
 			{isGameMode(GameMode.Shrouded) && <div className="absolute-center" style={styles.shroud}></div>}
 			<Brick id="brick" style={styles.brick} />
-		</div>
+		</>
 	);
 };

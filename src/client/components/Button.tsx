@@ -41,7 +41,7 @@ export const Button = ({
 		onClick?.();
 	};
 
-	const handleTouch = () => {
+	const handleTouchEnd = () => {
 		if (!forceTouch) return;
 		handleClick();
 	};
@@ -52,7 +52,7 @@ export const Button = ({
 			style={styles.button(backgroundColor)}
 			onClick={handleClick}
 			autoFocus={autoFocus}
-			onTouchEnd={handleTouch}
+			onTouchEnd={handleTouchEnd}
 			disabled={disabled}
 		>
 			<Text size={26}>{children}</Text>

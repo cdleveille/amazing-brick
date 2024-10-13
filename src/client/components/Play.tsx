@@ -4,7 +4,6 @@ import { GameObject, Jump, Pause, Score, Timer } from "@components";
 import { GameMode } from "@constants";
 import { Game } from "@game";
 import { useAppContext } from "@hooks";
-import { assertGetElementById } from "@utils";
 
 export const Play = () => {
 	const ctx = useAppContext();
@@ -21,7 +20,7 @@ export const Play = () => {
 	}, []);
 
 	return (
-		<div id="play-container" className="play-container">
+		<div className="play-container">
 			<div className="hud">
 				<Pause />
 				{isGameMode(GameMode.Sprint) && <Timer />}
@@ -37,16 +36,14 @@ const initInputEventListeners = (game: Game) => {
 	const LEFT_KEYS = ["ArrowLeft", "a"];
 	const RIGHT_KEYS = ["ArrowRight", "d"];
 
-	const playContainer = assertGetElementById("play-container");
-
 	const onKeyDown = (e: KeyboardEvent) => {
 		if (e.repeat) return;
 		if (LEFT_KEYS.includes(e.key)) {
-			playContainer.style.cursor = "none";
+			document.body.style.cursor = "none";
 			return game.jump("left");
 		}
 		if (RIGHT_KEYS.includes(e.key)) {
-			playContainer.style.cursor = "none";
+			document.body.style.cursor = "none";
 			return game.jump("right");
 		}
 	};
@@ -57,7 +54,7 @@ const initInputEventListeners = (game: Game) => {
 			if (touch.clientX < window.innerWidth / 2) game.jump("left");
 			if (touch.clientX >= window.innerWidth / 2) game.jump("right");
 		}
-		playContainer.style.cursor = "none";
+		document.body.style.cursor = "none";
 	};
 
 	const onTouchEnd = (e: TouchEvent) => {
@@ -65,7 +62,7 @@ const initInputEventListeners = (game: Game) => {
 	};
 
 	const onMouseMove = () => {
-		playContainer.style.cursor = "auto";
+		document.body.style.cursor = "auto";
 	};
 
 	document.addEventListener("keydown", onKeyDown);
@@ -78,5 +75,6 @@ const initInputEventListeners = (game: Game) => {
 		document.removeEventListener("touchstart", onTouchStart);
 		document.removeEventListener("touchend", onTouchEnd);
 		document.removeEventListener("mousemove", onMouseMove);
+		document.body.style.cursor = "auto";
 	};
 };
