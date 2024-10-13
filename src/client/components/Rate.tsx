@@ -41,7 +41,7 @@ export const Rate = () => {
 				spellCheck={false}
 				autoComplete="off"
 			/>
-			<div style={styles.rateButtonStack}>
+			<div style={styles.buttonStack}>
 				<Button
 					disabled={isSubmitDisabled}
 					onClick={() => {

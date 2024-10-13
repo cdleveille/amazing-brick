@@ -196,7 +196,7 @@ button:focus {
 	position: absolute;
 }
 
-.game-over {
+.game-over-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;

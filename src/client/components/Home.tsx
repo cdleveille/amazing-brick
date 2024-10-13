@@ -22,7 +22,7 @@ export const Home = () => {
 					{gameMode.description}
 				</Text>
 			</div>
-			<div style={styles.homeButtonStack}>
+			<div style={styles.buttonStack}>
 				<Button screenTarget="play" backgroundColor={Color.Green} autoFocus>
 					PLAY
 				</Button>

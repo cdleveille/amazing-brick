@@ -52,11 +52,6 @@ export const useStyles = () => {
 			homeGameModeDescription: {
 				color: isDarkMode ? "#cccccc" : "#555555"
 			} as CSSProperties,
-			homeButtonStack: {
-				display: "flex",
-				flexDirection: "column",
-				rowGap: `${32 * scaleRatio}px`
-			} as CSSProperties,
 			pauseOverlay: {
 				width: canvas.width,
 				height: canvas.height,
@@ -112,11 +107,6 @@ export const useStyles = () => {
 				color: isDarkMode ? Color.White : Color.Black,
 				transition: "0.2s ease-in-out"
 			} as CSSProperties,
-			rateButtonStack: {
-				display: "flex",
-				flexDirection: "column",
-				rowGap: `${32 * scaleRatio}px`
-			} as CSSProperties,
 			rateThumbButton: (isSelected: boolean) =>
 				({
 					fontSize: `${80 * scaleRatio}px`,
@@ -150,6 +140,11 @@ export const useStyles = () => {
 				textAlign: "center",
 				fontFamily: "Roboto-Thin",
 				fontWeight: "bolder"
+			} as CSSProperties,
+			buttonStack: {
+				display: "flex",
+				flexDirection: "column",
+				rowGap: `${32 * scaleRatio}px`
 			} as CSSProperties,
 			button: (backgroundColor: string) =>
 				({
@@ -235,7 +230,36 @@ export const useStyles = () => {
 			loadingIndicator: {
 				color: isDarkMode ? Color.White : Color.Black,
 				size: `${100 * scaleRatio}px`
-			} as CSSProperties & { size: string }
+			} as CSSProperties & { size: string },
+			gameOverContainer: {
+				rowGap: `${64 * scaleRatio}px`
+			} as CSSProperties,
+			gameOverHeader: {
+				fontSize: `${64 * scaleRatio}px`
+			} as CSSProperties,
+			gameOverNewHighScore: {
+				fontSize: `${32 * scaleRatio}px`,
+				color: Color.BrightRed
+			} as CSSProperties,
+			gameOverBox: {
+				border: `${1 * scaleRatio}px solid ${isDarkMode ? Color.White : Color.Black}`,
+				borderRadius: `${32 * scaleRatio}px`,
+				padding: `${32 * scaleRatio}px`,
+				rowGap: `${24 * scaleRatio}px`,
+				boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`,
+				minWidth: "50%"
+			} as CSSProperties,
+			gameOverBoxInner: {
+				display: "flex",
+				columnGap: `${54 * scaleRatio}px`
+			} as CSSProperties,
+			gameOverBoxLabel: {
+				fontSize: `${24 * scaleRatio}px`,
+				textAlign: "center"
+			} as CSSProperties,
+			gameOverBoxValue: {
+				fontSize: `${48 * scaleRatio}px`
+			} as CSSProperties
 		};
 	}, [canvas, screen, isDarkMode, gameMode, scaleRatio, isPaused]);
 
