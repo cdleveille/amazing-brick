@@ -9,7 +9,7 @@ import { gameModes, getLocalStorageItem } from "@utils";
 
 import type { TCanvas, TGameMode, TGameModeName, TScreen } from "@types";
 
-export const Main = () => {
+export const AppContextProvider = () => {
 	const [game, setGame] = useState<Game>();
 	const [screen, setScreen] = useState<TScreen>("home");
 	const [canvas, setCanvas] = useState<TCanvas>();
@@ -20,7 +20,6 @@ export const Main = () => {
 	const [gameMode, setGameMode] = useState(
 		getLocalStorageItem<TGameMode>(GAME_MODE_LOCAL_STORAGE_KEY) ?? gameModes[0]
 	);
-	const [startTime, setStartTime] = useState(0);
 	const [netStartTime, setNetStartTime] = useState(0);
 
 	const player_id = useMemo(
@@ -57,8 +56,6 @@ export const Main = () => {
 				gameMode,
 				setGameMode,
 				isGameMode,
-				startTime,
-				setStartTime,
 				netStartTime,
 				setNetStartTime
 			}}

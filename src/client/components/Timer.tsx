@@ -8,8 +8,7 @@ import { now } from "@utils";
 const INITIAL_SEC = 10;
 
 export const Timer = () => {
-	const { isPausedAtStart, isPaused, setScreen, gameMode, setStartTime, netStartTime, setNetStartTime } =
-		useAppContext();
+	const { isPausedAtStart, isPaused, setScreen, gameMode, netStartTime, setNetStartTime } = useAppContext();
 
 	const { styles } = useStyles();
 
@@ -42,7 +41,6 @@ export const Timer = () => {
 	useEffect(() => {
 		if (isPausedAtStart) return;
 		const rightNow = now();
-		setStartTime(rightNow);
 		if (isTimerUsed) {
 			setCurrentTime(rightNow);
 			setNetStartTime(rightNow);

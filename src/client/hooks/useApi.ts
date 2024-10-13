@@ -6,11 +6,11 @@ import type { SocketEventName, TEncryptedScore, TRating, TScoreRes, THighScoresR
 
 const TIMEOUT_MS = 5000;
 
-interface IReqParams<T = unknown> {
+type IReqParams<T = unknown> = {
 	event: SocketEventName;
 	data?: unknown;
 	callback?: ((res: T) => void) | (() => void);
-}
+};
 
 export const useApi = () => {
 	const to = ({ event, data, callback }: IReqParams) => {

@@ -3,29 +3,19 @@ import { Dispatch, SetStateAction } from "react";
 import { Color, GameMode, SocketEvent } from "@constants";
 import { Game } from "@game";
 
-export interface IConfig {
+export type TConfig = {
 	IS_PROD: boolean;
 	HOST: string;
 	PORT: number;
 	RELOAD_PORT: number;
 	MONGO_URI: string;
 	SKIP_DB: boolean;
-}
+};
 
-export interface IBase {
+export type TBase = {
 	created_at: Date;
 	updated_at: Date;
-}
-
-export interface IUser {
-	username: string;
-	password: string;
-}
-
-export interface IError {
-	code: number;
-	message: string;
-}
+};
 
 type ReverseMap<T> = T[keyof T];
 export type SocketEventName = ReverseMap<typeof SocketEvent>;
@@ -49,8 +39,6 @@ export type TAppContext = {
 	gameMode: TGameMode;
 	setGameMode: Dispatch<SetStateAction<TGameMode>>;
 	isGameMode: (gm: TGameModeName) => boolean;
-	startTime: number;
-	setStartTime: Dispatch<SetStateAction<number>>;
 	netStartTime: number;
 	setNetStartTime: Dispatch<SetStateAction<number>>;
 };

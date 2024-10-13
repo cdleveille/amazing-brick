@@ -2,6 +2,11 @@ export const now = () => {
 	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 };
 
+export const registerServiceWorker = async () => {
+	if (!navigator.serviceWorker) return;
+	if (!navigator.serviceWorker.controller) await navigator.serviceWorker.register("sw.js");
+};
+
 export const assertGetElementById = (id: string) => {
 	const ele = document.getElementById(id);
 	if (!ele) throw new Error(`Element with id "${id}" not found`);

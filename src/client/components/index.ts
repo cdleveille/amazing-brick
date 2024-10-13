@@ -1,3 +1,4 @@
+export * from "./AppContextProvider";
 export * from "./Brick";
 export * from "./Button";
 export * from "./DarkMode";
@@ -6,7 +7,6 @@ export * from "./GameObject";
 export * from "./GameOver";
 export * from "./Home";
 export * from "./Jump";
-export * from "./Main";
 export * from "./Offline";
 export * from "./Pause";
 export * from "./Play";

@@ -27,7 +27,7 @@ export const Play = () => {
 		<div id="play-container" className="play-container">
 			<div className="hud">
 				<Pause />
-				<Timer />
+				{isGameMode(GameMode.Sprint) && <Timer />}
 				<Score />
 			</div>
 			<GameObject />

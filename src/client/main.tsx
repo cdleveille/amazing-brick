@@ -4,14 +4,9 @@ import "./style.css";
 
 import { createRoot } from "react-dom/client";
 
-import { Main } from "@components";
+import { AppContextProvider } from "@components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Config } from "@utils";
-
-const registerServiceWorker = async () => {
-	if (!navigator.serviceWorker) return;
-	if (!navigator.serviceWorker.controller) await navigator.serviceWorker.register("sw.js");
-};
+import { Config, registerServiceWorker } from "@utils";
 
 window.addEventListener("load", async () => {
 	if (Config.IS_PROD) await registerServiceWorker();
@@ -22,6 +17,6 @@ document.body.appendChild(rootDiv);
 const root = createRoot(rootDiv);
 root.render(
 	<QueryClientProvider client={new QueryClient()}>
-		<Main />
+		<AppContextProvider />
 	</QueryClientProvider>
 );
