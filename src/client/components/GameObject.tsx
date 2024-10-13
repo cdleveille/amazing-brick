@@ -16,13 +16,14 @@ export const GameObject = () => {
 			<div id="block2" className="block"></div>
 			<div id="block3" className="block"></div>
 			<div id="block4" className="block"></div>
-			<Brick id="brick" style={styles.brick} />
 			{isGameMode(GameMode.Gotcha) && (
 				<>
 					<Brick className="gotcha-brick" />
 					<Brick className="gotcha-brick" />
 				</>
 			)}
+			{isGameMode(GameMode.Shrouded) && <div className="absolute-center" style={styles.shroud}></div>}
+			<Brick id="brick" style={styles.brick} />
 		</div>
 	);
 };

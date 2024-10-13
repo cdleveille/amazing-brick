@@ -7,7 +7,7 @@ import {
 	PLAYER_ID_LOCAL_STORAGE_KEY
 } from "@constants";
 import { useAppContext, useLocalStorage } from "@hooks";
-import { executeOnClass } from "@util";
+import { executeOnClass } from "@utils";
 
 export const useSync = () => {
 	const {

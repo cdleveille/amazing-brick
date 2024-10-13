@@ -2,7 +2,7 @@ import { GameMode } from "@constants";
 
 import type { TPoint, TRectangle, TDiamond, TGameMode } from "@types";
 
-export const now = (): number => {
+export const now = () => {
 	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 };
 

@@ -1,5 +1,5 @@
 import { Game } from "@game";
-import { assertGetElementById } from "@util";
+import { assertGetElementById } from "@utils";
 
 import type { TJumpDirection } from "@types";
 

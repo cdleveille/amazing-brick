@@ -4,7 +4,7 @@ import { GameObject, Jump, Pause, Score, Timer } from "@components";
 import { GameMode } from "@constants";
 import { Game } from "@game";
 import { useAppContext } from "@hooks";
-import { assertGetElementById, executeOnClass } from "@util";
+import { assertGetElementById, executeOnClass } from "@utils";
 
 export const Play = () => {
 	const ctx = useAppContext();

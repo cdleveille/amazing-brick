@@ -1,6 +1,6 @@
 import { GameMode } from "@constants";
 import { Brick, Obstacle } from "@game";
-import { executeOnClass, isRectangleIntersectingDiamond, now } from "@util";
+import { executeOnClass, isRectangleIntersectingDiamond, now } from "@utils";
 
 import type { TAppContext, TCanvas, TJumpDirection, TGotchaBrick } from "@types";
 

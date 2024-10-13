@@ -2,9 +2,10 @@ import { useMemo, useState } from "react";
 
 import { Screen } from "@components";
 import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
+import { AppContext } from "@contexts";
 import { Game } from "@game";
-import { AppContext, useLocalStorage, useResize } from "@hooks";
-import { gameModes } from "@util";
+import { useLocalStorage, useResize } from "@hooks";
+import { gameModes } from "@utils";
 
 import type { TCanvas, TGameMode, TGameModeName, TScreen } from "@types";
 

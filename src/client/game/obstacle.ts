@@ -1,6 +1,6 @@
 import { Color, GameMode, OBSTACLE_COLORS } from "@constants";
 import { Game } from "@game";
-import { assertGetElementById } from "@util";
+import { assertGetElementById } from "@utils";
 
 import type { TWall, TBlock } from "@types";
 

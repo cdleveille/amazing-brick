@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { GameMode } from "@constants";
 import { useAppContext, useStyles } from "@hooks";
 import TimerRoundedIcon from "@mui/icons-material/TimerRounded";
-import { now } from "@util";
+import { now } from "@utils";
 
 const INITIAL_SEC = 10;
 

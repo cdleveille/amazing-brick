@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
-import { gameModes } from "@util";
+import { gameModes } from "@utils";
 
 import type { TGameMode } from "@types";
 

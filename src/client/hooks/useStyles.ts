@@ -184,12 +184,7 @@ export const useStyles = () => {
 			gameObjectContainer: {
 				width: "100%",
 				height: "100%",
-				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White,
-				background: isGameMode(GameMode.Shrouded)
-					? isDarkMode
-						? `radial-gradient(circle, ${Color.DarkBlue} 50%, rgba(0,0,0,1) 65%)`
-						: `radial-gradient(circle, ${Color.White} 50%, rgba(0,0,0,1) 65%)`
-					: ""
+				backgroundColor: isDarkMode ? Color.DarkBlue : Color.White
 			} as CSSProperties,
 			brick: {
 				backgroundColor: isDarkMode ? Color.White : Color.Black
@@ -226,7 +221,13 @@ export const useStyles = () => {
 					columnGap: `${16 * scaleRatio}px`,
 					width: "100%",
 					transition: "0.2s ease-in-out"
-				}) as CSSProperties
+				}) as CSSProperties,
+			shroud: {
+				background: `radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,1) 65%)`,
+				width: "105%",
+				height: "105%",
+				zIndex: 2000
+			} as CSSProperties
 		};
 	}, [canvas, screen, isDarkMode, gameMode, scaleRatio, isPaused]);
 
