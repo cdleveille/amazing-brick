@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { Screen } from "@components";
 import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
@@ -27,9 +27,9 @@ export const AppContextProvider = () => {
 		[]
 	);
 
-	const isScreen = (s: TScreen) => screen === s;
+	const isScreen = useCallback((s: TScreen) => screen === s, [screen]);
 
-	const isGameMode = (gm: TGameModeName) => gameMode.name === gm;
+	const isGameMode = useCallback((gm: TGameModeName) => gameMode.name === gm, [gameMode]);
 
 	useResize(setCanvas);
 

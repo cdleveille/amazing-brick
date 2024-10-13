@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEvent, useState } from "react";
+import { CSSProperties, MouseEvent, useCallback, useState } from "react";
 
 import { useStyles } from "@hooks";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -23,22 +23,24 @@ export const GameModeMenu = ({
 	const { styles } = useStyles();
 
 	const open = Boolean(anchorEl);
-	const handleClick = (event: MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+	const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+	const handleClose = () => setAnchorEl(null);
 
-	const getNextGameMode = (gameMode: TGameMode) => {
-		const nextIndex = gameModes.findIndex(mode => mode.name === gameMode.name) + 1;
-		return gameModes[nextIndex % gameModes.length];
-	};
+	const getNextGameMode = useCallback(
+		(gameMode: TGameMode) => {
+			const nextIndex = gameModes.findIndex(mode => mode.name === gameMode.name) + 1;
+			return gameModes[nextIndex % gameModes.length];
+		},
+		[gameModes]
+	);
 
-	const getPreviousGameMode = (gameMode: TGameMode) => {
-		const previousIndex = gameModes.findIndex(mode => mode.name === gameMode.name) - 1;
-		return gameModes[(previousIndex + gameModes.length) % gameModes.length];
-	};
+	const getPreviousGameMode = useCallback(
+		(gameMode: TGameMode) => {
+			const previousIndex = gameModes.findIndex(mode => mode.name === gameMode.name) - 1;
+			return gameModes[(previousIndex + gameModes.length) % gameModes.length];
+		},
+		[gameModes]
+	);
 
 	return (
 		<div style={styles.gameModeContainer}>

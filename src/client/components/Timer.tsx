@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { GameMode } from "@constants";
 import { useAppContext, useStyles } from "@hooks";
@@ -15,9 +15,12 @@ export const Timer = () => {
 	const [currentTime, setCurrentTime] = useState(0);
 	const [timePausedAt, setTimePausedAt] = useState(0);
 
-	const secondsLeft = INITIAL_SEC - formatMsToS(currentTime - netStartTime);
+	const secondsLeft = useMemo(
+		() => INITIAL_SEC - formatMsToS(currentTime - netStartTime),
+		[formatMsToS, currentTime, netStartTime]
+	);
 
-	const isTimerUsed = gameMode.name == GameMode.Sprint;
+	const isTimerUsed = useMemo(() => gameMode.name == GameMode.Sprint, [gameMode]);
 
 	useEffect(() => {
 		if (isPausedAtStart || !isTimerUsed) return;

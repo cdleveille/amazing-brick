@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Button, Offline, Text } from "@components";
 import { Color } from "@constants";
@@ -15,16 +15,17 @@ export const Rate = () => {
 
 	const { setScreen, player_id } = useAppContext();
 
-	const isSubmitDisabled = typeof isThumbsUp !== "boolean" || comments.trim() === "";
-
 	if (isOffline) return <Offline message="Internet connection required to submit rating" />;
 
-	const placeholder =
-		isThumbsUp === true
+	const isSubmitDisabled = typeof isThumbsUp !== "boolean" || comments.trim() === "";
+
+	const placeholder = useMemo(() => {
+		return isThumbsUp === true
 			? "What do you like about Amazing Brick?"
 			: isThumbsUp === false
 				? "What could be improved in Amazing Brick?"
 				: "What do you think of Amazing Brick?";
+	}, [isThumbsUp]);
 
 	return (
 		<div className="rate-container" style={styles.rateContainer}>
