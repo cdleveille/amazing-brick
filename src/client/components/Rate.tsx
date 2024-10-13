@@ -71,7 +71,13 @@ const RateButton = ({ type, onClick, isSelected }: RateButtonProps) => {
 	const { styles } = useStyles();
 
 	return (
-		<button className="btn-rate" onClick={onClick} style={styles.rateThumbButton(isSelected)} disabled={isSelected}>
+		<button
+			className="btn-rate"
+			onClick={onClick}
+			style={styles.rateThumbButton(isSelected)}
+			disabled={isSelected}
+			aria-label={`${type === "thumbs-up" ? "Thumbs Up" : "Thumbs Down"}`}
+		>
 			{type === "thumbs-up" ? <ThumbsUpSvg /> : <ThumbsDownSvg />}
 		</button>
 	);

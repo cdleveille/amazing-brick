@@ -11,6 +11,7 @@ export const DarkMode = () => {
 			className="btn-dark-mode"
 			onClick={() => setIsDarkMode(isDarkMode => !isDarkMode)}
 			style={styles.darkModeBtn}
+			aria-label="Toggle Dark Mode"
 		>
 			{isDarkMode ? (
 				<LightModeRoundedIcon sx={styles.darkModeBtnIcon("#cccccc")} />

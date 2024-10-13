@@ -110,7 +110,11 @@ export const GameModeMenu = ({
 				columnGap: `${8 * scaleRatio}px`
 			}}
 		>
-			<button className="arrow-btn" onClick={() => onSelectOption(getPreviousGameMode(value))}>
+			<button
+				className="arrow-btn"
+				onClick={() => onSelectOption(getPreviousGameMode(value))}
+				aria-label="Previous Game Mode"
+			>
 				<ChevronLeftIcon
 					sx={{ fontSize: `${36 * scaleRatio}px`, color: isDarkMode ? Color.White : Color.Black }}
 				/>
@@ -153,7 +157,11 @@ export const GameModeMenu = ({
 			>
 				{value.name}
 			</Button>
-			<button className="arrow-btn" onClick={() => onSelectOption(getNextGameMode(value))}>
+			<button
+				className="arrow-btn"
+				onClick={() => onSelectOption(getNextGameMode(value))}
+				aria-label="Next Game Mode"
+			>
 				<ChevronRightIcon
 					sx={{ fontSize: `${36 * scaleRatio}px`, color: isDarkMode ? Color.White : Color.Black }}
 				/>
