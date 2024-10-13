@@ -10,46 +10,44 @@ export const isRectangleIntersectingDiamond = (rect: TRectangle, diamond: TDiamo
 	};
 
 	const isPointInDiamond = (point: TPoint, diamond: TDiamond) => {
+		// The diamond is a rotated square, so we need to use a special check
 		const dx = Math.abs(point.x - diamond.cx);
 		const dy = Math.abs(point.y - diamond.cy);
-		return dx + dy <= diamond.size;
+		// Check if the point lies within the rotated diamond bounds
+		return dx + dy <= diamond.radius;
 	};
 
-	const getRectangleCorners = (rect: TRectangle) => {
-		return [
-			{ x: rect.x, y: rect.y }, // Top-left
-			{ x: rect.x + rect.width, y: rect.y }, // Top-right
-			{ x: rect.x, y: rect.y + rect.height }, // Bottom-left
-			{ x: rect.x + rect.width, y: rect.y + rect.height } // Bottom-right
-		] as TPoint[];
-	};
+	// Step 1: Get the four corners of the rectangle
+	const rectCorners: TPoint[] = [
+		{ x: rect.x, y: rect.y }, // Top-left
+		{ x: rect.x + rect.width, y: rect.y }, // Top-right
+		{ x: rect.x, y: rect.y + rect.height }, // Bottom-left
+		{ x: rect.x + rect.width, y: rect.y + rect.height } // Bottom-right
+	];
 
-	const getDiamondCorners = (diamond: TDiamond) => {
-		return [
-			{ x: diamond.cx, y: diamond.cy - diamond.size }, // Top
-			{ x: diamond.cx + diamond.size, y: diamond.cy }, // Right
-			{ x: diamond.cx, y: diamond.cy + diamond.size }, // Bottom
-			{ x: diamond.cx - diamond.size, y: diamond.cy } // Left
-		] as TPoint[];
-	};
+	// Step 2: Get the four corners of the diamond
+	const diamondCorners: TPoint[] = [
+		{ x: diamond.cx, y: diamond.cy - diamond.radius }, // Top
+		{ x: diamond.cx + diamond.radius, y: diamond.cy }, // Right
+		{ x: diamond.cx, y: diamond.cy + diamond.radius }, // Bottom
+		{ x: diamond.cx - diamond.radius, y: diamond.cy } // Left
+	];
 
-	// Check if any rectangle corner is inside the diamond
-	const rectCorners = getRectangleCorners(rect);
+	// Step 3: Check if any rectangle corner is inside the diamond
 	for (const corner of rectCorners) {
 		if (isPointInDiamond(corner, diamond)) {
 			return true;
 		}
 	}
 
-	// Check if any diamond corner is inside the rectangle
-	const diamondCorners = getDiamondCorners(diamond);
+	// Step 4: Check if any diamond corner is inside the rectangle
 	for (const corner of diamondCorners) {
 		if (isPointInRectangle(corner, rect)) {
 			return true;
 		}
 	}
 
-	// If no corners overlap, return false
+	// Step 5: No collision found
 	return false;
 };
 

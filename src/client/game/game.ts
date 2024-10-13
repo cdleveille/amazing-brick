@@ -133,7 +133,7 @@ export class Game {
 					{
 						cx: this.brick.x,
 						cy: this.brick.y,
-						size: this.brick.diagonalRadius
+						radius: this.brick.diagonalRadius
 					}
 				)
 			) {
@@ -146,7 +146,7 @@ export class Game {
 						width: this.canvas.width - wall.gapX - this.obstacle.wallGapWidth + 1 * this.canvas.scaleRatio,
 						height: this.obstacle.wallHeight + 5 * this.canvas.scaleRatio
 					},
-					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
+					{ cx: this.brick.x, cy: this.brick.y, radius: this.brick.diagonalRadius }
 				)
 			) {
 				this.crash();
@@ -162,7 +162,7 @@ export class Game {
 						width: this.obstacle.blockWidth,
 						height: this.obstacle.blockWidth + 5 * this.canvas.scaleRatio
 					},
-					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
+					{ cx: this.brick.x, cy: this.brick.y, radius: this.brick.diagonalRadius }
 				)
 			) {
 				this.crash();
@@ -179,7 +179,7 @@ export class Game {
 						width: gotchaBrickDiagonalWidth,
 						height: gotchaBrickDiagonalWidth
 					},
-					{ cx: this.brick.x, cy: this.brick.y, size: this.brick.diagonalRadius }
+					{ cx: this.brick.x, cy: this.brick.y, radius: this.brick.diagonalRadius }
 				);
 				if (isColliding) {
 					this.ctx.setScore(score => score + 1);

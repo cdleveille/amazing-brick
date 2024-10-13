@@ -72,23 +72,11 @@ export type TBlock = {
 	color: Color;
 };
 
-export type TPoint = {
-	x: number;
-	y: number;
-};
+export type TPoint = { x: number; y: number };
 
-export type TRectangle = {
-	x: number;
-	y: number;
-	width: number;
-	height: number;
-};
+export type TRectangle = { x: number; y: number; width: number; height: number };
 
-export type TDiamond = {
-	cx: number;
-	cy: number;
-	size: number;
-};
+export type TDiamond = { cx: number; cy: number; radius: number };
 
 export type TScore = {
 	player_id: string;
