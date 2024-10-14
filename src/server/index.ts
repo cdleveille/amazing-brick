@@ -53,9 +53,9 @@ app.use(
 app.use(express.static(PUBLIC_DIR));
 app.set("json spaces", 2);
 app.disable("x-powered-by");
+if (!IS_PROD) require("reload")(app, { port: RELOAD_PORT }).catch((error: unknown) => log.error(error));
 const httpServer = createServer(app);
 initSocket(httpServer);
 httpServer.listen(PORT, () => {
 	log.info(`Server started in ${IS_PROD ? "production" : "development"} mode - listening on ${HOST}:${PORT}`);
-	if (!IS_PROD) require("reload")(app, { port: RELOAD_PORT }).catch((error: unknown) => log.error(error));
 });
