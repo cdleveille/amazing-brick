@@ -11,13 +11,12 @@ import { gameModes } from "@utils";
 
 import type { TGameMode } from "@types";
 
-export const GameModeMenu = ({
-	value,
-	onSelectOption
-}: {
+type TGameModeMenuProps = {
 	value: TGameMode;
 	onSelectOption: (gameMode: TGameMode) => void;
-}) => {
+};
+
+export const GameModeMenu = ({ value, onSelectOption }: TGameModeMenuProps) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
 	const { styles } = useStyles();

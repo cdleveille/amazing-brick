@@ -5,7 +5,7 @@ import { useAppContext, useStyles } from "@hooks";
 
 import type { TScreen } from "@types";
 
-type ButtonProps = {
+type TButtonProps = {
 	backgroundColor: string;
 	screenTarget?: TScreen;
 	onClick?: () => void;
@@ -23,7 +23,7 @@ export const Button = ({
 	autoFocus,
 	forceTouch,
 	disabled
-}: ButtonProps) => {
+}: TButtonProps) => {
 	const [isClickable, setIsClickable] = useState(false);
 
 	const { setScreen } = useAppContext();

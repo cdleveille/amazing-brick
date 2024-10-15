@@ -1,9 +1,11 @@
-type BrickProps = {
+import { CSSProperties } from "react";
+
+type TBrickProps = {
 	id?: string;
 	className?: string;
-	style?: React.CSSProperties;
+	style?: CSSProperties;
 };
 
-export const Brick = ({ id, className, style }: BrickProps) => {
+export const Brick = ({ id, className, style }: TBrickProps) => {
 	return <div id={id} className={`brick ${className}`} style={style}></div>;
 };

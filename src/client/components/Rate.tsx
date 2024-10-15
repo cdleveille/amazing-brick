@@ -62,13 +62,13 @@ export const Rate = () => {
 	);
 };
 
-type RateButtonProps = {
+type TRateButtonProps = {
 	type: "thumbs-up" | "thumbs-down";
 	onClick: () => void;
 	isSelected: boolean;
 };
 
-const RateButton = ({ type, onClick, isSelected }: RateButtonProps) => {
+const RateButton = ({ type, onClick, isSelected }: TRateButtonProps) => {
 	const { styles } = useStyles();
 
 	return (

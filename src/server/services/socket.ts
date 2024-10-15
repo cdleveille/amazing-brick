@@ -5,9 +5,15 @@ import { Server, Socket } from "socket.io";
 import { GameMode, SocketEvent } from "@constants";
 import { Rating, Score } from "@models";
 
-import { THighScoresRes } from "../types/index";
-
-import type { TEncryptedScore, TScoreRes, TRating, TGameModeName, TPlayerHighScoreRes, TScore } from "@types";
+import type {
+	TEncryptedScore,
+	TScoreRes,
+	TRating,
+	TGameModeName,
+	TPlayerHighScoreRes,
+	TScore,
+	THighScoresRes
+} from "@types";
 
 export const initSocket = (httpServer: HttpServer) => {
 	const io = new Server(httpServer);

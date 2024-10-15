@@ -2,7 +2,12 @@ import { Button, Text } from "@components";
 import { Color } from "@constants";
 import { useStyles } from "@hooks";
 
-export const Offline = ({ message, isHideHomeBtn }: { message: string; isHideHomeBtn?: boolean }) => {
+type TOfflineProps = {
+	message: string;
+	isHideHomeBtn?: boolean;
+};
+
+export const Offline = ({ message, isHideHomeBtn }: TOfflineProps) => {
 	const { styles } = useStyles();
 
 	return (

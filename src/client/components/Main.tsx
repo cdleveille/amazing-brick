@@ -3,7 +3,7 @@ import { useAppContext, useStyles, useSync } from "@hooks";
 
 import type { TScreen } from "@types";
 
-export const Screen = () => {
+export const Main = () => {
 	const { screen, isScreen } = useAppContext();
 	const { styles } = useStyles();
 	useSync();

@@ -4,7 +4,7 @@ import "./style.css";
 
 import { createRoot } from "react-dom/client";
 
-import { AppContextProvider } from "@components";
+import { AppContextProvider, Main } from "@components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Config, registerServiceWorker } from "@utils";
 
@@ -17,6 +17,8 @@ document.body.appendChild(rootDiv);
 const root = createRoot(rootDiv);
 root.render(
 	<QueryClientProvider client={new QueryClient()}>
-		<AppContextProvider />
+		<AppContextProvider>
+			<Main />
+		</AppContextProvider>
 	</QueryClientProvider>
 );
