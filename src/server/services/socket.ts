@@ -68,8 +68,7 @@ export const initSocket = (httpServer: HttpServer) => {
 				standardScore: existingHighScore?.score ?? 0,
 				sprintScore: existingHighScore?.sprint_score ?? 0,
 				shroudedScore: existingHighScore?.shrouded_score ?? 0,
-				gotchaScore: existingHighScore?.gotcha_score ?? 0,
-				insanityScore: existingHighScore?.insanity_score ?? 0
+				gotchaScore: existingHighScore?.gotcha_score ?? 0
 			} as TPlayerHighScoreRes);
 		});
 
@@ -101,10 +100,6 @@ const assembleHighScoresRes = (highScores: TScore[]) =>
 			.sort((a, b) => b - a),
 		gotchaScores: highScores
 			.map(({ gotcha_score }) => gotcha_score)
-			.filter(score => score > 0)
-			.sort((a, b) => b - a),
-		insanityScores: highScores
-			.map(({ insanity_score }) => insanity_score)
 			.filter(score => score > 0)
 			.sort((a, b) => b - a)
 	}) as THighScoresRes;

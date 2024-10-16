@@ -34,6 +34,5 @@ export enum GameMode {
 	Standard = "Standard",
 	Sprint = "Sprint",
 	Shrouded = "Shrouded",
-	Gotcha = "Gotcha",
-	Insanity = "Insanity"
+	Gotcha = "Gotcha"
 }

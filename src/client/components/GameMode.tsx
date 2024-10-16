@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
-import { gameModes } from "@utils";
+import { GAME_MODES } from "@utils";
 
 import type { TGameMode } from "@types";
 
@@ -27,18 +27,18 @@ export const GameModeMenu = ({ value, onSelectOption }: TGameModeMenuProps) => {
 
 	const getNextGameMode = useCallback(
 		(gameMode: TGameMode) => {
-			const nextIndex = gameModes.findIndex(mode => mode.name === gameMode.name) + 1;
-			return gameModes[nextIndex % gameModes.length];
+			const nextIndex = GAME_MODES.findIndex(mode => mode.name === gameMode.name) + 1;
+			return GAME_MODES[nextIndex % GAME_MODES.length];
 		},
-		[gameModes]
+		[GAME_MODES]
 	);
 
 	const getPreviousGameMode = useCallback(
 		(gameMode: TGameMode) => {
-			const previousIndex = gameModes.findIndex(mode => mode.name === gameMode.name) - 1;
-			return gameModes[(previousIndex + gameModes.length) % gameModes.length];
+			const previousIndex = GAME_MODES.findIndex(mode => mode.name === gameMode.name) - 1;
+			return GAME_MODES[(previousIndex + GAME_MODES.length) % GAME_MODES.length];
 		},
-		[gameModes]
+		[GAME_MODES]
 	);
 
 	return (
@@ -79,7 +79,7 @@ export const GameModeMenu = ({ value, onSelectOption }: TGameModeMenuProps) => {
 				onClose={handleClose}
 				styles={styles.gameModeDropdown}
 			>
-				{gameModes.map(mode => (
+				{GAME_MODES.map(mode => (
 					<MenuItem
 						onClick={() => {
 							onSelectOption(mode);

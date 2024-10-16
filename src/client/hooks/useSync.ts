@@ -1,28 +1,12 @@
 import { useEffect } from "react";
 
-import {
-	GAME_MODE_LOCAL_STORAGE_KEY,
-	GameMode,
-	IS_DARK_MODE_LOCAL_STORAGE_KEY,
-	PLAYER_ID_LOCAL_STORAGE_KEY
-} from "@constants";
+import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
 import { useAppContext } from "@hooks";
-import { executeOnClass, setLocalStorageItem } from "@utils";
+import { setLocalStorageItem } from "@utils";
 
 export const useSync = () => {
-	const {
-		canvas,
-		player_id,
-		game,
-		isPaused,
-		isPausedAtStart,
-		score,
-		screen,
-		isScreen,
-		isDarkMode,
-		gameMode,
-		isGameMode
-	} = useAppContext();
+	const { canvas, player_id, game, isPaused, isPausedAtStart, score, screen, isScreen, isDarkMode, gameMode } =
+		useAppContext();
 
 	useEffect(() => {
 		if (!game) return;
@@ -54,12 +38,7 @@ export const useSync = () => {
 	}, [isDarkMode]);
 
 	useEffect(() => {
-		setLocalStorageItem(GAME_MODE_LOCAL_STORAGE_KEY, gameMode);
-		if (isGameMode(GameMode.Insanity)) {
-			executeOnClass("game-mode-select", ele => ele.classList.add("shake-hard"));
-		} else {
-			executeOnClass("game-mode-select", ele => ele.classList.remove("shake-hard"));
-		}
+		setLocalStorageItem(GAME_MODE_LOCAL_STORAGE_KEY, gameMode.name);
 	}, [gameMode]);
 
 	useEffect(() => {

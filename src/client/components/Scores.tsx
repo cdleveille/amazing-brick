@@ -24,8 +24,7 @@ export const Scores = () => {
 			standardScore: 0,
 			sprintScore: 0,
 			shroudedScore: 0,
-			gotchaScore: 0,
-			insanityScore: 0
+			gotchaScore: 0
 		}
 	} = getPlayerHighScore(player_id);
 	const { data: fetchedHighScores } = getHighScores();
@@ -53,8 +52,6 @@ export const Scores = () => {
 				return playerHighScore.shroudedScore;
 			case GameMode.Gotcha:
 				return playerHighScore.gotchaScore;
-			case GameMode.Insanity:
-				return playerHighScore.insanityScore;
 			default:
 				return 0;
 		}
@@ -71,8 +68,6 @@ export const Scores = () => {
 				return highScores.shroudedScores;
 			case GameMode.Gotcha:
 				return highScores.gotchaScores;
-			case GameMode.Insanity:
-				return highScores.insanityScores;
 			default:
 				return [];
 		}

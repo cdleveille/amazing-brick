@@ -2,43 +2,7 @@ import { GameMode } from "@constants";
 
 import type { TPoint, TRectangle, TDiamond, TGameMode } from "@types";
 
-// Optimized function to check if a rectangle is colliding with a diamond
 export const isRectangleIntersectingDiamond = (rect: TRectangle, diamond: TDiamond) => {
-	// Function to check if two axis-aligned bounding boxes (AABBs) intersect
-	const doAABBsIntersect = (rect1: TRectangle, rect2: TRectangle) => {
-		return (
-			rect1.x < rect2.x + rect2.width &&
-			rect1.x + rect1.width > rect2.x &&
-			rect1.y < rect2.y + rect2.height &&
-			rect1.y + rect1.height > rect2.y
-		);
-	};
-
-	// Function to check if a point is inside the rectangle
-	const isPointInRectangle = (point: TPoint, rect: TRectangle) => {
-		return (
-			point.x >= rect.x && point.x <= rect.x + rect.width && point.y >= rect.y && point.y <= rect.y + rect.height
-		);
-	};
-
-	// Function to check if a point is inside the diamond
-	const isPointInDiamond = (point: TPoint, diamond: TDiamond) => {
-		const dx = Math.abs(point.x - diamond.cx);
-		const dy = Math.abs(point.y - diamond.cy);
-		return dx + dy <= diamond.radius;
-	};
-
-	// Optimized function to check if two lines intersect (line segment intersection)
-	const doLinesIntersect = (p1: TPoint, p2: TPoint, p3: TPoint, p4: TPoint) => {
-		const det = (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x);
-		if (det === 0) return false; // Parallel lines
-
-		const lambda = ((p4.y - p3.y) * (p4.x - p1.x) + (p3.x - p4.x) * (p4.y - p1.y)) / det;
-		const gamma = ((p1.y - p2.y) * (p4.x - p1.x) + (p2.x - p1.x) * (p4.y - p1.y)) / det;
-
-		return 0 <= lambda && lambda <= 1 && 0 <= gamma && gamma <= 1;
-	};
-
 	// Step 1: Get the axis-aligned bounding box (AABB) of the diamond
 	const diamondAABB: TRectangle = {
 		x: diamond.cx - diamond.radius,
@@ -110,7 +74,36 @@ export const isRectangleIntersectingDiamond = (rect: TRectangle, diamond: TDiamo
 	return false;
 };
 
-export const gameModes = [
+const doAABBsIntersect = (rect1: TRectangle, rect2: TRectangle) => {
+	return (
+		rect1.x < rect2.x + rect2.width &&
+		rect1.x + rect1.width > rect2.x &&
+		rect1.y < rect2.y + rect2.height &&
+		rect1.y + rect1.height > rect2.y
+	);
+};
+
+const isPointInRectangle = (point: TPoint, rect: TRectangle) => {
+	return point.x >= rect.x && point.x <= rect.x + rect.width && point.y >= rect.y && point.y <= rect.y + rect.height;
+};
+
+const isPointInDiamond = (point: TPoint, diamond: TDiamond) => {
+	const dx = Math.abs(point.x - diamond.cx);
+	const dy = Math.abs(point.y - diamond.cy);
+	return dx + dy <= diamond.radius;
+};
+
+const doLinesIntersect = (p1: TPoint, p2: TPoint, p3: TPoint, p4: TPoint) => {
+	const det = (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x);
+	if (det === 0) return false; // Parallel lines
+
+	const lambda = ((p4.y - p3.y) * (p4.x - p1.x) + (p3.x - p4.x) * (p4.y - p1.y)) / det;
+	const gamma = ((p1.y - p2.y) * (p4.x - p1.x) + (p2.x - p1.x) * (p4.y - p1.y)) / det;
+
+	return 0 <= lambda && lambda <= 1 && 0 <= gamma && gamma <= 1;
+};
+
+export const GAME_MODES = [
 	{
 		name: GameMode.Standard,
 		description: "How high can you climb?"

@@ -84,7 +84,6 @@ export type TScore = {
 	sprint_score: number;
 	shrouded_score: number;
 	gotcha_score: number;
-	insanity_score: number;
 };
 
 export type TEncryptedScore = {
@@ -103,7 +102,6 @@ export type THighScoresRes = {
 	sprintScores: number[];
 	shroudedScores: number[];
 	gotchaScores: number[];
-	insanityScores: number[];
 };
 
 export type TPlayerHighScoreRes = {
@@ -111,7 +109,6 @@ export type TPlayerHighScoreRes = {
 	sprintScore: number;
 	shroudedScore: number;
 	gotchaScore: number;
-	insanityScore: number;
 };
 
 export type TRating = {
