@@ -12,7 +12,7 @@ import { connectToDatabase, initSocket, log } from "@services";
 const { IS_PROD, HOST, PORT, RELOAD_PORT, SKIP_DB } = Config;
 
 if (!IS_PROD) {
-	const { buildClient } = await import("@services");
+	const { buildClient } = await import("../../scripts/buildClient");
 	await buildClient();
 }
 

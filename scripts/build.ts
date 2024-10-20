@@ -1,3 +1,3 @@
-import { buildClient } from "@services";
+import { buildClient } from "./buildClient";
 
 await buildClient();
