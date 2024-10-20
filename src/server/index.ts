@@ -11,6 +11,11 @@ import { connectToDatabase, initSocket, log } from "@services";
 
 const { IS_PROD, HOST, PORT, RELOAD_PORT, SKIP_DB } = Config;
 
+if (!IS_PROD) {
+	const { buildClient } = await import("@services");
+	await buildClient();
+}
+
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
 if (!SKIP_DB) await connectToDatabase();
@@ -53,7 +58,6 @@ app.use(
 app.use(express.static(PUBLIC_DIR));
 app.set("json spaces", 2);
 app.disable("x-powered-by");
-if (!IS_PROD) require("reload")(app, { port: RELOAD_PORT }).catch((error: unknown) => log.error(error));
 const httpServer = createServer(app);
 initSocket(httpServer);
 httpServer.listen(PORT, () => {
