@@ -17,7 +17,7 @@ type TGameModeMenuProps = {
 };
 
 export const GameModeMenu = ({ value, onSelectOption }: TGameModeMenuProps) => {
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
 	const { styles } = useStyles();
 

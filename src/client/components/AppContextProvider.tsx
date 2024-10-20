@@ -3,7 +3,7 @@ import { ReactNode, useCallback, useMemo, useState } from "react";
 import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
 import { AppContext } from "@contexts";
 import { Game } from "@game";
-import { useResize } from "@hooks";
+import { usePersistedState, useResize } from "@hooks";
 import { GAME_MODES, getLocalStorageItem } from "@utils";
 
 import type { TCanvas, TGameModeName, TScreen } from "@types";
@@ -14,9 +14,9 @@ type TAppContextProviderProps = {
 
 export const AppContextProvider = ({ children }: TAppContextProviderProps) => {
 	const [game, setGame] = useState<Game>();
-	const [screen, setScreen] = useState<TScreen>("home");
-	const [canvas, setCanvas] = useState<TCanvas>();
-	const [score, setScore] = useState(0);
+	const [screen, setScreen] = usePersistedState<TScreen>("home", "screen");
+	const [canvas, setCanvas] = usePersistedState<TCanvas | undefined>(undefined, "canvas");
+	const [score, setScore] = usePersistedState(0, "score");
 	const [isPaused, setIsPaused] = useState(false);
 	const [isPausedAtStart, setIsPausedAtStart] = useState(true);
 	const [isDarkMode, setIsDarkMode] = useState(getLocalStorageItem<boolean>(IS_DARK_MODE_LOCAL_STORAGE_KEY) ?? false);

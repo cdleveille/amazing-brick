@@ -17,8 +17,8 @@ export const GameOver = () => {
 
 	const { data, mutate: submitScore } = useSubmitScore({
 		player_id,
-		score: !isOffline ? CryptoJS.AES.encrypt(score.toString(), socket.id as string).toString() : "",
-		game_mode_name: !isOffline ? CryptoJS.AES.encrypt(gameMode.name.toString(), socket.id as string).toString() : ""
+		score: !isOffline ? CryptoJS.AES.encrypt(score.toString(), socket.id ?? "").toString() : "",
+		game_mode_name: !isOffline ? CryptoJS.AES.encrypt(gameMode.name.toString(), socket.id ?? "").toString() : ""
 	});
 
 	useEffect(() => {
