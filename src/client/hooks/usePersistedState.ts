@@ -13,6 +13,7 @@ export const usePersistedState = <T>(initialValue: T, id: string): [T, React.Dis
 	const [state, setState] = useState<T>(persistedInitialValue);
 
 	useEffect(() => {
+		if (Config.IS_PROD) return;
 		const stateStr = JSON.stringify(state);
 		sessionStorage.setItem(`state:${id}`, stateStr);
 	}, [state]);
