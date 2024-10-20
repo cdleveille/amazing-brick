@@ -27,6 +27,7 @@
       "@game": ["./src/client/game"],
       "@helpers": ["./src/server/helpers"],
       "@hooks": ["./src/client/hooks"],
+      "@processes": ["./processes"],
       "@middleware": ["./src/server/middleware"],
       "@models": ["./src/server/models"],
       "@services": ["./src/server/services"],

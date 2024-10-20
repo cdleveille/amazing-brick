@@ -3,6 +3,7 @@ import { Server as HttpServer } from "http";
 import { Server, Socket } from "socket.io";
 
 import { GameMode, SocketEvent } from "@constants";
+import { Config } from "@helpers";
 import { Rating, Score } from "@models";
 
 import type {
@@ -17,6 +18,13 @@ import type {
 
 export const initSocket = (httpServer: HttpServer) => {
 	const io = new Server(httpServer);
+
+	(async () => {
+		if (Config.IS_PROD) return;
+		const { initWatch } = await import("@processes");
+		const emitReload = () => io.emit(SocketEvent.Reload);
+		await initWatch(emitReload);
+	})();
 
 	io.on("connect", socket => {
 		socket.on(
