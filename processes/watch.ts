@@ -1,7 +1,7 @@
 import chokidar from "chokidar";
 import path from "path";
 
-import { buildClient } from "./buildClient";
+import { buildClient } from "@processes";
 
 const SRC_DIR = path.resolve("./src/client");
 
