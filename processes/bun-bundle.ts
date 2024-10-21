@@ -6,8 +6,8 @@ import type { BuildArtifact, BuildConfig, BuildOutput } from "bun";
 
 export const BunBundle = {
 	build: async ({
-		srcDir,
-		outDir,
+		root,
+		outdir,
 		entrypoints,
 		swEntrypoint,
 		jsStringTemplate = "<!-- {js} -->",
@@ -17,30 +17,28 @@ export const BunBundle = {
 		minify,
 		plugins = [],
 		suppressLog = false,
-		clearOutDir = true,
+		clearOutdir = true,
 		...rest
 	}: BunBundleBuildConfig) => {
 		try {
 			const start = now();
 
-			if (clearOutDir) rimrafSync(outDir);
+			if (clearOutdir) rimrafSync(path.resolve(outdir));
 
 			const sharedConfig = {
-				root: path.resolve(srcDir),
-				outdir: path.resolve(outDir),
+				root: path.resolve(root),
+				outdir: path.resolve(outdir),
 				minify
 			} as Partial<BuildConfig>;
 
 			const buildMain = Bun.build({
 				...rest,
 				...sharedConfig,
-				entrypoints: [...entrypoints.map(entry => path.join(srcDir, entry))],
+				entrypoints: [...entrypoints.map(entry => path.join(root, entry))],
 				plugins: [
 					...plugins,
-					...copyFolders.map(folder =>
-						copy(`${path.join(srcDir, folder)}/`, `${path.join(outDir, folder)}/`)
-					),
-					...copyFiles.map(file => copy(path.join(srcDir, file), path.join(outDir, file)))
+					...copyFolders.map(folder => copy(`${path.join(root, folder)}/`, `${path.join(outdir, folder)}/`)),
+					...copyFiles.map(file => copy(path.join(root, file), path.join(outdir, file)))
 				]
 			});
 
@@ -50,7 +48,7 @@ export const BunBundle = {
 						buildMain,
 						Bun.build({
 							...sharedConfig,
-							entrypoints: [path.join(srcDir, swEntrypoint)]
+							entrypoints: [path.join(root, swEntrypoint)]
 						})
 					])
 				: await Promise.all([buildMain]);
@@ -61,10 +59,10 @@ export const BunBundle = {
 			}
 
 			// assert that index.html exists in outDir
-			const indexHtmlPath = path.join(outDir, "index.html");
+			const indexHtmlPath = path.join(outdir, "index.html");
 			const indexHtmlFile = Bun.file(indexHtmlPath);
 			const indexHtmlContents = await indexHtmlFile.text().catch(() => {
-				throw "No index.html file found in outDir: " + path.resolve(outDir);
+				throw "No index.html file found in outDir: " + path.resolve(outdir);
 			});
 
 			const { outputs } = results[0];
@@ -103,8 +101,8 @@ export const BunBundle = {
 };
 
 export type BunBundleBuildConfig = {
-	srcDir: string;
-	outDir: string;
+	root: string;
+	outdir: string;
 	entrypoints: string[];
 	swEntrypoint?: string;
 	jsStringTemplate?: string;
@@ -112,7 +110,7 @@ export type BunBundleBuildConfig = {
 	copyFolders?: string[];
 	copyFiles?: string[];
 	suppressLog?: boolean;
-	clearOutDir?: boolean;
+	clearOutdir?: boolean;
 } & Partial<BuildConfig>;
 
 export type BunBundleBuildOutput = {
