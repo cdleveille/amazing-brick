@@ -1,6 +1,6 @@
-import { BunBundle, BunBundleBuildConfig } from "bun-bundle";
-
 import { Config } from "@helpers";
+
+import { BunBundle, BunBundleBuildConfig } from "./bun-bundle.ts";
 
 const parseArg = (arg: string) => Bun.argv.find(a => a.startsWith(arg))?.split("=")[1];
 
@@ -11,11 +11,22 @@ const IS_PROD = Config.IS_PROD || BUN_ENV === "production";
 const buildConfig: BunBundleBuildConfig = {
 	srcDir: "./src/client",
 	outDir: "./public",
-	mainEntry: "main.tsx",
-	swEntry: "sw.ts",
+	entrypoints: ["main.tsx"],
+	swEntrypoint: "sw.ts",
 	copyFolders: ["assets"],
 	copyFiles: ["browserconfig.xml", "favicon.ico", "index.html", "manifest.json"],
-	define: { "Bun.env.IS_PROD": `"${IS_PROD}"` }
+	define: { "Bun.env.IS_PROD": `"${IS_PROD}"` },
+	sourcemap: IS_PROD ? "none" : "linked",
+	naming: {
+		entry: "[dir]/[name]~[hash].[ext]",
+		asset: "[dir]/[name]~[hash].[ext]"
+	},
+	minify: IS_PROD,
+	suppressLog: true
 };
 
-export const buildClient = () => BunBundle.build(buildConfig);
+export const buildClient = async () => {
+	const output = await BunBundle.build(buildConfig);
+	console.log(`Build completed in ${IS_PROD ? "production" : "development"} mode in ${output.buildTime}ms`);
+	return output;
+};
