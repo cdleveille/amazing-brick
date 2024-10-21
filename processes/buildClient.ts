@@ -1,6 +1,6 @@
-import { Config } from "@helpers";
+import { BunBundle, BunBundleBuildConfig } from "bun-bundle";
 
-import { BunBundle, BunBundleBuildConfig } from "./bun-bundle.ts";
+import { Config } from "@helpers";
 
 const parseArg = (arg: string) => Bun.argv.find(a => a.startsWith(arg))?.split("=")[1];
 
