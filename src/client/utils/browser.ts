@@ -28,3 +28,5 @@ export const getLocalStorageItem = <T = unknown>(key: string) => {
 };
 
 export const removeLocalStorageItem = (key: string) => window.localStorage.removeItem(key);
+
+export const doesSystemPreferDarkTheme = () => window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;

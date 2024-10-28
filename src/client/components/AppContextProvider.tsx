@@ -4,10 +4,13 @@ import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_
 import { AppContext } from "@contexts";
 import { Game } from "@game";
 import { usePersistedState, useResize } from "@hooks";
-import { GAME_MODES, getLocalStorageItem } from "@utils";
+import { doesSystemPreferDarkTheme, GAME_MODES, getLocalStorageItem } from "@utils";
 
-import type { TCanvas, TGameModeName, TScreen } from "@types";
-
+import type {
+	TCanvas,
+	TGameModeName,
+	TScreen
+} from "@types";
 type TAppContextProviderProps = {
 	children: ReactNode;
 };
@@ -19,7 +22,9 @@ export const AppContextProvider = ({ children }: TAppContextProviderProps) => {
 	const [score, setScore] = usePersistedState(0, "score");
 	const [isPaused, setIsPaused] = useState(false);
 	const [isPausedAtStart, setIsPausedAtStart] = useState(true);
-	const [isDarkMode, setIsDarkMode] = useState(getLocalStorageItem<boolean>(IS_DARK_MODE_LOCAL_STORAGE_KEY) ?? false);
+	const [isDarkMode, setIsDarkMode] = useState(
+		getLocalStorageItem<boolean>(IS_DARK_MODE_LOCAL_STORAGE_KEY) ?? doesSystemPreferDarkTheme() ?? false
+	);
 	const [gameMode, setGameMode] = useState(
 		GAME_MODES.find(gm => gm.name === getLocalStorageItem<string>(GAME_MODE_LOCAL_STORAGE_KEY)) ?? GAME_MODES[0]
 	);
