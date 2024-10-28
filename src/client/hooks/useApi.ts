@@ -2,9 +2,8 @@ import { useCallback } from "react";
 
 import { SocketEvent } from "@constants";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import type { SocketEventName, TEncryptedScore, THighScoresRes, TPlayerHighScoreRes, TRating, TScoreRes } from "@types";
 import { socket } from "@utils";
-
-import type { SocketEventName, TEncryptedScore, TRating, TScoreRes, THighScoresRes, TPlayerHighScoreRes } from "@types";
 
 const TIMEOUT_MS = 5000;
 

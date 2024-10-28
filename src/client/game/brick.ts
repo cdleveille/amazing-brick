@@ -1,7 +1,6 @@
 import { Game } from "@game";
-import { assertGetElementById } from "@utils";
-
 import type { TJumpDirection } from "@types";
+import { assertGetElementById } from "@utils";
 
 export class Brick {
 	game: Game;

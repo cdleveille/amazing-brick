@@ -1,5 +1,6 @@
-import CryptoJS from "crypto-js";
 import { useEffect } from "react";
+
+import CryptoJS from "crypto-js";
 
 import { Button, Loading, Text } from "@components";
 import { Color } from "@constants";

@@ -1,7 +1,6 @@
 import { model, Schema } from "mongoose";
 
 import { BaseSchema } from "@helpers";
-
 import type { TRating } from "@types";
 
 const RatingSchema = new Schema<TRating>(

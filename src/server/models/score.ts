@@ -1,7 +1,6 @@
 import { model, Schema } from "mongoose";
 
 import { BaseSchema } from "@helpers";
-
 import type { TScore } from "@types";
 
 const ScoreSchema = new Schema<TScore>(

@@ -4,13 +4,9 @@ import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_
 import { AppContext } from "@contexts";
 import { Game } from "@game";
 import { usePersistedState, useResize } from "@hooks";
+import type { TCanvas, TGameModeName, TScreen } from "@types";
 import { doesSystemPreferDarkTheme, GAME_MODES, getLocalStorageItem } from "@utils";
 
-import type {
-	TCanvas,
-	TGameModeName,
-	TScreen
-} from "@types";
 type TAppContextProviderProps = {
 	children: ReactNode;
 };

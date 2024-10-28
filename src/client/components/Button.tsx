@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 
 import { Text } from "@components";
 import { useAppContext, useStyles } from "@hooks";
-
 import type { TScreen } from "@types";
 
 type TButtonProps = {
