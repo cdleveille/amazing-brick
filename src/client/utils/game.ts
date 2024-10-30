@@ -1,6 +1,5 @@
 import { GameMode } from "@constants";
-
-import type { TPoint, TRectangle, TDiamond, TGameMode } from "@types";
+import type { TDiamond, TGameMode, TPoint, TRectangle } from "@types";
 
 export const isRectangleIntersectingDiamond = (rect: TRectangle, diamond: TDiamond) => {
 	// Step 1: Get the axis-aligned bounding box (AABB) of the diamond

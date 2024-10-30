@@ -1,7 +1,6 @@
 import { Brick, Button, GameModeMenu, Text } from "@components";
 import { Color } from "@constants";
 import { useAppContext, useStyles } from "@hooks";
-
 import type { TGameMode } from "@types";
 
 export const Home = () => {

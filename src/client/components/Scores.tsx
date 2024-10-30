@@ -3,9 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Button, GameModeMenu, Loading, Offline, Text } from "@components";
 import { Color, GameMode, SocketEvent } from "@constants";
 import { useApi, useAppContext, useIsOffline, useStyles } from "@hooks";
-import { socket } from "@utils";
-
 import type { TGameMode, THighScoresRes } from "@types";
+import { socket } from "@utils";
 
 export const Scores = () => {
 	const { player_id, gameMode } = useAppContext();

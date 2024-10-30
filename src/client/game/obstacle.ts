@@ -1,8 +1,7 @@
 import { Color, GameMode, OBSTACLE_COLORS } from "@constants";
 import { Game } from "@game";
+import type { TBlock, TWall } from "@types";
 import { assertGetElementById } from "@utils";
-
-import type { TWall, TBlock } from "@types";
 
 export class Obstacle {
 	game: Game;
