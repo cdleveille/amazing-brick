@@ -1,34 +1,31 @@
-import compression from "compression";
-import cors from "cors";
-import express from "express";
-import helmet from "helmet";
-import { createServer } from "http";
-import nocache from "nocache";
-import path from "path";
+import { Hono } from "hono";
+import { serveStatic } from "hono/bun";
+import { cors } from "hono/cors";
+import { secureHeaders } from "hono/secure-headers";
 
 import { Config } from "@helpers";
 import { connectToDatabase, initSocket, log } from "@services";
 
-const { IS_PROD, HOST, PORT, RELOAD_PORT, SKIP_DB } = Config;
+const { IS_PROD, HOST, PORT, WS_PORT, SKIP_DB } = Config;
+const WS_HOST = HOST.replace("http", "ws");
 
-if (!IS_PROD) {
-	const { buildClient } = await import("@processes");
-	await buildClient();
-}
+const buildIfDev = IS_PROD ? [] : [(await import("@processes")).buildClient()];
 
-const PUBLIC_DIR = path.join(process.cwd(), "public");
+const connectDb = SKIP_DB ? [] : [connectToDatabase()];
 
-if (!SKIP_DB) await connectToDatabase();
+await Promise.all([...buildIfDev, ...connectDb]);
 
-const app = express();
-app.use(nocache());
+const app = new Hono({ strict: false });
+
+app.use(cors());
+
 app.use(
-	helmet.contentSecurityPolicy({
-		directives: {
+	secureHeaders({
+		contentSecurityPolicy: {
 			defaultSrc: ["'self'"],
 			baseUri: ["'self'"],
 			childSrc: ["'self'"],
-			connectSrc: ["'self'", ...(!IS_PROD ? [`ws://localhost:${RELOAD_PORT}`] : [])],
+			connectSrc: ["'self'", `${HOST}:${WS_PORT}`, `${WS_HOST}:${WS_PORT}`],
 			fontSrc: ["'self'", "https:", "data:"],
 			formAction: ["'self'"],
 			frameAncestors: ["'self'"],
@@ -36,30 +33,32 @@ app.use(
 			imgSrc: ["'self'", "data:"],
 			manifestSrc: ["'self'"],
 			mediaSrc: ["'self'"],
-			objectSrc: ["'self'"],
+			objectSrc: ["'none'"],
 			scriptSrc: ["'self'"],
 			scriptSrcAttr: ["'none'"],
 			scriptSrcElem: ["'self'"],
 			styleSrc: ["'self'", "https:", "'unsafe-inline'"],
-			styleSrcAttr: ["'unsafe-inline'"],
+			styleSrcAttr: ["'self'", "https:", "'unsafe-inline'"],
 			styleSrcElem: ["'self'", "https:", "'unsafe-inline'"],
 			upgradeInsecureRequests: [],
 			workerSrc: ["'self'", "blob:"]
 		}
 	})
 );
-app.use(compression());
-app.use(
-	cors({
-		origin: "*",
-		methods: ["GET"]
+
+app.get(
+	"/*",
+	serveStatic({
+		root: "./public",
+		onFound: (_path, c) => c.header("Cache-Control", "no-store")
 	})
 );
-app.use(express.static(PUBLIC_DIR));
-app.set("json spaces", 2);
-app.disable("x-powered-by");
-const httpServer = createServer(app);
-initSocket(httpServer);
-httpServer.listen(PORT, () => {
-	log.info(`Server started in ${IS_PROD ? "production" : "development"} mode - listening on ${HOST}:${PORT}`);
-});
+
+initSocket();
+
+log.info(`HTTP server started on port ${PORT} in ${IS_PROD ? "production" : "development"} mode`);
+
+export default {
+	port: Config.PORT,
+	fetch: app.fetch
+};

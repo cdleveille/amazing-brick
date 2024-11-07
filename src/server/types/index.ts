@@ -7,7 +7,7 @@ export type TConfig = {
 	IS_PROD: boolean;
 	HOST: string;
 	PORT: number;
-	RELOAD_PORT: number;
+	WS_PORT: number;
 	MONGO_URI: string;
 	SKIP_DB: boolean;
 };

@@ -8,6 +8,9 @@ primary_region = "bos"
   internal_port = 8080
   processes = ["app"]
   protocol = "tcp"
+  [services.concurrency]
+    type = "connections"
+    soft_limit = 500
   [[services.ports]]
     force_https = true
     handlers = ["http"]
@@ -18,7 +21,16 @@ primary_region = "bos"
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 8080
-  [services.concurrency]
-    type = "connections"
-    hard_limit = 500
-    soft_limit = 400
+
+[[services]]
+  internal_port = 8081
+  processes = ["app"]
+  protocol = "tcp"
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8081
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1

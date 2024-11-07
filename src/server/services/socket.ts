@@ -1,10 +1,10 @@
 import CryptoJS from "crypto-js";
-import { Server as HttpServer } from "http";
-import { Server, Socket } from "socket.io";
+import { Server, type ServerOptions, type Socket } from "socket.io";
 
 import { GameMode, SocketEvent } from "@constants";
 import { Config } from "@helpers";
 import { Rating, Score } from "@models";
+import { log } from "@services";
 import type {
 	TEncryptedScore,
 	TGameModeName,
@@ -15,11 +15,18 @@ import type {
 	TScoreRes
 } from "@types";
 
-export const initSocket = (httpServer: HttpServer) => {
-	const io = new Server(httpServer);
+const { IS_PROD, HOST, PORT, WS_PORT } = Config;
+
+export const initSocket = () => {
+	const io = new Server(WS_PORT, {
+		cors: { origin: [HOST, `${HOST}:${PORT}`] },
+		serveClient: false
+	} as Partial<ServerOptions>);
+
+	log.info(`Socket.IO server started on port ${WS_PORT}`);
 
 	(async () => {
-		if (Config.IS_PROD) return;
+		if (IS_PROD) return;
 		const { initWatch } = await import("@processes");
 		const emitReload = () => io.emit(SocketEvent.Reload);
 		await initWatch(emitReload);
