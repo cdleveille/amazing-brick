@@ -16,6 +16,12 @@
     "start": "bun ./src/server/index.ts"
   },
   "devDependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.6",
+    "@mui/joy": "^5.0.0-beta.48",
+    "@mui/material": "^6.1.6",
+    "@tanstack/react-query": "^5.59.20",
     "@types/crypto-js": "^4.2.2",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
@@ -24,6 +30,9 @@
     "chokidar": "^4.0.1",
     "eslint": "^9.10.0",
     "prettier": "^3.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "socket.io-client": "^4.8.1",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.4.0",
     "workbox-cli": "^7.1.0",
@@ -31,18 +40,9 @@
     "workbox-strategies": "^7.1.0"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^6.1.2",
-    "@mui/joy": "^5.0.0-beta.48",
-    "@mui/material": "^6.1.2",
-    "@tanstack/react-query": "^5.59.0",
     "crypto-js": "^4.2.0",
     "hono": "^4.6.9",
     "mongoose": "^8.6.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "socket.io": "^4.7.5",
-    "socket.io-client": "^4.7.5"
+    "socket.io": "^4.7.5"
   }
 }
