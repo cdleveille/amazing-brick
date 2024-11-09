@@ -22,11 +22,11 @@
     "@mui/joy": "^5.0.0-beta.48",
     "@mui/material": "^6.1.6",
     "@tanstack/react-query": "^5.59.20",
+    "@types/bun": "latest",
     "@types/crypto-js": "^4.2.2",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "bun-bundle": "^3.0.0",
-    "bun-types": "latest",
     "chokidar": "^4.0.1",
     "eslint": "^9.10.0",
     "prettier": "^3.3.3",
@@ -40,8 +40,9 @@
     "workbox-strategies": "^7.1.0"
   },
   "dependencies": {
+    "@elysiajs/static": "^1.1.1",
     "crypto-js": "^4.2.0",
-    "hono": "^4.6.9",
+    "elysia": "^1.1.24",
     "mongoose": "^8.6.1",
     "socket.io": "^4.7.5"
   }
