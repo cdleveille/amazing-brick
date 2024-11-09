@@ -12,8 +12,7 @@ window.addEventListener("load", async () => {
 	if (Config.IS_PROD) await registerServiceWorker();
 });
 
-const rootDiv = document.createElement("div");
-document.body.appendChild(rootDiv);
+const rootDiv = document.getElementById("root")!;
 const root = createRoot(rootDiv);
 root.render(
 	<QueryClientProvider client={new QueryClient()}>

@@ -28,7 +28,7 @@ export const initSocket = async () => {
 	if (!IS_PROD) {
 		const { initWatch } = await import("@processes");
 		const emitReload = () => io.emit(SocketEvent.Reload);
-		await initWatch(emitReload);
+		initWatch(emitReload);
 	}
 
 	io.on("connect", socket => {

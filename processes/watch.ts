@@ -15,7 +15,7 @@ const stopWatching = async () => {
 process.on("exit", () => stopWatching);
 process.on("SIGINT", () => stopWatching);
 
-export const initWatch = async (emitReload: () => void) => {
+export const initWatch = (emitReload: () => void) => {
 	const buildAndReloadClient = async () => {
 		await buildClient();
 		emitReload();
