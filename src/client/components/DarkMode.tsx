@@ -14,9 +14,9 @@ export const DarkMode = () => {
 			aria-label="Toggle Dark Mode"
 		>
 			{isDarkMode ? (
-				<LightModeRoundedIcon sx={styles.darkModeBtnIcon("#cccccc")} />
-			) : (
 				<DarkModeRoundedIcon sx={styles.darkModeBtnIcon("#555555")} />
+			) : (
+				<LightModeRoundedIcon sx={styles.darkModeBtnIcon("#cccccc")} />
 			)}
 		</button>
 	);
