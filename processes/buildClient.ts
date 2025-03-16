@@ -1,34 +1,54 @@
-import { BunBundle, BunBundleBuildConfig } from "bun-bundle";
+import copy from "bun-copy-plugin";
+import { rimrafSync } from "rimraf";
 
+import { Env, Path } from "@constants";
 import { Config } from "@helpers";
+import { log } from "@services";
 
+const now = () => performance?.now?.() ?? Date.now();
 const parseArg = (arg: string) => Bun.argv.find(a => a.startsWith(arg))?.split("=")[1];
 
-const BUN_ENV = parseArg("BUN_ENV") ?? parseArg("NODE_ENV");
+const env = parseArg("BUN_ENV") ?? parseArg("NODE_ENV");
+const isProd = Config.IS_PROD || env === Env.Production;
 
-const IS_PROD = Config.IS_PROD || BUN_ENV === "production";
+const src = Path.ClientSrc;
+const outdir = Path.Public;
 
-const buildConfig: BunBundleBuildConfig = {
-	root: "./src/client",
-	outdir: "./public",
-	entrypoints: ["main.tsx"],
-	swEntrypoint: "sw.ts",
-	jsStringTemplate: "<!-- {js} -->",
-	cssStringTemplate: "<!-- {css} -->",
-	copyFolders: ["assets"],
-	copyFiles: ["browserconfig.xml", "favicon.ico", "index.html", "manifest.json", "style.css"],
-	define: { "Bun.env.IS_PROD": `"${IS_PROD}"`, "Bun.env.WS_PORT": `"${Config.WS_PORT}"` },
-	sourcemap: IS_PROD ? "none" : "linked",
-	naming: {
-		entry: "[dir]/[name]~[hash].[ext]",
-		asset: "[dir]/[name]~[hash].[ext]"
-	},
-	minify: IS_PROD,
-	suppressLog: true
-};
+const copyFolders = ["assets"];
+const copyFiles = ["favicon.ico", "manifest.json"];
 
 export const buildClient = async () => {
-	const output = await BunBundle.build(buildConfig);
-	console.log(`Build completed in ${IS_PROD ? "production" : "development"} mode in ${output.buildTime}ms`);
-	return output;
+	try {
+		const start = now();
+
+		rimrafSync(outdir);
+
+		const results = await Promise.all([
+			Bun.build({
+				entrypoints: [`${src}/index.html`, `${src}/sw.ts`],
+				outdir,
+				define: { "Bun.env.IS_PROD": `"${isProd}"`, "Bun.env.WS_PORT": `"${Config.WS_PORT}"` },
+				sourcemap: isProd ? "none" : "linked",
+				naming: {
+					entry: "[dir]/[name].[ext]",
+					asset: "[dir]/[name].[ext]"
+				},
+				plugins: [
+					...copyFolders.map(folder => copy(`${src}/${folder}/`, `${outdir}/${folder}/`)),
+					...copyFiles.map(file => copy(`${src}/${file}`, `${outdir}/${file}`))
+				],
+				minify: isProd
+			})
+		]);
+
+		results.forEach(result => {
+			if (!result.success) throw result.logs;
+		});
+
+		const buildTime = (now() - start).toFixed(2);
+
+		log.info(`Build completed in ${isProd ? Env.Production : Env.Development} mode in ${buildTime}ms`);
+	} catch (error) {
+		throw new AggregateError(error instanceof Array ? error : [error]);
+	}
 };

@@ -1,5 +1,6 @@
 import { Elysia } from "elysia";
 
+import { Env, Path } from "@constants";
 import { staticPlugin } from "@elysiajs/static";
 import { Config } from "@helpers";
 import { connectToDatabase, initSocket, log } from "@services";
@@ -12,6 +13,6 @@ const connectDb = SKIP_DB ? [] : [connectToDatabase()];
 
 await Promise.all([initSocket(), ...buildIfDev, ...connectDb]);
 
-new Elysia().use(staticPlugin({ prefix: "/", assets: "./public", noCache: true })).listen(PORT);
+new Elysia().use(staticPlugin({ prefix: "/", assets: Path.Public, noCache: true })).listen(PORT);
 
-log.info(`HTTP server listening on port ${PORT} in ${IS_PROD ? "production" : "development"} mode`);
+log.info(`HTTP server listening on port ${PORT} in ${IS_PROD ? Env.Production : Env.Development} mode`);

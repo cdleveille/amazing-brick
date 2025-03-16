@@ -1,9 +1,10 @@
 import chokidar from "chokidar";
 import path from "path";
 
+import { Path } from "@constants";
 import { buildClient } from "@processes";
 
-const SRC_DIR = path.resolve("./src/client");
+const SRC_DIR = path.resolve(Path.ClientSrc);
 
 const watcher = chokidar.watch(SRC_DIR, { persistent: true });
 

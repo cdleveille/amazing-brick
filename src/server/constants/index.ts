@@ -1,3 +1,13 @@
+export enum Env {
+	Production = "production",
+	Development = "development"
+}
+
+export enum Path {
+	Public = "./public",
+	ClientSrc = "./src/client"
+}
+
 export enum SocketEvent {
 	Score = "score",
 	Rating = "rating",
