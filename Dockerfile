@@ -20,19 +20,21 @@ RUN apt-get update -qq && \
 COPY --link bun.lockb package.json ./
 COPY --link . .
 
-RUN bun i --ignore-scripts && \
-    bun build:prod
+# install all dependencies and run production build
+RUN bun install --ignore-scripts --frozen-lockfile
+RUN bun run build:prod
+RUN bun run compile
 
-# Install production dependencies only
-RUN rm -rf node_modules && \
-    bun i --ignore-scripts --production
+# final stage for app image
+FROM debian:bullseye-slim
 
-# Final stage for app image
-FROM base
+# copy built application
+COPY --from=build /app/public /app/public
+COPY --from=build /app/main /app/main
 
-# Copy built application
-COPY --from=build /app /app
+# set working directory
+WORKDIR /app
 
-# Start the server by default, this can be overwritten at runtime
+# start the server
 EXPOSE 3000
-CMD [ "bun", "start" ]
+ENTRYPOINT ["./main"]
