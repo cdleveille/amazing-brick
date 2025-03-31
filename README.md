@@ -14,8 +14,8 @@
 
 ## Stack
 
--   [Bun](https://bun.sh)
--   [Elysia](https://elysiajs.com)
--   [MongoDB](https://www.mongodb.com)
--   [React](https://react.dev)
--   [Socket.IO](https://socket.io)
+- [Bun](https://bun.sh)
+- [Elysia](https://elysiajs.com)
+- [MongoDB](https://www.mongodb.com)
+- [React](https://react.dev)
+- [Socket.IO](https://socket.io)
