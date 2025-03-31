@@ -3,13 +3,15 @@ import { Elysia } from "elysia";
 import { Env, Path } from "@constants";
 import { staticPlugin } from "@elysiajs/static";
 import { Config } from "@helpers";
-import { connectToDatabase, initSocket, log } from "@services";
+import { initSocket, log } from "@services";
 
 const { IS_PROD, PORT, SKIP_DB } = Config;
 
-if (!SKIP_DB) connectToDatabase();
+const buildIfDev = IS_PROD ? [] : [(await import("@processes")).buildClient()];
 
-initSocket();
+const connectToDb = SKIP_DB ? [] : [(await import("@services")).connectToDatabase()];
+
+await Promise.all([...buildIfDev, ...connectToDb, initSocket()]);
 
 new Elysia()
 	.use(staticPlugin({ prefix: "/", assets: Path.Public, noCache: true }))

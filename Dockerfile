@@ -4,8 +4,6 @@
 ARG BUN_VERSION=latest
 FROM oven/bun:${BUN_VERSION} as base
 
-LABEL fly_launch_runtime="Bun"
-
 # Bun app lives here
 WORKDIR /app
 
@@ -26,7 +24,7 @@ RUN bun run build:prod
 RUN bun run compile
 
 # final stage for app image
-FROM debian:bullseye-slim
+FROM gcr.io/distroless/base
 
 # copy built application
 COPY --from=build /app/public /app/public

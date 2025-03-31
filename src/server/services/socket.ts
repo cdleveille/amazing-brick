@@ -17,7 +17,7 @@ import type {
 
 const { IS_PROD, HOST, PORT, WS_PORT } = Config;
 
-export const initSocket = () => {
+export const initSocket = async () => {
 	const io = new Server(WS_PORT, {
 		cors: { origin: [HOST, `${HOST}:${PORT}`] },
 		serveClient: false
@@ -25,9 +25,10 @@ export const initSocket = () => {
 
 	log.info(`Socket.IO server started on port ${WS_PORT}`);
 
-	if (!IS_PROD)
-		import("@processes").then(({ initWatch }) => initWatch(() => io.emit(SocketEvent.Reload))).catch(log.error);
-
+	if (!IS_PROD) {
+		const { initWatch } = await import("@processes");
+		initWatch(() => io.emit(SocketEvent.Reload));
+	}
 	io.on("connect", socket => {
 		socket.on(
 			SocketEvent.Score,
