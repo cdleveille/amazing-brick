@@ -24,6 +24,7 @@ jobs:
       - run: bun i --ignore-scripts
       - run: bun lint
       - run: bun build:prod
+      - run: bun run compile
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only --detach --no-cache --config fly.toml
