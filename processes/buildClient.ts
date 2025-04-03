@@ -18,37 +18,27 @@ const copyFolders = ["assets"];
 const copyFiles = ["favicon.ico", "manifest.json"];
 
 export const buildClient = async () => {
-	try {
-		const start = now();
+	const start = now();
 
-		rimrafSync(outdir);
+	rimrafSync(outdir);
 
-		const results = await Promise.all([
-			Bun.build({
-				entrypoints: [`${src}/index.html`, `${src}/sw.ts`],
-				outdir,
-				define: { "Bun.env.IS_PROD": `"${isProd}"`, "Bun.env.WS_PORT": `"${Config.WS_PORT}"` },
-				sourcemap: isProd ? "none" : "linked",
-				naming: {
-					entry: "[dir]/[name].[ext]",
-					asset: "[dir]/[name].[ext]"
-				},
-				plugins: [
-					...copyFolders.map(folder => copy(`${src}/${folder}/`, `${outdir}/${folder}/`)),
-					...copyFiles.map(file => copy(`${src}/${file}`, `${outdir}/${file}`))
-				],
-				minify: isProd
-			})
-		]);
+	await Bun.build({
+		entrypoints: [`${src}/index.html`, `${src}/sw.ts`],
+		outdir,
+		define: { "Bun.env.IS_PROD": `"${isProd}"`, "Bun.env.WS_PORT": `"${Config.WS_PORT}"` },
+		sourcemap: isProd ? "none" : "linked",
+		naming: {
+			entry: "[dir]/[name].[ext]",
+			asset: "[dir]/[name]-[hash].[ext]"
+		},
+		plugins: [
+			...copyFolders.map(folder => copy(`${src}/${folder}/`, `${outdir}/${folder}/`)),
+			...copyFiles.map(file => copy(`${src}/${file}`, `${outdir}/${file}`))
+		],
+		minify: isProd
+	});
 
-		results.forEach(result => {
-			if (!result.success) throw result.logs;
-		});
+	const buildTime = (now() - start).toFixed(2);
 
-		const buildTime = (now() - start).toFixed(2);
-
-		log.info(`Build completed in ${isProd ? Env.Production : Env.Development} mode in ${buildTime}ms`);
-	} catch (error) {
-		throw new AggregateError(error instanceof Array ? error : [error]);
-	}
+	log.info(`Build completed in ${isProd ? Env.Production : Env.Development} mode in ${buildTime}ms`);
 };

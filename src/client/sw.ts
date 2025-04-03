@@ -11,7 +11,7 @@ self.__WB_DISABLE_DEV_LOGS = true;
 
 const cacheName = "sw-cache";
 
-const cacheFirstHashPrefix = "~";
+const cacheFirstHashPrefix = "-";
 
 const cacheFirstWithoutHashFileTypes = [".webp", ".ttf", ".woff", ".woff2", ".svg"];
 
