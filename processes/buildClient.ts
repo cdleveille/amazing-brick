@@ -29,7 +29,8 @@ export const buildClient = async () => {
 		sourcemap: isProd ? "none" : "linked",
 		naming: {
 			entry: "[dir]/[name].[ext]",
-			asset: "[dir]/[name]-[hash].[ext]"
+			asset: "[dir]/[name]~[hash].[ext]",
+			chunk: "[dir]/chunk~[hash].[ext]"
 		},
 		plugins: [
 			...copyFolders.map(folder => copy(`${src}/${folder}/`, `${outdir}/${folder}/`)),
