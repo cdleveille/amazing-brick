@@ -1,8 +1,16 @@
+import { Config } from "@utils";
+
 export const now = () => window.performance?.now?.() ?? new Date().getTime();
 
 export const registerServiceWorker = async () => {
-	if (!navigator.serviceWorker) return;
-	if (!navigator.serviceWorker.controller) await navigator.serviceWorker.register("sw.js");
+	if (!Config.IS_PROD || !navigator.serviceWorker) return;
+
+	const registration = await navigator.serviceWorker.register("sw.js", {
+		type: "module",
+		scope: "/"
+	});
+
+	if (registration.active) await registration.update();
 };
 
 export const assertGetElementById = (id: string) => {
