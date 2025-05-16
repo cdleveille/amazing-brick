@@ -42,17 +42,21 @@ export class Game {
 		this.ctx.setScore(0);
 		this.stopGameLoop = false;
 		executeOnClass("canvas", ele => ele.classList.remove("shake"));
-		let current: number,
-			last = now(),
-			delta: number;
+
+		let current: number;
+		let last = now();
+		let delta: number;
+		const maxDelta = 0.1;
+
 		const frame = () => {
 			if (this.stopGameLoop) return;
-			current = now();
-			delta = (current - last) / 1000;
 			requestAnimationFrame(frame);
+			current = now();
+			delta = Math.min((current - last) / 1000, maxDelta);
 			this.update(delta);
 			last = current;
 		};
+
 		requestAnimationFrame(frame);
 	}
 
