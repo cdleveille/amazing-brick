@@ -1,4 +1,4 @@
-app = "amazing-brick"
+app = "amazingbrick"
 primary_region = "bos"
 
 [[services]]
