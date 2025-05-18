@@ -1,16 +1,21 @@
 import { useMemo, useState } from "react";
 
-import { Button, Offline, Text } from "@components";
-import { Color } from "@constants";
-import { useApi, useAppContext, useIsOffline, useStyles } from "@hooks";
+import { Button } from "@client/components/Button";
+import { Offline } from "@client/components/Offline";
+import { Text } from "@client/components/Text";
+import { useApi } from "@client/hooks/useApi";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { useIsOffline } from "@client/hooks/useIsOffline";
+import { useStyles } from "@client/hooks/useStyles";
 import { Textarea } from "@mui/joy";
+import { Color } from "@shared/constants";
 
 export const Rate = () => {
 	const [isThumbsUp, setIsThumbsUp] = useState<boolean>();
 	const [comments, setComments] = useState<string>("");
 
 	const { submitRating } = useApi();
-	const { isOffline } = useIsOffline();
+	const isOffline = useIsOffline();
 	const { styles } = useStyles();
 
 	const { setScreen, player_id } = useAppContext();
@@ -30,8 +35,16 @@ export const Rate = () => {
 	return (
 		<div className="rate-container" style={styles.rateContainer}>
 			<div style={styles.rateThumbButtons}>
-				<RateButton type="thumbs-up" onClick={() => setIsThumbsUp(true)} isSelected={isThumbsUp === true} />
-				<RateButton type="thumbs-down" onClick={() => setIsThumbsUp(false)} isSelected={isThumbsUp === false} />
+				<RateButton
+					type="thumbs-up"
+					onClick={() => setIsThumbsUp(true)}
+					isSelected={isThumbsUp === true}
+				/>
+				<RateButton
+					type="thumbs-down"
+					onClick={() => setIsThumbsUp(false)}
+					isSelected={isThumbsUp === false}
+				/>
 			</div>
 			<Textarea
 				className="text-area"
@@ -47,7 +60,11 @@ export const Rate = () => {
 					disabled={isSubmitDisabled}
 					onClick={() => {
 						if (isSubmitDisabled) return;
-						submitRating({ player_id, is_thumbs_up: isThumbsUp, comments: comments.trim() });
+						submitRating({
+							player_id,
+							is_thumbs_up: isThumbsUp,
+							comments: comments.trim()
+						});
 						setScreen("thanks");
 					}}
 					backgroundColor={Color.Green}
@@ -73,6 +90,7 @@ const RateButton = ({ type, onClick, isSelected }: TRateButtonProps) => {
 
 	return (
 		<button
+			type="button"
 			className="btn-rate"
 			onClick={onClick}
 			style={styles.rateThumbButton(isSelected)}
@@ -88,7 +106,13 @@ const ThumbsUpSvg = () => {
 	const { styles } = useStyles();
 
 	return (
-		<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={styles.rateThumbSvg}>
+		<svg
+			viewBox="0 0 32 32"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+			style={styles.rateThumbSvg}
+		>
+			<title>Thumbs Up</title>
 			<path
 				d="M12.313 5.531c0-2.9 2.124-3.583 3.312-3.562 2.413 0 3.082 2.009 3.281 3.078.248 1.33.006 4.509-.106 5.969l-.003.041a2.25 2.25 0 0 1 .515-.057h3.858c1.56 0 2.83 1.27 2.83 2.83 0 .806-.259 1.535-.765 2.05 1.044.461 1.765 1.428 1.765 2.544 0 1.023-.463 1.92-1.364 2.418.823.511 1.364 1.366 1.364 2.332 0 1.107-.543 2.069-1.598 2.533.375.386.598.96.598 1.794 0 1.38-.969 2.502-2.83 2.502h-3.858c-.045 0-.09 0-.134-.003h-3.131C5.609 30.172 5 23.406 5 20.656c0-5.156 2.298-6.689 4.34-8.051.966-.644 1.875-1.25 2.457-2.183.488-.783.515-1.5.515-4.89Z"
 				fill="#FFC83D"
@@ -105,7 +129,13 @@ const ThumbsDownSvg = () => {
 	const { styles } = useStyles();
 
 	return (
-		<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={styles.rateThumbSvg}>
+		<svg
+			viewBox="0 0 32 32"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+			style={styles.rateThumbSvg}
+		>
+			<title>Thumbs Down</title>
 			<path
 				d="M19.688 26.44c0 2.9-2.125 3.584-3.313 3.563-2.412 0-3.082-2.01-3.281-3.078-.248-1.33-.005-4.51.106-5.97l.003-.04c-.159.036-.33.057-.515.057H8.83c-1.56 0-2.83-1.27-2.83-2.83 0-.806.259-1.535.765-2.051C5.721 15.63 5 14.663 5 13.548c0-1.023.463-1.921 1.364-2.418C5.541 10.617 5 9.764 5 8.797c0-1.108.543-2.07 1.598-2.534C6.223 5.878 6 5.304 6 4.47c0-1.379.969-2.502 2.83-2.502h3.857c.046 0 .09.001.135.004h3.131C26.391 1.8 27 8.565 27 11.315c0 5.156-2.298 6.69-4.34 8.052-.966.644-1.875 1.25-2.457 2.183-.488.782-.515 1.5-.515 4.89Z"
 				fill="#FFC83D"

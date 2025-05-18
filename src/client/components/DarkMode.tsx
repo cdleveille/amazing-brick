@@ -1,4 +1,5 @@
-import { useAppContext, useStyles } from "@hooks";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { useStyles } from "@client/hooks/useStyles";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 
@@ -8,6 +9,7 @@ export const DarkMode = () => {
 
 	return (
 		<button
+			type="button"
 			className="btn-dark-mode"
 			onClick={() => setIsDarkMode(isDarkMode => !isDarkMode)}
 			style={styles.darkModeBtn}

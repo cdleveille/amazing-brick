@@ -1,4 +1,4 @@
-import { useStyles } from "@hooks";
+import { useStyles } from "@client/hooks/useStyles";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 export const Jump = () => {
@@ -25,6 +25,7 @@ const JumpSvg = () => {
 			className="absolute-center"
 			style={styles.jumpSvg}
 		>
+			<title>Jump</title>
 			<path
 				style={{
 					fill: "#a3a3a3",

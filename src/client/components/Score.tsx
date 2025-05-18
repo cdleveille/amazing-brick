@@ -1,4 +1,5 @@
-import { useAppContext, useStyles } from "@hooks";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { useStyles } from "@client/hooks/useStyles";
 
 export const Score = () => {
 	const { score } = useAppContext();

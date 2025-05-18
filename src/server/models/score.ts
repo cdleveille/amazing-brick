@@ -1,7 +1,7 @@
-import { model, Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
-import { BaseSchema } from "@helpers";
-import type { TScore } from "@types";
+import { BaseSchema } from "@server/helpers/util";
+import type { TScore } from "@shared/types";
 
 const ScoreSchema = new Schema<TScore>(
 	{

@@ -1,12 +1,16 @@
+import CircularProgress from "@mui/material/CircularProgress";
 import { useEffect } from "react";
 
-import { Button } from "@components";
-import { Color } from "@constants";
-import { usePersistedState, useStyles } from "@hooks";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Button } from "@client/components/Button";
+import { usePersistedState } from "@client/hooks/usePersistedState";
+import { useStyles } from "@client/hooks/useStyles";
+import { Color } from "@shared/constants";
 
 export const Loading = () => {
-	const [isShowLoadingIndicator, setIsShowLoadingIndicator] = usePersistedState(false, "isShowLoadingIndicator");
+	const [isShowLoadingIndicator, setIsShowLoadingIndicator] = usePersistedState(
+		false,
+		"isShowLoadingIndicator"
+	);
 
 	const { styles } = useStyles();
 

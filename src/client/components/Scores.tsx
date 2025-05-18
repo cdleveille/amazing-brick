@@ -1,10 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { Button, GameModeMenu, Loading, Offline, Text } from "@components";
-import { Color, GameMode, SocketEvent } from "@constants";
-import { useApi, useAppContext, useIsOffline, useStyles } from "@hooks";
-import type { TGameMode, THighScoresRes } from "@types";
-import { socket } from "@utils";
+import { Button } from "@client/components/Button";
+import { GameModeMenu } from "@client/components/GameMode";
+import { Loading } from "@client/components/Loading";
+import { Offline } from "@client/components/Offline";
+import { Text } from "@client/components/Text";
+import { socket } from "@client/helpers/socket";
+import { useApi } from "@client/hooks/useApi";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { useIsOffline } from "@client/hooks/useIsOffline";
+import { useStyles } from "@client/hooks/useStyles";
+import { Color, GameMode, SocketEvent } from "@shared/constants";
+import type { TGameMode, THighScoresRes } from "@shared/types";
 
 export const Scores = () => {
 	const { player_id, gameMode } = useAppContext();
@@ -14,7 +21,7 @@ export const Scores = () => {
 
 	const { getPlayerHighScore, getHighScores } = useApi();
 
-	const { isOffline } = useIsOffline();
+	const isOffline = useIsOffline();
 
 	const { styles } = useStyles();
 
@@ -30,9 +37,9 @@ export const Scores = () => {
 
 	useEffect(() => {
 		const onNewScore = (scores: THighScoresRes) => setHighScores(scores);
-		socket.on(SocketEvent.NewScore, onNewScore);
+		socket.io.on(SocketEvent.NewScore, onNewScore);
 		return () => {
-			socket.off(SocketEvent.NewScore, onNewScore);
+			socket.io.off(SocketEvent.NewScore, onNewScore);
 		};
 	}, []);
 
@@ -99,7 +106,10 @@ export const Scores = () => {
 				<div style={styles.scoresBoxLabel}>
 					<div>Top</div>
 					<div style={styles.scoresBoxValue}>
-						{getPercentileRank(selectedGameModePlayerHighScore, selectedGameModeHighScores ?? [])}
+						{getPercentileRank(
+							selectedGameModePlayerHighScore,
+							selectedGameModeHighScores ?? []
+						)}
 					</div>
 				</div>
 			</div>

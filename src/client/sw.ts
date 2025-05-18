@@ -1,7 +1,7 @@
-/// <reference lib="webworker" />
-
 import { registerRoute } from "workbox-routing";
-import { CacheFirst, NetworkFirst } from "workbox-strategies";
+import { CacheFirst, NetworkFirst, NetworkOnly } from "workbox-strategies";
+
+import { HASH_PREFIX, HASH_REGEX } from "@shared/constants";
 
 declare const self: ServiceWorkerGlobalScope & {
 	__WB_DISABLE_DEV_LOGS: boolean;
@@ -11,14 +11,22 @@ self.__WB_DISABLE_DEV_LOGS = true;
 const manifest = self.__WB_MANIFEST;
 
 const cacheName = "sw-cache";
-const cacheFirstHashPrefix = "~";
-const cacheFirstWithoutHashFileTypes = [".webp", ".ttf", ".woff", ".woff2", ".svg"];
+const cacheFirstWithoutHashFileTypes = [
+	".ttf",
+	".woff",
+	".woff2",
+	".jpg",
+	".jpeg",
+	".png",
+	".webp"
+];
 
-const isCacheFirstWithHash = (filename: string) =>
-	new RegExp(`${cacheFirstHashPrefix}[a-zA-Z0-9]{8}\\.[a-z0-9]+$`).test(filename);
+const isCacheFirstWithHash = (filename: string) => HASH_REGEX.test(filename);
 
 const isCacheFirstWithoutHash = (filename: string) =>
-	cacheFirstWithoutHashFileTypes.some(fileType => filename.toLowerCase().endsWith(fileType.toLowerCase()));
+	cacheFirstWithoutHashFileTypes.some(fileType =>
+		filename.toLowerCase().endsWith(fileType.toLowerCase())
+	);
 
 self.addEventListener("install", event => {
 	self.skipWaiting();
@@ -50,8 +58,8 @@ const isCacheFirstRequest = (url: URL) => {
 	if (!isCacheFirstWithHash(url.href)) return false;
 	// delete stale cache entries asynchronously
 	(async () => {
-		const urlPrefix = url.href.split(cacheFirstHashPrefix)[0];
-		const hash = url.href.split(cacheFirstHashPrefix)[1];
+		const urlPrefix = url.href.split(HASH_PREFIX)[0];
+		const hash = url.href.split(HASH_PREFIX)[1];
 		const urlSuffixSplit = url.href.split(".");
 		const urlSuffix = urlSuffixSplit[urlSuffixSplit.length - 1];
 		const cache = await caches.open(cacheName);
@@ -63,13 +71,15 @@ const isCacheFirstRequest = (url: URL) => {
 					entry =>
 						entry.url.startsWith(urlPrefix) &&
 						entry.url.endsWith(urlSuffix) &&
-						hash !== entry.url.split(cacheFirstHashPrefix)[1]
+						hash !== entry.url.split(HASH_PREFIX)[1]
 				)
 				.map(entry => cache.delete(entry))
 		);
 	})().catch(console.error);
 	return true;
 };
+
+registerRoute(({ url }) => url.href.includes("/socket.io/"), new NetworkOnly());
 
 registerRoute(({ url }) => isCacheFirstRequest(url), new CacheFirst({ cacheName }));
 

@@ -1,7 +1,9 @@
-import { GameMode } from "@constants";
-import { Brick, Obstacle } from "@game";
-import type { TAppContext, TCanvas, TGotchaBrick, TJumpDirection } from "@types";
-import { executeOnClass, isRectangleIntersectingDiamond, now } from "@utils";
+import { Brick } from "@client/game/brick";
+import { Obstacle } from "@client/game/obstacle";
+import { executeOnClass, now } from "@client/helpers/browser";
+import { isRectangleIntersectingDiamond } from "@client/helpers/game";
+import { GameMode } from "@shared/constants";
+import type { TAppContext, TCanvas, TGotchaBrick, TJumpDirection } from "@shared/types";
 
 export class Game {
 	ctx: TAppContext;
@@ -24,16 +26,18 @@ export class Game {
 		this.obstacle = new Obstacle(this);
 		this.gravity = 1500 * this.canvas.scaleRatio;
 		if (this.ctx.isGameMode(GameMode.Gotcha)) {
-			this.gotchaBricks = Array.from(document.getElementsByClassName("gotcha-brick")).map((ele, i) => {
-				return {
-					x: this.generateRandomGotchaBrickX(),
-					y:
-						-this.obstacle.wallSpacing * (i + 1) -
-						this.obstacle.wallHeight / 2 +
-						this.obstacle.wallSpacing / 2,
-					ele: ele as HTMLElement
-				} as TGotchaBrick;
-			});
+			this.gotchaBricks = Array.from(document.getElementsByClassName("gotcha-brick")).map(
+				(ele, i) => {
+					return {
+						x: this.generateRandomGotchaBrickX(),
+						y:
+							-this.obstacle.wallSpacing * (i + 1) -
+							this.obstacle.wallHeight / 2 +
+							this.obstacle.wallSpacing / 2,
+						ele: ele as HTMLElement
+					} as TGotchaBrick;
+				}
+			);
 			this.gotchaBrickWidth = 20 * this.canvas.scaleRatio;
 		}
 	}
@@ -146,7 +150,11 @@ export class Game {
 					{
 						x: wall.gapX + this.obstacle.wallGapWidth - 1 * this.canvas.scaleRatio,
 						y: wall.y - 1 * this.canvas.scaleRatio,
-						width: this.canvas.width - wall.gapX - this.obstacle.wallGapWidth + 1 * this.canvas.scaleRatio,
+						width:
+							this.canvas.width -
+							wall.gapX -
+							this.obstacle.wallGapWidth +
+							1 * this.canvas.scaleRatio,
 						height: this.obstacle.wallHeight + 5 * this.canvas.scaleRatio
 					},
 					{ cx: this.brick.x, cy: this.brick.y, radius: this.brick.diagonalRadius }

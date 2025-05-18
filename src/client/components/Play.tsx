@@ -1,9 +1,13 @@
 import { useEffect } from "react";
 
-import { GameObject, Jump, Pause, Score, Timer } from "@components";
-import { GameMode } from "@constants";
-import { Game } from "@game";
-import { useAppContext } from "@hooks";
+import { GameObject } from "@client/components/GameObject";
+import { Jump } from "@client/components/Jump";
+import { Pause } from "@client/components/Pause";
+import { Score } from "@client/components/Score";
+import { Timer } from "@client/components/Timer";
+import { Game } from "@client/game/game";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { GameMode } from "@shared/constants";
 
 export const Play = () => {
 	const ctx = useAppContext();

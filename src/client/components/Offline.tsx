@@ -1,6 +1,7 @@
-import { Button, Text } from "@components";
-import { Color } from "@constants";
-import { useStyles } from "@hooks";
+import { Button } from "@client/components/Button";
+import { Text } from "@client/components/Text";
+import { useStyles } from "@client/hooks/useStyles";
+import { Color } from "@shared/constants";
 
 type TOfflineProps = {
 	message: string;

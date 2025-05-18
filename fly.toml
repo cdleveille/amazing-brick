@@ -1,4 +1,4 @@
-app = "amazingbrick"
+app = "amazing-brick"
 primary_region = "bos"
 
 [[services]]
@@ -21,14 +21,6 @@ primary_region = "bos"
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 3000
-
-[[services]]
-  internal_port = 3001
-  processes = ["app"]
-  protocol = "tcp"
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 3001
 
 [[vm]]
   memory = '512mb'

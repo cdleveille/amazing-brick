@@ -1,7 +1,7 @@
-import { model, Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
-import { BaseSchema } from "@helpers";
-import type { TRating } from "@types";
+import { BaseSchema } from "@server/helpers/util";
+import type { TRating } from "@shared/types";
 
 const RatingSchema = new Schema<TRating>(
 	{

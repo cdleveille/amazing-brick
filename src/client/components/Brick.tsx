@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import type { CSSProperties } from "react";
 
 type TBrickProps = {
 	id?: string;
@@ -7,5 +7,5 @@ type TBrickProps = {
 };
 
 export const Brick = ({ id, className, style }: TBrickProps) => {
-	return <div id={id} className={`brick ${className}`} style={style}></div>;
+	return <div id={id} className={`brick ${className}`} style={style} />;
 };

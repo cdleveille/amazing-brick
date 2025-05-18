@@ -1,6 +1,7 @@
-import { Brick } from "@components";
-import { GameMode } from "@constants";
-import { useAppContext, useStyles } from "@hooks";
+import { Brick } from "@client/components/Brick";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { useStyles } from "@client/hooks/useStyles";
+import { GameMode } from "@shared/constants";
 
 export const GameObject = () => {
 	const { isGameMode } = useAppContext();
@@ -8,21 +9,23 @@ export const GameObject = () => {
 
 	return (
 		<>
-			<div id="wall1-left" className="wall"></div>
-			<div id="wall1-right" className="wall"></div>
-			<div id="wall2-left" className="wall"></div>
-			<div id="wall2-right" className="wall"></div>
-			<div id="block1" className="block"></div>
-			<div id="block2" className="block"></div>
-			<div id="block3" className="block"></div>
-			<div id="block4" className="block"></div>
+			<div id="wall1-left" className="wall" />
+			<div id="wall1-right" className="wall" />
+			<div id="wall2-left" className="wall" />
+			<div id="wall2-right" className="wall" />
+			<div id="block1" className="block" />
+			<div id="block2" className="block" />
+			<div id="block3" className="block" />
+			<div id="block4" className="block" />
 			{isGameMode(GameMode.Gotcha) && (
 				<>
 					<Brick className="gotcha-brick" />
 					<Brick className="gotcha-brick" />
 				</>
 			)}
-			{isGameMode(GameMode.Shrouded) && <div className="absolute-center" style={styles.shroud}></div>}
+			{isGameMode(GameMode.Shrouded) && (
+				<div className="absolute-center" style={styles.shroud} />
+			)}
 			<Brick id="brick" style={styles.brick} />
 		</>
 	);

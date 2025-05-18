@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { GameMode } from "@constants";
-import { useAppContext, useStyles } from "@hooks";
+import { now } from "@client/helpers/browser";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { useStyles } from "@client/hooks/useStyles";
 import TimerRoundedIcon from "@mui/icons-material/TimerRounded";
-import { now } from "@utils";
+import { GameMode } from "@shared/constants";
 
 const INITIAL_SEC = 10;
 
 export const Timer = () => {
-	const { isPausedAtStart, isPaused, setScreen, gameMode, netStartTime, setNetStartTime } = useAppContext();
+	const { isPausedAtStart, isPaused, setScreen, gameMode, netStartTime, setNetStartTime } =
+		useAppContext();
 
 	const { styles } = useStyles();
 
@@ -20,7 +22,7 @@ export const Timer = () => {
 		[formatMsToS, currentTime, netStartTime]
 	);
 
-	const isTimerUsed = useMemo(() => gameMode.name == GameMode.Sprint, [gameMode]);
+	const isTimerUsed = useMemo(() => gameMode.name === GameMode.Sprint, [gameMode]);
 
 	useEffect(() => {
 		if (isPausedAtStart || !isTimerUsed) return;
@@ -59,7 +61,10 @@ export const Timer = () => {
 
 	return (
 		<div style={styles.timerContainer}>
-			<TimerRoundedIcon className={isPaused || isPausedAtStart ? "" : "rocking"} sx={styles.timerIcon} />
+			<TimerRoundedIcon
+				className={isPaused || isPausedAtStart ? "" : "rocking"}
+				sx={styles.timerIcon}
+			/>
 			{isPausedAtStart ? INITIAL_SEC : secondsLeft}
 		</div>
 	);

@@ -1,10 +1,12 @@
-import type { TConfig } from "@types";
+import { DefaultConfig } from "@shared/constants";
+import type { TConfig } from "@shared/types";
 
-export const Config = {
-	IS_PROD: Bun.env.BUN_ENV === "production" || Bun.env.NODE_ENV === "production",
-	HOST: Bun.env.HOST || "http://localhost",
-	PORT: parseInt(Bun.env.PORT || "3000"),
-	WS_PORT: parseInt(Bun.env.WS_PORT || "3001"),
-	MONGO_URI: Bun.env.MONGO_URI || "mongodb://localhost:27017/amazing-brick",
-	SKIP_DB: Bun.env.SKIP_DB === "true"
-} as TConfig;
+const PORT = process.env.PORT ? Number.parseInt(process.env.PORT) : DefaultConfig.PORT;
+
+const HOST = process.env.HOST ?? DefaultConfig.HOST;
+
+const MONGO_URI = process.env.MONGO_URI ?? DefaultConfig.MONGO_URI;
+
+export const Config: TConfig = { PORT, HOST, MONGO_URI };
+
+export const isCustomHost = HOST !== DefaultConfig.HOST;

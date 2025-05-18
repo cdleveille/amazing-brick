@@ -1,7 +1,7 @@
-import { Color, GameMode, OBSTACLE_COLORS } from "@constants";
-import { Game } from "@game";
-import type { TBlock, TWall } from "@types";
-import { assertGetElementById } from "@utils";
+import type { Game } from "@client/game/game";
+import { assertGetElementById } from "@client/helpers/browser";
+import { type Color, GameMode, OBSTACLE_COLORS } from "@shared/constants";
+import type { TBlock, TWall } from "@shared/types";
 
 export class Obstacle {
 	game: Game;
@@ -81,7 +81,8 @@ export class Obstacle {
 
 	generateRandomGapX() {
 		return (
-			Math.random() * (this.game.canvas.width - this.wallGapWidth - 2 * this.wallGapMinDistFromEdge) +
+			Math.random() *
+				(this.game.canvas.width - this.wallGapWidth - 2 * this.wallGapMinDistFromEdge) +
 			this.wallGapMinDistFromEdge
 		);
 	}
@@ -104,7 +105,8 @@ export class Obstacle {
 
 	getNextWallColor(color: Color) {
 		const currentWallColorIndex = OBSTACLE_COLORS.indexOf(color);
-		const nextWallColorIndex = currentWallColorIndex + 1 >= OBSTACLE_COLORS.length ? 0 : currentWallColorIndex + 1;
+		const nextWallColorIndex =
+			currentWallColorIndex + 1 >= OBSTACLE_COLORS.length ? 0 : currentWallColorIndex + 1;
 		return OBSTACLE_COLORS[nextWallColorIndex];
 	}
 

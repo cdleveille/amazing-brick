@@ -1,6 +1,6 @@
-import { Button } from "@components";
-import { Color } from "@constants";
-import { useStyles } from "@hooks";
+import { Button } from "@client/components/Button";
+import { useStyles } from "@client/hooks/useStyles";
+import { Color } from "@shared/constants";
 
 export const Thanks = () => {
 	const { styles } = useStyles();

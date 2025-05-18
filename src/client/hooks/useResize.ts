@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import type { TCanvas } from "@types";
+import type { TCanvas } from "@shared/types";
 
 export const useResize = (setCanvas: React.Dispatch<React.SetStateAction<TCanvas | undefined>>) => {
 	const onResize = () => {

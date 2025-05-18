@@ -1,11 +1,17 @@
-import { ReactNode, useCallback, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useMemo, useState } from "react";
 
-import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
-import { AppContext } from "@contexts";
-import { Game } from "@game";
-import { usePersistedState, useResize } from "@hooks";
-import type { TCanvas, TGameModeName, TScreen } from "@types";
-import { doesSystemPreferDarkTheme, GAME_MODES, getLocalStorageItem } from "@utils";
+import { AppContext } from "@client/contexts/app";
+import type { Game } from "@client/game/game";
+import { doesSystemPreferDarkTheme, storage } from "@client/helpers/browser";
+import { GAME_MODES } from "@client/helpers/game";
+import { usePersistedState } from "@client/hooks/usePersistedState";
+import { useResize } from "@client/hooks/useResize";
+import {
+	GAME_MODE_LOCAL_STORAGE_KEY,
+	IS_DARK_MODE_LOCAL_STORAGE_KEY,
+	PLAYER_ID_LOCAL_STORAGE_KEY
+} from "@shared/constants";
+import type { TCanvas, TGameModeName, TScreen } from "@shared/types";
 
 type TAppContextProviderProps = {
 	children: ReactNode;
@@ -19,15 +25,19 @@ export const AppContextProvider = ({ children }: TAppContextProviderProps) => {
 	const [isPaused, setIsPaused] = useState(false);
 	const [isPausedAtStart, setIsPausedAtStart] = useState(true);
 	const [isDarkMode, setIsDarkMode] = useState(
-		getLocalStorageItem<boolean>(IS_DARK_MODE_LOCAL_STORAGE_KEY) ?? doesSystemPreferDarkTheme() ?? false
+		storage.local.getItem<boolean>(IS_DARK_MODE_LOCAL_STORAGE_KEY) ??
+			doesSystemPreferDarkTheme() ??
+			false
 	);
 	const [gameMode, setGameMode] = useState(
-		GAME_MODES.find(gm => gm.name === getLocalStorageItem<string>(GAME_MODE_LOCAL_STORAGE_KEY)) ?? GAME_MODES[0]
+		GAME_MODES.find(
+			gm => gm.name === storage.local.getItem<string>(GAME_MODE_LOCAL_STORAGE_KEY)
+		) ?? GAME_MODES[0]
 	);
 	const [netStartTime, setNetStartTime] = useState(0);
 
 	const player_id = useMemo(
-		() => getLocalStorageItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID(),
+		() => storage.local.getItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID(),
 		[]
 	);
 

@@ -1,7 +1,7 @@
-import { CSSProperties, useMemo } from "react";
+import { type CSSProperties, useMemo } from "react";
 
-import { Color, GameMode } from "@constants";
-import { useAppContext } from "@hooks";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { Color, GameMode } from "@shared/constants";
 
 export const useStyles = () => {
 	const { canvas, screen, isDarkMode, gameMode, isGameMode, isPaused } = useAppContext();
@@ -47,7 +47,8 @@ export const useStyles = () => {
 				right: 0,
 				padding: `${8 * scaleRatio}px`
 			} as CSSProperties,
-			darkModeBtnIcon: (color: string) => ({ color, fontSize: `${40 * scaleRatio}px` }) as CSSProperties,
+			darkModeBtnIcon: (color: string) =>
+				({ color, fontSize: `${40 * scaleRatio}px` }) as CSSProperties,
 			gameModeArrowBtn: {
 				fontSize: `${36 * scaleRatio}px`,
 				color: isDarkMode ? Color.White : Color.Black
@@ -290,7 +291,12 @@ export const useStyles = () => {
 			} as CSSProperties,
 			scoresTopTenItem: (index: number) =>
 				({
-					backgroundColor: index % 2 === 0 ? (isDarkMode ? Color.DarkGray : Color.LightGray) : "transparent",
+					backgroundColor:
+						index % 2 === 0
+							? isDarkMode
+								? Color.DarkGray
+								: Color.LightGray
+							: "transparent",
 					display: "flex",
 					flexDirection: "row",
 					justifyContent: "center",
@@ -300,7 +306,7 @@ export const useStyles = () => {
 					transition: "0.2s ease-in-out"
 				}) as CSSProperties,
 			shroud: {
-				background: `radial-gradient(circle, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 65%)`,
+				background: "radial-gradient(circle, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 65%)",
 				width: "102%",
 				height: "102%",
 				zIndex: 500

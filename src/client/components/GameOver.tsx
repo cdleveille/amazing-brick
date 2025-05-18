@@ -2,24 +2,33 @@ import { useEffect } from "react";
 
 import CryptoJS from "crypto-js";
 
-import { Button, Loading, Text } from "@components";
-import { Color } from "@constants";
-import { useApi, useAppContext, useIsOffline, useStyles } from "@hooks";
-import { socket } from "@utils";
+import { Button } from "@client/components/Button";
+import { Loading } from "@client/components/Loading";
+import { Text } from "@client/components/Text";
+import { socket } from "@client/helpers/socket";
+import { useApi } from "@client/hooks/useApi";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { useIsOffline } from "@client/hooks/useIsOffline";
+import { useStyles } from "@client/hooks/useStyles";
+import { Color } from "@shared/constants";
 
 export const GameOver = () => {
 	const { score, player_id, gameMode } = useAppContext();
 
 	const { useSubmitScore } = useApi();
 
-	const { isOffline } = useIsOffline();
+	const isOffline = useIsOffline();
 
 	const { styles } = useStyles();
 
 	const { data, mutate: submitScore } = useSubmitScore({
 		player_id,
-		score: !isOffline ? CryptoJS.AES.encrypt(score.toString(), socket.id ?? "").toString() : "",
-		game_mode_name: !isOffline ? CryptoJS.AES.encrypt(gameMode.name.toString(), socket.id ?? "").toString() : ""
+		score: !isOffline
+			? CryptoJS.AES.encrypt(score.toString(), socket.io.id ?? "").toString()
+			: "",
+		game_mode_name: !isOffline
+			? CryptoJS.AES.encrypt(gameMode.name.toString(), socket.io.id ?? "").toString()
+			: ""
 	});
 
 	useEffect(() => {

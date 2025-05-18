@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { Text } from "@components";
-import { useAppContext, useStyles } from "@hooks";
-import type { TScreen } from "@types";
+import { Text } from "@client/components/Text";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { useStyles } from "@client/hooks/useStyles";
+import type { TScreen } from "@shared/types";
 
 type TButtonProps = {
 	backgroundColor: string;
@@ -47,6 +48,7 @@ export const Button = ({
 
 	return (
 		<button
+			type="button"
 			className="btn"
 			style={styles.button(backgroundColor)}
 			onClick={handleClick}

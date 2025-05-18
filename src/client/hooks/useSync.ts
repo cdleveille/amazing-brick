@@ -1,12 +1,26 @@
 import { useEffect } from "react";
 
-import { GAME_MODE_LOCAL_STORAGE_KEY, IS_DARK_MODE_LOCAL_STORAGE_KEY, PLAYER_ID_LOCAL_STORAGE_KEY } from "@constants";
-import { useAppContext } from "@hooks";
-import { setLocalStorageItem } from "@utils";
+import { storage } from "@client/helpers/browser";
+import { useAppContext } from "@client/hooks/useAppContext";
+import {
+	GAME_MODE_LOCAL_STORAGE_KEY,
+	IS_DARK_MODE_LOCAL_STORAGE_KEY,
+	PLAYER_ID_LOCAL_STORAGE_KEY
+} from "@shared/constants";
 
 export const useSync = () => {
-	const { canvas, player_id, game, isPaused, isPausedAtStart, score, screen, isScreen, isDarkMode, gameMode } =
-		useAppContext();
+	const {
+		canvas,
+		player_id,
+		game,
+		isPaused,
+		isPausedAtStart,
+		score,
+		screen,
+		isScreen,
+		isDarkMode,
+		gameMode
+	} = useAppContext();
 
 	useEffect(() => {
 		if (!game) return;
@@ -30,15 +44,15 @@ export const useSync = () => {
 
 	useEffect(() => {
 		if (!player_id) return;
-		setLocalStorageItem(PLAYER_ID_LOCAL_STORAGE_KEY, player_id);
+		storage.local.setItem(PLAYER_ID_LOCAL_STORAGE_KEY, player_id);
 	}, [player_id]);
 
 	useEffect(() => {
-		setLocalStorageItem(IS_DARK_MODE_LOCAL_STORAGE_KEY, !!isDarkMode);
+		storage.local.setItem(IS_DARK_MODE_LOCAL_STORAGE_KEY, !!isDarkMode);
 	}, [isDarkMode]);
 
 	useEffect(() => {
-		setLocalStorageItem(GAME_MODE_LOCAL_STORAGE_KEY, gameMode.name);
+		storage.local.setItem(GAME_MODE_LOCAL_STORAGE_KEY, gameMode.name);
 	}, [gameMode]);
 
 	useEffect(() => {

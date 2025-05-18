@@ -1,39 +1,27 @@
 {
   "compilerOptions": {
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom", "webworker"],
     "module": "esnext",
     "target": "esnext",
-    "types": ["bun-types"],
+    "types": ["@types/bun"],
     "moduleResolution": "bundler",
     "moduleDetection": "force",
     "noEmit": true,
-    "composite": true,
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "allowJs": true,
+    "checkJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "downlevelIteration": true,
     "skipLibCheck": true,
     "jsx": "react-jsx",
     "strict": true,
     "baseUrl": ".",
+    "incremental": false,
     "paths": {
-      "@assets": ["./src/client/assets"],
-      "@components": ["./src/client/components"],
-      "@constants": ["./src/server/constants"],
-      "@contexts": ["./src/client/contexts"],
-      "@game": ["./src/client/game"],
-      "@helpers": ["./src/server/helpers"],
-      "@hooks": ["./src/client/hooks"],
-      "@processes": ["./processes"],
-      "@middleware": ["./src/server/middleware"],
-      "@models": ["./src/server/models"],
-      "@services": ["./src/server/services"],
-      "@types": ["./src/server/types"],
-      "@utils": ["./src/client/utils"]
+      "@*": ["src/*"]
     }
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.json"]
+  "exclude": ["node_modules", "public"]
 }

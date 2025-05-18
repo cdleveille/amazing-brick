@@ -1,6 +1,14 @@
-import { DarkMode, GameOver, Home, Play, Rate, Scores, Thanks } from "@components";
-import { useAppContext, useStyles, useSync } from "@hooks";
-import type { TScreen } from "@types";
+import { DarkMode } from "@client/components/DarkMode";
+import { GameOver } from "@client/components/GameOver";
+import { Home } from "@client/components/Home";
+import { Play } from "@client/components/Play";
+import { Rate } from "@client/components/Rate";
+import { Scores } from "@client/components/Scores";
+import { Thanks } from "@client/components/Thanks";
+import { useAppContext } from "@client/hooks/useAppContext";
+import { useStyles } from "@client/hooks/useStyles";
+import { useSync } from "@client/hooks/useSync";
+import type { TScreen } from "@shared/types";
 
 export const Main = () => {
 	const { screen, isScreen } = useAppContext();
@@ -9,12 +17,12 @@ export const Main = () => {
 
 	return (
 		<>
-			<div className="cover" style={styles.coverTop}></div>
+			<div className="cover" style={styles.coverTop} />
 			<div className="canvas" style={styles.canvas}>
 				{!isScreen("play") && <DarkMode />}
 				{getScreen(screen)}
 			</div>
-			<div className="cover" style={styles.coverBottom}></div>
+			<div className="cover" style={styles.coverBottom} />
 		</>
 	);
 };

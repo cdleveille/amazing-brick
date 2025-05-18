@@ -2,14 +2,14 @@
 	font-family: "Roboto-Regular";
 	font-style: normal;
 	font-weight: 600;
-	src: url("./assets/fonts/Roboto-Regular.ttf") format("truetype");
+	src: url("./assets/Roboto-Regular.ttf") format("truetype");
 }
 
 @font-face {
 	font-family: "Roboto-Thin";
 	font-style: normal;
 	font-weight: lighter;
-	src: url("./assets/fonts/Roboto-Thin.ttf") format("truetype");
+	src: url("./assets/Roboto-Thin.ttf") format("truetype");
 }
 
 * {
@@ -21,7 +21,6 @@
 *:not(textarea, button) {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
-	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;

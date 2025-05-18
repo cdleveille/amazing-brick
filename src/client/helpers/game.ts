@@ -1,5 +1,5 @@
-import { GameMode } from "@constants";
-import type { TDiamond, TGameMode, TPoint, TRectangle } from "@types";
+import { GameMode } from "@shared/constants";
+import type { TDiamond, TGameMode, TPoint, TRectangle } from "@shared/types";
 
 export const isRectangleIntersectingDiamond = (rect: TRectangle, diamond: TDiamond) => {
 	// Step 1: Get the axis-aligned bounding box (AABB) of the diamond
@@ -83,7 +83,12 @@ const doAABBsIntersect = (rect1: TRectangle, rect2: TRectangle) => {
 };
 
 const isPointInRectangle = (point: TPoint, rect: TRectangle) => {
-	return point.x >= rect.x && point.x <= rect.x + rect.width && point.y >= rect.y && point.y <= rect.y + rect.height;
+	return (
+		point.x >= rect.x &&
+		point.x <= rect.x + rect.width &&
+		point.y >= rect.y &&
+		point.y <= rect.y + rect.height
+	);
 };
 
 const isPointInDiamond = (point: TPoint, diamond: TDiamond) => {

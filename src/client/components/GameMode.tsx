@@ -1,14 +1,14 @@
-import { CSSProperties, MouseEvent, useCallback, useState } from "react";
+import { type CSSProperties, type MouseEvent, useCallback, useState } from "react";
 
-import { useStyles } from "@hooks";
+import { GAME_MODES } from "@client/helpers/game";
+import { useStyles } from "@client/hooks/useStyles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Button from "@mui/material/Button";
-import Menu, { MenuProps } from "@mui/material/Menu";
+import Menu, { type MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
-import type { TGameMode } from "@types";
-import { GAME_MODES } from "@utils";
+import type { TGameMode } from "@shared/types";
 
 type TGameModeMenuProps = {
 	value: TGameMode;
@@ -24,25 +24,20 @@ export const GameModeMenu = ({ value, onSelectOption }: TGameModeMenuProps) => {
 	const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
 
-	const getNextGameMode = useCallback(
-		(gameMode: TGameMode) => {
-			const nextIndex = GAME_MODES.findIndex(mode => mode.name === gameMode.name) + 1;
-			return GAME_MODES[nextIndex % GAME_MODES.length];
-		},
-		[GAME_MODES]
-	);
+	const getNextGameMode = useCallback((gameMode: TGameMode) => {
+		const nextIndex = GAME_MODES.findIndex(mode => mode.name === gameMode.name) + 1;
+		return GAME_MODES[nextIndex % GAME_MODES.length];
+	}, []);
 
-	const getPreviousGameMode = useCallback(
-		(gameMode: TGameMode) => {
-			const previousIndex = GAME_MODES.findIndex(mode => mode.name === gameMode.name) - 1;
-			return GAME_MODES[(previousIndex + GAME_MODES.length) % GAME_MODES.length];
-		},
-		[GAME_MODES]
-	);
+	const getPreviousGameMode = useCallback((gameMode: TGameMode) => {
+		const previousIndex = GAME_MODES.findIndex(mode => mode.name === gameMode.name) - 1;
+		return GAME_MODES[(previousIndex + GAME_MODES.length) % GAME_MODES.length];
+	}, []);
 
 	return (
 		<div style={styles.gameModeContainer}>
 			<button
+				type="button"
 				className="arrow-btn"
 				onClick={() => onSelectOption(getPreviousGameMode(value))}
 				aria-label="Previous Game Mode"
@@ -57,13 +52,14 @@ export const GameModeMenu = ({ value, onSelectOption }: TGameModeMenuProps) => {
 				variant="outlined"
 				disableElevation
 				onClick={handleClick}
-				endIcon={<span style={styles.gameModeEndIcon(open)}></span>}
+				endIcon={<span style={styles.gameModeEndIcon(open)} />}
 				color="inherit"
 				sx={styles.gameModeMenuBtn}
 			>
 				{value.name}
 			</Button>
 			<button
+				type="button"
 				className="arrow-btn"
 				onClick={() => onSelectOption(getNextGameMode(value))}
 				aria-label="Next Game Mode"

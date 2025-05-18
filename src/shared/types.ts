@@ -1,15 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
-import { Color, GameMode, SocketEvent } from "@constants";
-import { Game } from "@game";
+import type { Game } from "@client/game/game";
+import { type Color, type GameMode, SocketEvent } from "@shared/constants";
 
 export type TConfig = {
-	IS_PROD: boolean;
-	HOST: string;
 	PORT: number;
-	WS_PORT: number;
+	HOST: string;
 	MONGO_URI: string;
-	SKIP_DB: boolean;
 };
 
 export type TBase = {
@@ -42,6 +39,33 @@ export type TAppContext = {
 	netStartTime: number;
 	setNetStartTime: Dispatch<SetStateAction<number>>;
 };
+
+export type TClientToServerSocketEvent = {
+	[SocketEvent.Score]: (score: TEncryptedScore) => void;
+	[SocketEvent.Rating]: (rating: TRating) => void;
+	[SocketEvent.PlayerHighScore]: (player_id: string) => void;
+	[SocketEvent.HighScores]: () => void;
+	[SocketEvent.NewScore]: () => void;
+};
+
+export type TServerToClientSocketEvent = {
+	[SocketEvent.Score]: (score: TScoreRes) => void;
+	[SocketEvent.Rating]: () => void;
+	[SocketEvent.PlayerHighScore]: (playerHighScore: TPlayerHighScoreRes) => void;
+	[SocketEvent.HighScores]: (highScores: THighScoresRes) => void;
+	[SocketEvent.NewScore]: (highScores: THighScoresRes) => void;
+};
+
+export type TSocketReqParams<T extends keyof TClientToServerSocketEvent> = {
+	event: T;
+	data?: Parameters<TClientToServerSocketEvent[T]>;
+};
+
+export type TSocketResArgs<T extends keyof TClientToServerSocketEvent> = Parameters<
+	TServerToClientSocketEvent[T]
+>;
+
+export type TReactStateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
 export type TCanvas = {
 	width: number;

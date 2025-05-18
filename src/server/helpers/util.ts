@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-import type { TBase } from "@types";
+import type { TBase } from "@shared/types";
 
 export const BaseSchema = new Schema<TBase>({
 	created_at: {
@@ -13,5 +13,3 @@ export const BaseSchema = new Schema<TBase>({
 		default: () => Date.now()
 	}
 });
-
-export const isCacheFirstRequest = (filename: string) => filename.includes("~");
