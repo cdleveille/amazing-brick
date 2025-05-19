@@ -38,6 +38,9 @@ export type TAppContext = {
 	isGameMode: (gm: TGameModeName) => boolean;
 	netStartTime: number;
 	setNetStartTime: Dispatch<SetStateAction<number>>;
+	scoreRes: TScoreRes | null;
+	setScoreRes: Dispatch<SetStateAction<TScoreRes | null>>;
+	submitScore: () => Promise<void>;
 };
 
 export type TClientToServerSocketEvent = {

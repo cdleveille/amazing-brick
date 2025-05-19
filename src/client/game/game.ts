@@ -109,6 +109,7 @@ export class Game {
 		} else this.brick.isCollidingTop = false;
 
 		if (this.brick.y + this.brick.diagonalRadius >= this.canvas.height) {
+			this.crash();
 			this.ctx.setScreen("game-over");
 		}
 
@@ -203,8 +204,10 @@ export class Game {
 	}
 
 	crash() {
-		this.brick.ele.classList.add("spin");
+		if (this.isGameOver) return;
 		this.isGameOver = true;
+		this.ctx.submitScore();
+		this.brick.ele.classList.add("spin");
 		executeOnClass("canvas", ele => ele.classList.add("shake"));
 	}
 

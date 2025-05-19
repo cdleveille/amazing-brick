@@ -11,7 +11,8 @@ import { GameMode } from "@shared/constants";
 
 export const Play = () => {
 	const ctx = useAppContext();
-	const { setGame, setIsPaused, isPausedAtStart, setIsPausedAtStart, isGameMode } = ctx;
+	const { setGame, setIsPaused, isPausedAtStart, setIsPausedAtStart, isGameMode, setScoreRes } =
+		ctx;
 
 	useEffect(() => {
 		const game = new Game(ctx);
@@ -19,6 +20,7 @@ export const Play = () => {
 		setGame(game);
 		setIsPaused(false);
 		setIsPausedAtStart(true);
+		setScoreRes(null);
 
 		return initInputEventListeners(game);
 	}, []);

@@ -1,43 +1,21 @@
-import { useEffect } from "react";
-
-import CryptoJS from "crypto-js";
-
 import { Button } from "@client/components/Button";
 import { Loading } from "@client/components/Loading";
 import { Text } from "@client/components/Text";
-import { socket } from "@client/helpers/socket";
-import { useApi } from "@client/hooks/useApi";
 import { useAppContext } from "@client/hooks/useAppContext";
 import { useIsOffline } from "@client/hooks/useIsOffline";
 import { useStyles } from "@client/hooks/useStyles";
 import { Color } from "@shared/constants";
 
 export const GameOver = () => {
-	const { score, player_id, gameMode } = useAppContext();
-
-	const { useSubmitScore } = useApi();
+	const { score, gameMode, scoreRes } = useAppContext();
 
 	const isOffline = useIsOffline();
 
 	const { styles } = useStyles();
 
-	const { data, mutate: submitScore } = useSubmitScore({
-		player_id,
-		score: !isOffline
-			? CryptoJS.AES.encrypt(score.toString(), socket.io.id ?? "").toString()
-			: "",
-		game_mode_name: !isOffline
-			? CryptoJS.AES.encrypt(gameMode.name.toString(), socket.io.id ?? "").toString()
-			: ""
-	});
+	if (!isOffline && !scoreRes) return <Loading />;
 
-	useEffect(() => {
-		if (!isOffline) submitScore();
-	}, []);
-
-	if (!isOffline && !data) return <Loading />;
-
-	const { highScore, existingHighScore } = data ?? {};
+	const { highScore, existingHighScore } = scoreRes ?? {};
 
 	return (
 		<div className="game-over-container" style={styles.gameOverContainer}>

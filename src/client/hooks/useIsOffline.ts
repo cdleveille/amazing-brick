@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 
 export const useIsOffline = () => {
-	const [isOffline, setIsOffline] = useState(false);
+	const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
 	useEffect(() => {
-		const handleOffline = () => setIsOffline(true);
-		const handleOnline = () => setIsOffline(false);
+		const onOffline = () => setIsOffline(true);
+		const onOnline = () => setIsOffline(false);
 
-		window.addEventListener("offline", handleOffline);
-		window.addEventListener("online", handleOnline);
+		window.addEventListener("offline", onOffline);
+		window.addEventListener("online", onOnline);
 
 		return () => {
-			window.removeEventListener("offline", handleOffline);
-			window.removeEventListener("online", handleOnline);
+			window.removeEventListener("offline", onOffline);
+			window.removeEventListener("online", onOnline);
 		};
 	}, []);
 
