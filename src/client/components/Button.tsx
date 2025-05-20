@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Text } from "@client/components/Text";
 import { useAppContext } from "@client/hooks/useAppContext";
@@ -35,16 +35,16 @@ export const Button = ({
 		return () => clearTimeout(timeout);
 	}, []);
 
-	const handleClick = useCallback(() => {
+	const handleClick = () => {
 		if (!isClickable) return;
 		if (screenTarget) setScreen(screenTarget);
 		onClick?.();
-	}, [isClickable, screenTarget, setScreen, onClick]);
+	};
 
-	const handleTouchEnd = useCallback(() => {
+	const handleTouchEnd = () => {
 		if (!forceTouch) return;
 		handleClick();
-	}, [forceTouch, handleClick]);
+	};
 
 	return (
 		<button

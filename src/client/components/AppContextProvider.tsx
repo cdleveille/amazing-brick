@@ -1,5 +1,5 @@
 import CryptoJS from "crypto-js";
-import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import { AppContext } from "@client/contexts/app";
 import type { Game } from "@client/game/game";
@@ -20,6 +20,8 @@ import type { TCanvas, TEncryptedScore, TGameModeName, TScoreRes, TScreen } from
 type TAppContextProviderProps = {
 	children: ReactNode;
 };
+
+const player_id = storage.local.getItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID();
 
 export const AppContextProvider = ({ children }: TAppContextProviderProps) => {
 	const [game, setGame] = useState<Game>();
@@ -42,18 +44,13 @@ export const AppContextProvider = ({ children }: TAppContextProviderProps) => {
 	);
 	const [netStartTime, setNetStartTime] = useState(0);
 
-	const player_id = useMemo(
-		() => storage.local.getItem<string>(PLAYER_ID_LOCAL_STORAGE_KEY) ?? crypto.randomUUID(),
-		[]
-	);
+	const isScreen = (s: TScreen) => screen === s;
 
-	const isScreen = useCallback((s: TScreen) => screen === s, [screen]);
-
-	const isGameMode = useCallback((gm: TGameModeName) => gameMode.name === gm, [gameMode]);
+	const isGameMode = (gm: TGameModeName) => gameMode.name === gm;
 
 	const isOffline = useIsOffline();
 
-	const submitScore = useCallback(async () => {
+	const submitScore = async () => {
 		if (isOffline) return;
 		const toSubmit: TEncryptedScore = {
 			player_id,
@@ -65,7 +62,7 @@ export const AppContextProvider = ({ children }: TAppContextProviderProps) => {
 		};
 		const res = await socket.emitAndReceive({ event: SocketEvent.Score, data: [toSubmit] });
 		setScoreRes(res);
-	}, [player_id, gameMode, socket, setScoreRes, isOffline]);
+	};
 
 	useEffect(() => {
 		scoreRef.current = score;

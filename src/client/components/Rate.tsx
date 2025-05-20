@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "@client/components/Button";
 import { Offline } from "@client/components/Offline";
@@ -24,13 +24,12 @@ export const Rate = () => {
 
 	const isSubmitDisabled = typeof isThumbsUp !== "boolean" || comments.trim() === "";
 
-	const placeholder = useMemo(() => {
-		return isThumbsUp === true
+	const placeholder =
+		isThumbsUp === true
 			? "What do you like about Amazing Brick?"
 			: isThumbsUp === false
 				? "What could be improved in Amazing Brick?"
 				: "What do you think of Amazing Brick?";
-	}, [isThumbsUp]);
 
 	return (
 		<div className="rate-container" style={styles.rateContainer}>

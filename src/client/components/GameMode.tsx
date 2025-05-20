@@ -1,4 +1,4 @@
-import { type CSSProperties, type MouseEvent, useCallback, useState } from "react";
+import { type CSSProperties, type MouseEvent, useState } from "react";
 
 import { GAME_MODES } from "@client/helpers/game";
 import { useStyles } from "@client/hooks/useStyles";
@@ -24,15 +24,15 @@ export const GameModeMenu = ({ value, onSelectOption }: TGameModeMenuProps) => {
 	const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
 
-	const getNextGameMode = useCallback((gameMode: TGameMode) => {
+	const getNextGameMode = (gameMode: TGameMode) => {
 		const nextIndex = GAME_MODES.findIndex(mode => mode.name === gameMode.name) + 1;
 		return GAME_MODES[nextIndex % GAME_MODES.length];
-	}, []);
+	};
 
-	const getPreviousGameMode = useCallback((gameMode: TGameMode) => {
+	const getPreviousGameMode = (gameMode: TGameMode) => {
 		const previousIndex = GAME_MODES.findIndex(mode => mode.name === gameMode.name) - 1;
 		return GAME_MODES[(previousIndex + GAME_MODES.length) % GAME_MODES.length];
-	}, []);
+	};
 
 	return (
 		<div style={styles.gameModeContainer}>
