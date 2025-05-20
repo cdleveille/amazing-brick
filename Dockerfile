@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 # use bun image for throw-away build stage
-FROM oven/bun:latest AS build
+FROM oven/bun@sha256:a02c6162266611419fd84c8f96dbdbf3029532e2491314dee5172a27223e5428 AS build
 
 WORKDIR /app
 
@@ -22,7 +22,7 @@ RUN bun install --ignore-scripts --frozen-lockfile && \
 	chmod +x ./main
 
 # minimalist final stage for app image
-FROM gcr.io/distroless/base
+FROM gcr.io/distroless/base@sha256:cef75d12148305c54ef5769e6511a5ac3c820f39bf5c8a4fbfd5b76b4b8da843
 
 # copy built application
 COPY --from=build /app/main /app/main
