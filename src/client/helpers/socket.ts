@@ -10,7 +10,8 @@ import type {
 } from "@shared/types";
 
 const io: Socket<TServerToClientSocketEvent, TClientToServerSocketEvent> = socketIo(
-	`${window.location.protocol}//${window.location.hostname}:${Config.PORT}`
+	`${window.location.protocol}//${window.location.hostname}:${Config.PORT}`,
+	{ transports: ["websocket"] }
 );
 
 const emit = <T extends keyof TClientToServerSocketEvent>({
