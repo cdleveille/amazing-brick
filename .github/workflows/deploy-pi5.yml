@@ -1,4 +1,4 @@
-name: deploy
+name: deploy to pi5
 
 on:
   push:
