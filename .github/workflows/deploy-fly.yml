@@ -1,4 +1,4 @@
-name: deploy
+name: deploy to fly.io
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production
+    environment: Fly.IO
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
