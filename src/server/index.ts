@@ -15,7 +15,7 @@ const { PORT, HOST } = Config;
 (async () => {
 	await connectToDatabase();
 
-	const app = new Elysia()
+	const app = new Elysia({ aot: true, precompile: true, nativeStaticResponse: true })
 		.onError(c => onError(c))
 		.onBeforeHandle(onBeforeHandle)
 		.use(plugins);
