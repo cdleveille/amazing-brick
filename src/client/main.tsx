@@ -5,7 +5,11 @@ import { AppContextProvider } from "@client/components/AppContextProvider";
 import { Main } from "@client/components/Main";
 import { assertGetElementById, registerServiceWorker } from "@client/helpers/browser";
 
-registerServiceWorker().catch(console.error);
+window.addEventListener("load", () => {
+	registerServiceWorker().catch(error => {
+		console.error("Service worker registration failed:", error);
+	});
+});
 
 const root = assertGetElementById("root");
 createRoot(root).render(

@@ -5,7 +5,7 @@ import { Elysia } from "elysia";
 
 import { Config } from "@server/helpers/config";
 import { connectToDatabase } from "@server/helpers/db";
-import { createHttpAdapter, onBeforeHandle, onError } from "@server/helpers/elysia";
+import { createHttpAdapter, onError } from "@server/helpers/elysia";
 import { plugins } from "@server/helpers/plugins";
 import { io } from "@server/helpers/socket";
 import { Path } from "@shared/constants";
@@ -17,7 +17,6 @@ const { PORT, HOST } = Config;
 
 	const app = new Elysia({ aot: true, precompile: true, nativeStaticResponse: true })
 		.onError(c => onError(c))
-		.onBeforeHandle(onBeforeHandle)
 		.use(plugins);
 
 	if (existsSync(Path.Public)) {

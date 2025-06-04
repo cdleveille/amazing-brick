@@ -13,11 +13,6 @@ export const onError: ErrorHandler = ({ error, set }) => {
 	return { message };
 };
 
-export const onBeforeHandle: Handler = c => {
-	// Needed to prevent service worker error
-	c.set.headers.vary = "Origin";
-};
-
 // Creates a Node-style HTTP adapter function (needed to attach Socket.IO to Elysia)
 export const createHttpAdapter = (app: Elysia) => {
 	return async (req: IncomingMessage, res: ServerResponse) => {

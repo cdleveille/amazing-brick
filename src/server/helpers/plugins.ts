@@ -1,4 +1,3 @@
-import { cors } from "@elysiajs/cors";
 import { Elysia } from "elysia";
 import { helmet } from "elysia-helmet";
 
@@ -10,7 +9,7 @@ const WS_HOST = HOST.replace("http", "ws");
 
 const connectSrc = isCustomHost ? ["'self'", `${HOST}:${PORT}`, `${WS_HOST}:${PORT}`] : ["*"];
 
-export const plugins = new Elysia().use(cors()).use(
+export const plugins = new Elysia().use(
 	helmet({
 		contentSecurityPolicy: {
 			directives: {
