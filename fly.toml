@@ -10,7 +10,7 @@ primary_region = "bos"
   protocol = "tcp"
   [services.concurrency]
     type = "connections"
-    soft_limit = 500
+    soft_limit = 2000
   [[services.ports]]
     force_https = true
     handlers = ["http"]
