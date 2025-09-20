@@ -20,6 +20,4 @@ primary_region = "bos"
     port = 3000
 
 [[vm]]
-  memory = '512mb'
-  cpu_kind = 'shared'
-  cpus = 2
+  size = 'shared-cpu-1x'
