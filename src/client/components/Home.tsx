@@ -4,15 +4,49 @@ import { GameModeMenu } from "@client/components/GameMode";
 import { Text } from "@client/components/Text";
 import { useAppContext } from "@client/hooks/useAppContext";
 import { useStyles } from "@client/hooks/useStyles";
+import AnnouncementIcon from "@mui/icons-material/Announcement";
+import Tooltip from "@mui/material/Tooltip";
 import { Color } from "@shared/constants";
 import type { TGameMode } from "@shared/types";
 
 export const Home = () => {
-	const { gameMode, setGameMode } = useAppContext();
+	const { gameMode, setGameMode, isDarkMode, setScreen } = useAppContext();
 	const { styles } = useStyles();
 
 	return (
 		<div className="home-container" style={styles.homeContainer}>
+			<Tooltip
+				title="Thanks for playing Amazing Brick! ❤️"
+				placement="right"
+				slotProps={{
+					popper: {
+						modifiers: [
+							{
+								name: "offset",
+								options: {
+									offset: [-5, -12]
+								}
+							}
+						]
+					}
+				}}
+				arrow
+				open
+			>
+				<button
+					type="button"
+					className="btn-dark-mode"
+					onClick={() => setScreen("announcement")}
+					style={styles.announcementBtn}
+					aria-label="Announcement"
+				>
+					{isDarkMode ? (
+						<AnnouncementIcon sx={styles.darkModeBtnIcon("#cccccc")} />
+					) : (
+						<AnnouncementIcon sx={styles.darkModeBtnIcon("#555555")} />
+					)}
+				</button>
+			</Tooltip>
 			<div className="header-container">
 				<h1 className="header" style={styles.homeHeader}>
 					AMAZING BRICK&nbsp;

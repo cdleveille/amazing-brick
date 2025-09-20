@@ -9,6 +9,21 @@ export const useStyles = () => {
 
 	const styles = useMemo(() => {
 		return {
+			announcementBtn: {
+				top: 0,
+				left: 0,
+				padding: `${8 * scaleRatio}px`
+			} as CSSProperties,
+			announcementText: {
+				fontSize: `${22 * scaleRatio}px`,
+				fontFamily: "Roboto-Thin",
+				fontWeight: "bolder",
+				padding: `0 ${16 * scaleRatio}px`,
+				display: "flex",
+				flexDirection: "column",
+				rowGap: `${20 * scaleRatio}px`,
+				lineHeight: 1.4
+			} as CSSProperties,
 			brick: {
 				backgroundColor: isDarkMode ? Color.White : Color.Black
 			} as CSSProperties,

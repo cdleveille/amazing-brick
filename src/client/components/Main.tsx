@@ -1,3 +1,4 @@
+import { Announcement } from "@client/components/Announcement";
 import { DarkMode } from "@client/components/DarkMode";
 import { GameOver } from "@client/components/GameOver";
 import { Home } from "@client/components/Home";
@@ -41,6 +42,8 @@ const getScreen = (screen: TScreen) => {
 			return <Scores />;
 		case "thanks":
 			return <Thanks />;
+		case "announcement":
+			return <Announcement />;
 		default:
 			throw new Error(`Invalid screen: ${screen}`);
 	}
