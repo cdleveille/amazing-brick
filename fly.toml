@@ -8,9 +8,6 @@ primary_region = "bos"
   internal_port = 3000
   processes = ["app"]
   protocol = "tcp"
-  [services.concurrency]
-    type = "connections"
-    soft_limit = 2000
   [[services.ports]]
     force_https = true
     handlers = ["http"]
@@ -25,4 +22,4 @@ primary_region = "bos"
 [[vm]]
   memory = '512mb'
   cpu_kind = 'shared'
-  cpus = 1
+  cpus = 2
