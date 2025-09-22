@@ -47,7 +47,7 @@ if (existsSync(Path.Public)) {
     // SPA index.html fallback to enable client-side routing
     .get("*", ({ path }) => {
       const url = path.split("/").pop();
-      if (url && !url.includes(".")) return Bun.file(`${Path.Public}/index.html`);
+      if (url && !url.includes(".")) return new Response(Bun.file(`${Path.Public}/index.html`));
     });
   plugins.use(serveStatic);
 }
