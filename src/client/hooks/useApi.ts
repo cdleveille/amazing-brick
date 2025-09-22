@@ -1,33 +1,34 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import type { Static } from "elysia";
 
-import { socket } from "@client/helpers/socket";
-import { SocketEvent } from "@shared/constants";
-import type { TEncryptedScore, TRating } from "@shared/types";
+import { apiClient } from "@/client/helpers/network";
+import type { apiSchema } from "@/shared/schema";
+import type { TOnSuccess } from "@/shared/types";
 
-export const useApi = () => {
-	const useSubmitScore = (score: TEncryptedScore) =>
-		useMutation({
-			mutationFn: () => socket.emitAndReceive({ event: SocketEvent.Score, data: [score] })
-		});
+export const usePostScore = ({
+  onSuccess,
+}: {
+  onSuccess: TOnSuccess<(typeof apiSchema.score.post.response)[200]>;
+}) => {
+  return useMutation({
+    mutationFn: (body: Static<typeof apiSchema.score.post.body>) => {
+      return apiClient.http.score.post(body);
+    },
+    onSuccess: ({ data }) => data && onSuccess(data),
+  });
+};
 
-	const submitRating = (rating: TRating) =>
-		socket.emit({ event: SocketEvent.Rating, data: [rating] });
+export const useGetLeaderboard = (player_id: string) => {
+  return useQuery({
+    queryKey: ["leaderboard"],
+    queryFn: () => apiClient.http.leaderboard.get({ query: { player_id } }),
+  });
+};
 
-	const getPlayerHighScore = (player_id: string) =>
-		useQuery({
-			queryKey: ["getPlayerHighScore", player_id],
-			queryFn: () =>
-				socket.emitAndReceive({
-					event: SocketEvent.PlayerHighScore,
-					data: [player_id]
-				})
-		});
-
-	const getHighScores = () =>
-		useQuery({
-			queryKey: ["getHighScores"],
-			queryFn: () => socket.emitAndReceive({ event: SocketEvent.HighScores })
-		});
-
-	return { useSubmitScore, submitRating, getPlayerHighScore, getHighScores };
+export const usePostRating = () => {
+  return useMutation({
+    mutationFn: (body: Static<typeof apiSchema.rating.post.body>) => {
+      return apiClient.http.rating.post(body);
+    },
+  });
 };
