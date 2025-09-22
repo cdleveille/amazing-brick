@@ -16,9 +16,12 @@ export const Home = () => {
   return (
     <div className="home-container" style={styles.homeContainer}>
       <Tooltip
-        title="Thanks for playing Amazing Brick! ❤️"
+        title="New stability improvements!"
         placement="right"
         slotProps={{
+          tooltip: {
+            sx: { fontSize: 14 },
+          },
           popper: {
             modifiers: [
               {
