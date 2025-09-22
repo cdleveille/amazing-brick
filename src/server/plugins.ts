@@ -1,4 +1,5 @@
 import { existsSync } from "node:fs";
+import { html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { Elysia } from "elysia";
 import { helmet } from "elysia-helmet";
@@ -35,19 +36,18 @@ export const plugins = new Elysia().use(
 
 if (existsSync(Path.Public)) {
   const serveStatic = new Elysia()
+    .use(html())
     .use(
       staticPlugin({
         prefix: "/",
         assets: Path.Public,
-        indexHTML: true,
-        alwaysStatic: true,
         noCache: true,
       }),
     )
     // SPA index.html fallback to enable client-side routing
     .get("*", ({ path }) => {
       const url = path.split("/").pop();
-      if (url && !url.includes(".")) return new Response(Bun.file(`${Path.Public}/index.html`));
+      if (url && !url.includes(".")) return Bun.file(`${Path.Public}/index.html`);
     });
   plugins.use(serveStatic);
 }
