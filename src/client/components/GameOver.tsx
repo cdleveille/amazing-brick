@@ -32,7 +32,7 @@ export const GameOver = () => {
       )}
       {!isOffline && score === highScore && score > 0 && score > (existingHighScore ?? 0) && (
         <div className="new-high-score blink" style={styles.gameOverNewHighScore}>
-          NEW HIGH SCORE!
+          NEW PERSONAL BEST!
         </div>
       )}
       <div className="game-over-box" style={styles.gameOverBox}>
