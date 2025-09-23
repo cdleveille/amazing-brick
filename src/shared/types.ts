@@ -88,6 +88,7 @@ export type TScore = {
   sprint_score: number;
   shrouded_score: number;
   gotcha_score: number;
+  last_played_at: Date;
 };
 
 export type TEncryptedScore = Static<typeof encryptedScoreSchema>;

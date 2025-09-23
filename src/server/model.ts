@@ -5,12 +5,12 @@ import type { TBase, TRating, TScore } from "@/shared/types";
 const BaseSchema = new Schema<TBase>({
   created_at: {
     type: Date,
-    default: () => Date.now(),
+    default: () => new Date(),
     immutable: true,
   },
   updated_at: {
     type: Date,
-    default: () => Date.now(),
+    default: () => new Date(),
   },
 });
 
@@ -39,6 +39,10 @@ const ScoreSchema = new Schema<TScore>(
       type: Number,
       required: false,
       default: 0,
+    },
+    last_played_at: {
+      type: Date,
+      default: () => new Date(),
     },
   },
   { collection: "amazing_brick_score" },

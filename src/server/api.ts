@@ -4,6 +4,7 @@ import { Elysia } from "elysia";
 import { Rating, Score } from "@/server/model";
 import { GameMode } from "@/shared/constants";
 import { apiSchema } from "@/shared/schema";
+import type { TScore } from "@/shared/types";
 
 export const api = new Elysia({ prefix: "/api" })
   .post(
@@ -38,10 +39,16 @@ export const api = new Elysia({ prefix: "/api" })
         gameModeName === GameMode.Standard ? "score" : `${gameModeName.toLowerCase()}_score`;
 
       if (score > 0) {
+        const date = new Date();
         if (!existingHighScore) {
           await Score.create({ player_id, [scoreFieldKey]: score });
         } else if (score > existingHighScoreLookup[scoreFieldKey]) {
-          await Score.updateOne({ player_id }, { [scoreFieldKey]: score, updated_at: new Date() });
+          await Score.updateOne(
+            { player_id },
+            { [scoreFieldKey]: score, updated_at: date, last_played_at: date },
+          );
+        } else {
+          await Score.updateOne({ player_id }, { last_played_at: date });
         }
       }
 
@@ -55,7 +62,7 @@ export const api = new Elysia({ prefix: "/api" })
   .get(
     "/leaderboard",
     async c => {
-      const scores = await Score.find();
+      const scores = await Score.find().lean<TScore[]>();
 
       const { player_id } = c.query;
       const score = scores.find(s => s.player_id === player_id);
