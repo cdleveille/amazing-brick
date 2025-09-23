@@ -109,7 +109,16 @@ export const api = new Elysia({ prefix: "/api" })
         return c.status(422, { message: "Invalid request body" });
       }
 
-      await Rating.create({ player_id, is_thumbs_up, comments });
+      if (
+        ![
+          "eeba3713-b17d-464c-b4c0-9dd70c92fd99",
+          "dd684eb4-3374-4b0c-9cfc-7e52aa9e1270",
+          "ab9b0384-c0b7-44d6-b053-ca51ef9d3eb3",
+          "6f19bcb7-c795-418f-ba14-8c0d0292cd7f",
+        ].includes(player_id)
+      ) {
+        await Rating.create({ player_id, is_thumbs_up, comments });
+      }
 
       return { message: "Thanks for the feedback!" };
     },
