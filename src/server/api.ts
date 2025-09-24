@@ -62,7 +62,17 @@ export const api = new Elysia({ prefix: "/api" })
   .get(
     "/leaderboard",
     async c => {
-      const scores = await Score.find().lean<TScore[]>();
+      const scores = await Score.find(
+        {},
+        {
+          player_id: 1,
+          score: 1,
+          sprint_score: 1,
+          shrouded_score: 1,
+          gotcha_score: 1,
+          _id: 0,
+        },
+      ).lean<TScore[]>();
 
       const { player_id } = c.query;
       const score = scores.find(s => s.player_id === player_id);
