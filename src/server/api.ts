@@ -125,6 +125,7 @@ export const api = new Elysia({ prefix: "/api" })
           "dd684eb4-3374-4b0c-9cfc-7e52aa9e1270",
           "ab9b0384-c0b7-44d6-b053-ca51ef9d3eb3",
           "6f19bcb7-c795-418f-ba14-8c0d0292cd7f",
+          "31f3eeda-e498-4edd-a714-2cb084e34865",
         ].includes(player_id)
       ) {
         await Rating.create({ player_id, is_thumbs_up, comments });
