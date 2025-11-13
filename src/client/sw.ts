@@ -1,5 +1,3 @@
-import { HASH_REGEX } from "@/shared/constants";
-
 declare const self: ServiceWorkerGlobalScope & {
   __WB_DISABLE_DEV_LOGS: boolean;
   __WB_MANIFEST: { url: string }[];
@@ -24,6 +22,8 @@ const cacheFirstWithoutHashFileTypes = [
   ".png",
   ".webp",
 ];
+
+const HASH_REGEX = /~.{8}\.[a-zA-Z0-9]+$/;
 
 const isCacheFirstWithHash = (filename: string) => HASH_REGEX.test(filename);
 

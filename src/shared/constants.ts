@@ -29,10 +29,6 @@ export enum ErrorMessage {
 
 export const STORED_STATE_PREFIX = "state";
 
-export const HASH_PREFIX = "~";
-
-export const HASH_REGEX = new RegExp(`${HASH_PREFIX}.{8}\\.[a-zA-Z0-9]+$`);
-
 export const PLAYER_ID_LOCAL_STORAGE_KEY = "player_id";
 
 export const IS_DARK_MODE_LOCAL_STORAGE_KEY = "is_dark_mode";
