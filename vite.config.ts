@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
-import react from "@vitejs/plugin-react";
+import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import svgr from "vite-plugin-svgr";
@@ -65,10 +65,11 @@ export default defineConfig(({ mode }) => ({
       autoCodeSplitting: true,
       routesDirectory: resolve(root, "routes"),
       generatedRouteTree: resolve(root, "routes", "routeTree.gen.ts"),
+      routeFileIgnorePattern: "routeTree.gen.ts",
     }),
-    react({
+    viteReact({
       babel: {
-        plugins: [["babel-plugin-react-compiler", {}]],
+        plugins: ["babel-plugin-react-compiler"],
       },
     }),
     svgr({
