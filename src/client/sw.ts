@@ -9,7 +9,7 @@ const manifest = self.__WB_MANIFEST;
 const urlsToPrecache = ["/", ...manifest.map(({ url }) => url)];
 
 // Increment this version to invalidate cache and force clients to refetch all assets
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3";
 
 const cacheName = `sw-cache-${CACHE_VERSION}`;
 
