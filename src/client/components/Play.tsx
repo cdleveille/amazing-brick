@@ -40,8 +40,8 @@ export const Play = () => {
 };
 
 const initInputEventListeners = (game: Game) => {
-  const LEFT_KEYS = ["ArrowLeft", "a"];
-  const RIGHT_KEYS = ["ArrowRight", "d"];
+  const LEFT_KEYS = ["ArrowLeft", "a", "A"];
+  const RIGHT_KEYS = ["ArrowRight", "d", "D"];
 
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.repeat) return;
