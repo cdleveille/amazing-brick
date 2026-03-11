@@ -1,5 +1,5 @@
-import AnnouncementIcon from "@mui/icons-material/Announcement";
-import Tooltip from "@mui/material/Tooltip";
+// import AnnouncementIcon from "@mui/icons-material/Announcement";
+// import Tooltip from "@mui/material/Tooltip";
 
 import { Brick } from "@/client/components/Brick";
 import { Button } from "@/client/components/Button";
@@ -10,12 +10,12 @@ import { useStyles } from "@/client/hooks/useStyles";
 import { Color } from "@/shared/constants";
 
 export const Home = () => {
-  const { gameMode, setGameMode, isDarkMode, setScreen } = useApp();
+  const { gameMode, setGameMode } = useApp();
   const { styles } = useStyles();
 
   return (
     <div className="home-container" style={styles.homeContainer}>
-      <Tooltip
+      {/* <Tooltip
         title="New stability improvements!"
         placement="right"
         slotProps={{
@@ -49,7 +49,7 @@ export const Home = () => {
             <AnnouncementIcon sx={styles.darkModeBtnIcon("#555555")} />
           )}
         </button>
-      </Tooltip>
+      </Tooltip> */}
       <div className="header-container">
         <h1 className="header" style={styles.homeHeader}>
           AMAZING BRICK&nbsp;

@@ -296,7 +296,7 @@ export const useStyles = () => {
         textAlign: "center",
       } as CSSProperties,
       scoresBoxValue: {
-        fontSize: `${48 * scaleRatio}px`,
+        fontSize: `${42 * scaleRatio}px`,
       } as CSSProperties,
       scoresContainer: {
         rowGap: `${28 * scaleRatio}px`,
