@@ -1,19 +1,15 @@
+import CircularProgress from "@mui/material/CircularProgress";
+
 import { Button } from "@/client/components/Button";
-import { Loading } from "@/client/components/Loading";
 import { Text } from "@/client/components/Text";
 import { useApp } from "@/client/hooks/useApp";
-import { useIsOffline } from "@/client/hooks/useIsOffline";
 import { useStyles } from "@/client/hooks/useStyles";
 import { Color } from "@/shared/constants";
 
 export const GameOver = () => {
-  const { score, gameMode, scoreRes } = useApp();
-
-  const isOffline = useIsOffline();
+  const { score, gameMode, scoreRes, canvas } = useApp();
 
   const { styles } = useStyles();
-
-  if (!isOffline && !scoreRes) return <Loading />;
 
   const { highScore, existingHighScore } = scoreRes ?? {};
 
@@ -22,15 +18,7 @@ export const GameOver = () => {
       <h1 className="game-over-header" style={styles.gameOverHeader}>
         GAME OVER
       </h1>
-      {isOffline && (
-        <div className="blink" style={styles.offline}>
-          <Text size={28}>OFFLINE</Text>
-          <Text size={20} style={{ width: "70%", textAlign: "center" }}>
-            Internet connection required to submit and view high score
-          </Text>
-        </div>
-      )}
-      {!isOffline && score === highScore && score > 0 && score > (existingHighScore ?? 0) && (
+      {existingHighScore && score === highScore && score > 0 && score > existingHighScore && (
         <div className="new-high-score blink" style={styles.gameOverNewHighScore}>
           NEW PERSONAL BEST!
         </div>
@@ -42,12 +30,17 @@ export const GameOver = () => {
             <div>Score</div>
             <div style={styles.gameOverBoxValue}>{score}</div>
           </div>
-          {!isOffline && (
-            <div style={styles.gameOverBoxLabel}>
-              <div>Best</div>
+          <div style={styles.gameOverBoxLabel}>
+            <div>Best</div>
+            {highScore ? (
               <div style={styles.gameOverBoxValue}>{highScore}</div>
-            </div>
-          )}
+            ) : (
+              <CircularProgress
+                size={`${36 * canvas.scaleRatio}px`}
+                sx={{ ...styles.loadingIndicator, marginTop: `${10 * canvas.scaleRatio}px` }}
+              />
+            )}
+          </div>
         </div>
       </div>
       <div style={styles.buttonStack}>
