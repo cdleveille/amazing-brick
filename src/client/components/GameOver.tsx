@@ -18,11 +18,14 @@ export const GameOver = () => {
       <h1 className="game-over-header" style={styles.gameOverHeader}>
         GAME OVER
       </h1>
-      {existingHighScore && score === highScore && score > 0 && score > existingHighScore && (
-        <div className="new-high-score blink" style={styles.gameOverNewHighScore}>
-          NEW PERSONAL BEST!
-        </div>
-      )}
+      {existingHighScore !== undefined &&
+        score === highScore &&
+        score > 0 &&
+        score > existingHighScore && (
+          <div className="new-high-score blink" style={styles.gameOverNewHighScore}>
+            NEW PERSONAL BEST!
+          </div>
+        )}
       <div className="game-over-box" style={styles.gameOverBox}>
         <Text size={20}>{gameMode.name.toUpperCase()}</Text>
         <div style={styles.gameOverBoxInner}>
