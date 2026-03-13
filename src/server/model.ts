@@ -47,11 +47,12 @@ const ScoreSchema = new Schema<TScore>(
   },
   { collection: "amazing_brick_score" },
 )
+  .index({ player_id: 1 })
   .index({ score: -1 })
   .index({ sprint_score: -1 })
   .index({ shrouded_score: -1 })
   .index({ gotcha_score: -1 })
-  .index({ player_id: 1 })
+  .index({ last_played_at: -1 })
   .add(BaseSchema);
 
 export const Score = model<TScore>("User", ScoreSchema);
