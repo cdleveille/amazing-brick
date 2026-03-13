@@ -144,11 +144,11 @@ export const useStyles = () => {
         padding: `${32 * scaleRatio}px`,
         rowGap: `${24 * scaleRatio}px`,
         boxShadow: `0 0 ${2 * scaleRatio}px ${isDarkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"}`,
-        minWidth: "50%",
+        width: "55%",
       } as CSSProperties,
       gameOverBoxInner: {
         display: "flex",
-        columnGap: `${54 * scaleRatio}px`,
+        columnGap: `${8 * scaleRatio}px`,
       } as CSSProperties,
       gameOverBoxLabel: {
         fontSize: `${24 * scaleRatio}px`,

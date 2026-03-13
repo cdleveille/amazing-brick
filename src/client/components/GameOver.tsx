@@ -31,18 +31,27 @@ export const GameOver = () => {
         <div style={styles.gameOverBoxInner}>
           <div style={styles.gameOverBoxLabel}>
             <div>Score</div>
-            <div style={styles.gameOverBoxValue}>{score}</div>
+            <div
+              style={{
+                ...styles.gameOverBoxValue,
+                width: `${120 * canvas.scaleRatio}px`,
+              }}
+            >
+              {score}
+            </div>
           </div>
           <div style={styles.gameOverBoxLabel}>
             <div>Best</div>
-            {highScore ? (
-              <div style={styles.gameOverBoxValue}>{highScore}</div>
-            ) : (
-              <CircularProgress
-                size={`${36 * canvas.scaleRatio}px`}
-                sx={{ ...styles.loadingIndicator, marginTop: `${10 * canvas.scaleRatio}px` }}
-              />
-            )}
+            <div style={{ width: `${120 * canvas.scaleRatio}px` }}>
+              {highScore ? (
+                <div style={styles.gameOverBoxValue}>{highScore}</div>
+              ) : (
+                <CircularProgress
+                  size={`${40 * canvas.scaleRatio}px`}
+                  sx={{ ...styles.loadingIndicator, marginTop: `${10 * canvas.scaleRatio}px` }}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
