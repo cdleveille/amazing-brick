@@ -218,6 +218,19 @@ export const api = new Elysia({ prefix: "/api" })
       return { message: "Thanks for the feedback!" };
     },
     apiSchema.rating.post,
+  )
+  .get(
+    "/analytics",
+    async () => {
+      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
+      const playerCount = await Score.countDocuments({
+        last_played_at: { $gte: twentyFourHoursAgo },
+      });
+
+      return { playerCount };
+    },
+    apiSchema.analytics.get,
   );
 
 interface ILeaderboardAggResult {

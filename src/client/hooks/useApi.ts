@@ -32,3 +32,10 @@ export const usePostRating = () => {
     },
   });
 };
+
+export const useGetAnalytics = () => {
+  return useQuery({
+    queryKey: ["analytics"],
+    queryFn: () => apiClient.http.analytics.get(),
+  });
+};

@@ -5,6 +5,7 @@ import { Brick } from "@/client/components/Brick";
 import { Button } from "@/client/components/Button";
 import { GameModeMenu } from "@/client/components/GameMode";
 import { Text } from "@/client/components/Text";
+import { useGetAnalytics } from "@/client/hooks/useApi";
 import { useApp } from "@/client/hooks/useApp";
 import { useStyles } from "@/client/hooks/useStyles";
 import { Color } from "@/shared/constants";
@@ -12,6 +13,10 @@ import { Color } from "@/shared/constants";
 export const Home = () => {
   const { gameMode, setGameMode } = useApp();
   const { styles } = useStyles();
+
+  const { data } = useGetAnalytics();
+
+  if (data?.data?.playerCount) console.log(`Players last 24 hours: ${data.data.playerCount}`);
 
   return (
     <div className="home-container" style={styles.homeContainer}>

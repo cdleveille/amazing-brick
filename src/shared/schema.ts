@@ -68,4 +68,12 @@ export const apiSchema = {
       },
     },
   },
+  analytics: {
+    get: {
+      response: {
+        200: t.Object({ playerCount: t.Number() }),
+        500: t.Object({ message: t.String() }),
+      },
+    },
+  },
 } satisfies Record<string, Record<string, StandaloneInputSchema>>;
