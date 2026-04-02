@@ -28,7 +28,7 @@ const routes = app
         player_id,
         score: encryptedScore,
         game_mode_name: encryptedGameModeName,
-      } = await c.req.json();
+      } = c.req.valid("json");
       const scoreRes = await postScore({ player_id, encryptedScore, encryptedGameModeName });
       return c.json(scoreRes);
     },
@@ -42,7 +42,7 @@ const routes = app
       }),
     ),
     async c => {
-      const { player_id } = c.req.query();
+      const { player_id } = c.req.valid("query");
       const leaderboardRes = await getLeaderboard({ player_id: String(player_id) });
       return c.json(leaderboardRes);
     },
@@ -58,7 +58,7 @@ const routes = app
       }),
     ),
     async c => {
-      const { player_id, is_thumbs_up, comments } = await c.req.json();
+      const { player_id, is_thumbs_up, comments } = c.req.valid("json");
       const ratingRes = await postRating({ player_id, is_thumbs_up, comments });
       return c.json(ratingRes);
     },
