@@ -1,14 +1,12 @@
-import { author, description, license, version } from "package.json";
-
 export const AppInfo = {
   name: "Amazing Brick",
-  version,
-  description,
+  version: "2.0.0",
+  description: "How high can you climb?",
   author: {
-    name: author,
+    name: "Chris Leveille",
     url: "https://www.cdleveille.net",
   },
-  license,
+  license: "MIT",
   url: "https://amazingbrick.fly.dev",
   themeColor: "#000000",
 };
@@ -16,11 +14,6 @@ export const AppInfo = {
 export enum Env {
   Production = "production",
   Development = "development",
-}
-
-export enum Path {
-  Public = "public",
-  Client = "src/client",
 }
 
 export enum ErrorMessage {

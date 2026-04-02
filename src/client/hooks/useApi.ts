@@ -1,34 +1,38 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import type { Static } from "elysia";
-
-import { apiClient } from "@/client/helpers/network";
-import type { apiSchema } from "@/shared/schema";
-import type { TOnSuccess } from "@/shared/types";
+import { httpClient } from "@/client/helpers/network";
 
 export const usePostScore = ({
   onSuccess,
 }: {
-  onSuccess: TOnSuccess<(typeof apiSchema.score.post.response)[200]>;
+  onSuccess: (res: { highScore: number; existingHighScore: number }) => void;
 }) => {
   return useMutation({
-    mutationFn: (body: Static<typeof apiSchema.score.post.body>) => {
-      return apiClient.http.score.post(body);
+    mutationFn: async (body: { player_id: string; score: string; game_mode_name: string }) => {
+      const res = await httpClient.post("/api/score", { body });
+      const data = await res.json();
+      return data;
     },
-    onSuccess: ({ data }) => data && onSuccess(data),
+    onSuccess: res => onSuccess(res),
   });
 };
 
 export const useGetLeaderboard = (player_id: string) => {
   return useQuery({
-    queryKey: ["leaderboard"],
-    queryFn: () => apiClient.http.leaderboard.get({ query: { player_id } }),
+    queryKey: ["leaderboard", player_id],
+    queryFn: async () => {
+      const res = await httpClient.get(`/api/leaderboard?player_id=${player_id}`, {});
+      const data = await res.json();
+      return data;
+    },
   });
 };
 
 export const usePostRating = () => {
   return useMutation({
-    mutationFn: (body: Static<typeof apiSchema.rating.post.body>) => {
-      return apiClient.http.rating.post(body);
+    mutationFn: async (body: { player_id: string; is_thumbs_up: boolean; comments: string }) => {
+      const res = await httpClient.post("/api/rating", { body });
+      const data = await res.json();
+      return data;
     },
   });
 };
@@ -36,6 +40,10 @@ export const usePostRating = () => {
 export const useGetAnalytics = () => {
   return useQuery({
     queryKey: ["analytics"],
-    queryFn: () => apiClient.http.analytics.get(),
+    queryFn: async () => {
+      const res = await httpClient.get("/api/analytics", {});
+      const data = await res.json();
+      return data;
+    },
   });
 };

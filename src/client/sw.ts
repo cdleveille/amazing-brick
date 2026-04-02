@@ -9,7 +9,7 @@ const manifest = self.__WB_MANIFEST;
 const urlsToPrecache = ["/", ...manifest.map(({ url }) => url)];
 
 // Increment this version to invalidate cache and force clients to refetch all assets
-const CACHE_VERSION = "v3";
+const CACHE_VERSION = "v1";
 
 const cacheName = `sw-cache-${CACHE_VERSION}`;
 
@@ -86,7 +86,7 @@ const deleteOldCaches = async (newCacheName: string) => {
 const handleFetchRequest = async (request: Request) => {
   if (isCacheFirstRequest(request)) return await cacheFirstStrategy(request);
   const res = await networkFirstStrategy(request);
-  if (!res || !res.ok) throw new Error(`Failed to fetch ${request.url}`);
+  if (!res?.ok) throw new Error(`Failed to fetch ${request.url}`);
   return res;
 };
 

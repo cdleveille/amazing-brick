@@ -16,7 +16,7 @@ export const Home = () => {
 
   const { data } = useGetAnalytics();
 
-  if (data?.data?.playerCount) console.log(`Players last 24 hours: ${data.data.playerCount}`);
+  if (data?.playerCount) console.log(`Players last 24 hours: ${data.playerCount}`);
 
   return (
     <div className="home-container" style={styles.homeContainer}>

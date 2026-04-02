@@ -24,9 +24,9 @@ export const Scores = () => {
 
   if (isOffline) return <Offline message="Internet connection required to view scores" />;
 
-  if (!data?.data) return <Loading />;
+  if (!data) return <Loading />;
 
-  const { data: scores } = data;
+  const scores = data;
 
   const selectedPlayerScore = (() => {
     switch (selectedGameMode.name) {
@@ -86,7 +86,7 @@ export const Scores = () => {
       default:
         return [];
     }
-  })();
+  })() as number[];
 
   return (
     <div className="scores-container" style={styles.scoresContainer}>

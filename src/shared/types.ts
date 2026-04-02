@@ -1,16 +1,7 @@
-import type { Static, TSchema } from "elysia";
+import type React from "react";
 
 import type { Game } from "@/client/game/game";
-import type { api } from "@/server/api";
 import type { Color, GameMode } from "@/shared/constants";
-import type {
-  encryptedScoreSchema,
-  leaderboardResSchema,
-  ratingSchema,
-  scoreResSchema,
-} from "@/shared/schema";
-
-export type TApi = typeof api;
 
 export type TReactStateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -39,8 +30,6 @@ export type TAppContext = {
   setScoreRes: TReactStateSetter<TScoreRes | null>;
   submitScore: () => Promise<void>;
 };
-
-export type TOnSuccess<TReceive extends TSchema> = (data: Static<TReceive>) => void;
 
 export type TBase = {
   created_at: Date;
@@ -91,13 +80,17 @@ export type TScore = {
   last_played_at: Date;
 };
 
-export type TEncryptedScore = Static<typeof encryptedScoreSchema>;
+// export type TEncryptedScore = Static<typeof encryptedScoreSchema>;
 
-export type TScoreRes = Static<typeof scoreResSchema>;
+export type TScoreRes = { highScore: number; existingHighScore: number };
 
-export type TLeaderboardRes = Static<typeof leaderboardResSchema>;
+// export type TLeaderboardRes = Static<typeof leaderboardResSchema>;
 
-export type TRating = Static<typeof ratingSchema>;
+export type TRating = {
+  player_id: string;
+  is_thumbs_up: boolean;
+  comments: string;
+};
 
 export type ReverseMap<T> = T[keyof T];
 

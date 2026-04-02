@@ -1,27 +1,21 @@
 {
   "compilerOptions": {
     "lib": ["esnext", "dom", "webworker"],
-    "module": "esnext",
-    "target": "esnext",
-    "types": ["@types/bun"],
-    "moduleResolution": "bundler",
-    "moduleDetection": "force",
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "checkJs": true,
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "sourceMap": true,
     "jsx": "react-jsx",
-    "strict": true,
-    "baseUrl": ".",
-    "incremental": false,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "exclude": ["node_modules", "public"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
