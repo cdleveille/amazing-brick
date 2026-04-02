@@ -86,7 +86,7 @@ export const Scores = () => {
       default:
         return [];
     }
-  })() as number[];
+  })();
 
   return (
     <div className="scores-container" style={styles.scoresContainer}>

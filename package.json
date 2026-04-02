@@ -19,6 +19,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hono/node-server": "^1.19.12",
+    "@hono/zod-validator": "^0.7.6",
     "@mui/icons-material": "^7.3.9",
     "@mui/joy": "^5.0.0-beta.52",
     "@mui/material": "^7.3.9",
@@ -29,7 +30,8 @@
     "hono": "^4.12.9",
     "mongoose": "^9.3.3",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.10",
