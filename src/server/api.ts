@@ -1,8 +1,75 @@
+import { zValidator } from "@hono/zod-validator";
 import CryptoJS from "crypto-js";
+import { Hono } from "hono";
+import { z } from "zod";
 
 import { Rating, Score } from "@/server/model";
 import { GameMode } from "@/shared/constants";
 import type { TScore } from "@/shared/types";
+
+export const api = new Hono()
+  .post(
+    "/score",
+    zValidator(
+      "json",
+      z.object({
+        player_id: z.string(),
+        score: z.string(),
+        game_mode_name: z.string(),
+      }),
+    ),
+    async c => {
+      const {
+        player_id,
+        score: encryptedScore,
+        game_mode_name: encryptedGameModeName,
+      } = c.req.valid("json");
+
+      const scoreRes = await postScore({
+        player_id,
+        encryptedScore,
+        encryptedGameModeName,
+      });
+
+      return c.json(scoreRes);
+    },
+  )
+  .get(
+    "/leaderboard",
+    zValidator(
+      "query",
+      z.object({
+        player_id: z.string(),
+      }),
+    ),
+    async c => {
+      const { player_id } = c.req.valid("query");
+      const leaderboardRes = await getLeaderboard({ player_id: String(player_id) });
+      return c.json(leaderboardRes);
+    },
+  )
+  .post(
+    "/rating",
+    zValidator(
+      "json",
+      z.object({
+        player_id: z.string(),
+        is_thumbs_up: z.boolean(),
+        comments: z.string(),
+      }),
+    ),
+    async c => {
+      const { player_id, is_thumbs_up, comments } = c.req.valid("json");
+      const ratingRes = await postRating({ player_id, is_thumbs_up, comments });
+      return c.json(ratingRes);
+    },
+  )
+  .get("/analytics", async c => {
+    const analyticsRes = await getAnalytics();
+    return c.json(analyticsRes);
+  });
+
+export type TApi = typeof api;
 
 export const postScore = async ({
   player_id,

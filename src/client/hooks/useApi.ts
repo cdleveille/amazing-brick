@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { hc } from "hono/client";
 
-import type { TApi } from "@/server/index";
+import type { TApi } from "@/server/api";
 
-const apiClient = hc<TApi>("/").api;
+const apiClient = hc<TApi>("/api");
 
 export const usePostScore = ({
   onSuccess,

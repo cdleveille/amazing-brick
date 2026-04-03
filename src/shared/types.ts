@@ -80,11 +80,7 @@ export type TScore = {
   last_played_at: Date;
 };
 
-// export type TEncryptedScore = Static<typeof encryptedScoreSchema>;
-
 export type TScoreRes = { highScore: number; existingHighScore: number };
-
-// export type TLeaderboardRes = Static<typeof leaderboardResSchema>;
 
 export type TRating = {
   player_id: string;

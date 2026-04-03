@@ -1,92 +1,23 @@
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { z } from "zod";
 
-import { getAnalytics, getLeaderboard, postRating, postScore } from "@/server/api";
+import { api } from "@/server/api";
 import { Config } from "@/server/config";
 import { connectToDatabase } from "@/server/database";
 
 const app = new Hono();
 
+app.route("/api", api);
+
 app.use("/*", serveStatic({ root: "dist/public" }));
 
-const routes = app
-  .post(
-    "/api/score",
-    zValidator(
-      "json",
-      z.object({
-        player_id: z.string(),
-        score: z.string(),
-        game_mode_name: z.string(),
-      }),
-    ),
-    async c => {
-      const {
-        player_id,
-        score: encryptedScore,
-        game_mode_name: encryptedGameModeName,
-      } = c.req.valid("json");
-      const scoreRes = await postScore({ player_id, encryptedScore, encryptedGameModeName });
-      return c.json(scoreRes);
+connectToDatabase().then(() => {
+  serve(
+    {
+      fetch: app.fetch,
+      port: Config.PORT,
     },
-  )
-  .get(
-    "/api/leaderboard",
-    zValidator(
-      "query",
-      z.object({
-        player_id: z.string(),
-      }),
-    ),
-    async c => {
-      const { player_id } = c.req.valid("query");
-      const leaderboardRes = await getLeaderboard({ player_id: String(player_id) });
-      return c.json(leaderboardRes);
-    },
-  )
-  .post(
-    "/api/rating",
-    zValidator(
-      "json",
-      z.object({
-        player_id: z.string(),
-        is_thumbs_up: z.boolean(),
-        comments: z.string(),
-      }),
-    ),
-    async c => {
-      const { player_id, is_thumbs_up, comments } = c.req.valid("json");
-      const ratingRes = await postRating({ player_id, is_thumbs_up, comments });
-      return c.json(ratingRes);
-    },
-  )
-  .get("/api/analytics", async c => {
-    const analyticsRes = await getAnalytics();
-    return c.json(analyticsRes);
-  });
-
-const startServer = async () => {
-  try {
-    await connectToDatabase();
-
-    serve(
-      {
-        fetch: app.fetch,
-        port: Config.PORT,
-      },
-      info => {
-        console.log(`🚀 Server is listening on http://localhost:${info.port}`);
-      },
-    );
-  } catch (error) {
-    console.error("Failed to start server:", error);
-    process.exit(1);
-  }
-};
-
-startServer();
-
-export type TApi = typeof routes;
+    server => console.log(`Amazing Brick server is listening on http://localhost:${server.port}`),
+  );
+});
