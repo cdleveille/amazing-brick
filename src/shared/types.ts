@@ -88,6 +88,27 @@ export type TRating = {
   comments: string;
 };
 
+export type TLeaderboardAggResult = {
+  stats: {
+    standardTotal: number;
+    standardAbove: number;
+    standardEqual: number;
+    sprintTotal: number;
+    sprintAbove: number;
+    sprintEqual: number;
+    shroudedTotal: number;
+    shroudedAbove: number;
+    shroudedEqual: number;
+    gotchaTotal: number;
+    gotchaAbove: number;
+    gotchaEqual: number;
+  }[];
+  standardTop10: { score: number }[];
+  sprintTop10: { sprint_score: number }[];
+  shroudedTop10: { shrouded_score: number }[];
+  gotchaTop10: { gotcha_score: number }[];
+};
+
 export type ReverseMap<T> = T[keyof T];
 
 export type TGameModeName = ReverseMap<typeof GameMode>;
