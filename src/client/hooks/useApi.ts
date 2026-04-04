@@ -47,7 +47,10 @@ export const useGetAnalytics = () => {
     queryFn: async () => {
       const res = await apiClient.analytics.$get();
       const data = await res.json();
+      console.log("Analytics data:", data);
       return data;
     },
+    staleTime: Infinity,
+    refetchOnMount: false,
   });
 };

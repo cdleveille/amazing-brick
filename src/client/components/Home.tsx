@@ -14,9 +14,7 @@ export const Home = () => {
   const { gameMode, setGameMode } = useApp();
   const { styles } = useStyles();
 
-  const { data } = useGetAnalytics();
-
-  if (data) console.log("Analytics data:", data);
+  useGetAnalytics();
 
   return (
     <div className="home-container" style={styles.homeContainer}>
