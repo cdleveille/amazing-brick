@@ -50,8 +50,6 @@ export type TJumpDirection = "left" | "right";
 
 export type TWall = {
   y: number;
-  eleLeft: HTMLElement;
-  eleRight: HTMLElement;
   gapX: number;
   isScored: boolean;
   color: Color;
@@ -60,7 +58,6 @@ export type TWall = {
 export type TBlock = {
   x: number;
   y: number;
-  ele: HTMLElement;
   gapX: number;
   color: Color;
 };
@@ -121,5 +118,4 @@ export type TGameMode = {
 export type TGotchaBrick = {
   x: number;
   y: number;
-  ele: HTMLElement;
 };

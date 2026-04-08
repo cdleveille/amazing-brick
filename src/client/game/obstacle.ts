@@ -1,5 +1,4 @@
 import type { Game } from "@/client/game/game";
-import { assertGetElementById } from "@/client/helpers/browser";
 import { type Color, GameMode, OBSTACLE_COLORS } from "@/shared/constants";
 import type { TBlock, TWall } from "@/shared/types";
 
@@ -30,16 +29,12 @@ export class Obstacle {
     this.walls = [
       {
         y: -this.wallHeight,
-        eleLeft: assertGetElementById("wall1-left"),
-        eleRight: assertGetElementById("wall1-right"),
         gapX: wall1GapX,
         isScored: false,
         color: OBSTACLE_COLORS[0],
       },
       {
         y: -this.wallHeight - this.wallSpacing,
-        eleLeft: assertGetElementById("wall2-left"),
-        eleRight: assertGetElementById("wall2-right"),
         gapX: wall2GapX,
         isScored: false,
         color: OBSTACLE_COLORS[0],
@@ -51,28 +46,24 @@ export class Obstacle {
       {
         x: this.generateRandomBlockX(wall1GapX),
         y: this.walls[0].y - this.wallBlockSpacing - this.blockWidth,
-        ele: assertGetElementById("block1"),
         gapX: wall1GapX,
         color: OBSTACLE_COLORS[0],
       },
       {
         x: this.generateRandomBlockX(wall2GapX),
         y: this.walls[1].y + this.wallHeight + this.wallBlockSpacing,
-        ele: assertGetElementById("block2"),
         gapX: wall2GapX,
         color: OBSTACLE_COLORS[0],
       },
       {
         x: this.generateRandomBlockX(wall2GapX),
         y: this.walls[1].y - this.wallBlockSpacing - this.blockWidth,
-        ele: assertGetElementById("block3"),
         gapX: wall2GapX,
         color: OBSTACLE_COLORS[0],
       },
       {
         x: this.generateRandomBlockX(block4GapX),
         y: this.walls[1].y + this.wallHeight + this.wallBlockSpacing - this.wallSpacing,
-        ele: assertGetElementById("block4"),
         gapX: block4GapX,
         color: OBSTACLE_COLORS[0],
       },
@@ -133,16 +124,6 @@ export class Obstacle {
         wall.y -= this.game.brick.yv * delta;
       }
 
-      wall.eleLeft.style.backgroundColor = wall.color;
-      wall.eleRight.style.backgroundColor = wall.color;
-
-      wall.eleLeft.style.width = `${wall.gapX}px`;
-      wall.eleLeft.style.top = `${wall.y}px`;
-
-      wall.eleRight.style.width = `${this.game.canvas.width - wall.gapX - this.wallGapWidth}px`;
-      wall.eleRight.style.top = `${wall.y}px`;
-      wall.eleRight.style.left = `${wall.gapX + this.wallGapWidth}px`;
-
       if (
         wall.y > this.game.canvas.height / 2 + this.game.brick.diagonalRadius &&
         !wall.isScored &&
@@ -165,9 +146,6 @@ export class Obstacle {
         }
         wall.color = this.obstacleColor;
       }
-
-      wall.eleLeft.style.height = `${this.wallHeight}px`;
-      wall.eleRight.style.height = `${this.wallHeight}px`;
     }
 
     for (const block of this.blocks) {
@@ -175,17 +153,12 @@ export class Obstacle {
         block.y -= this.game.brick.yv * delta;
       }
 
-      block.ele.style.backgroundColor = block.color;
-      block.ele.style.width = `${this.blockWidth}px`;
-      block.ele.style.top = `${block.y}px`;
-      block.ele.style.left = `${block.x}px`;
-
       if (block.y >= this.game.canvas.height) {
         block.y -= this.wallSpacing * 2;
-        const id = block.ele.id;
-        if (id === "block1") {
+        const index = this.blocks.indexOf(block);
+        if (index === 0) {
           block.gapX = this.walls[0].gapX;
-        } else if (id === "block3") {
+        } else if (index === 2) {
           block.gapX = this.walls[1].gapX;
         } else {
           block.gapX = this.generateRandomGapX();
@@ -193,8 +166,29 @@ export class Obstacle {
         block.x = this.generateRandomBlockX(block.gapX);
         block.color = this.obstacleColor;
       }
+    }
+  }
 
-      block.ele.style.height = `${this.blockWidth}px`;
+  draw(ctx2d: CanvasRenderingContext2D) {
+    const { canvas } = this.game;
+
+    for (const wall of this.walls) {
+      ctx2d.fillStyle = wall.color;
+      // Left wall segment
+      if (wall.gapX > 0) {
+        ctx2d.fillRect(0, wall.y, wall.gapX, this.wallHeight);
+      }
+      // Right wall segment
+      const rightStart = wall.gapX + this.wallGapWidth;
+      const rightWidth = canvas.width - rightStart;
+      if (rightWidth > 0) {
+        ctx2d.fillRect(rightStart, wall.y, rightWidth, this.wallHeight);
+      }
+    }
+
+    for (const block of this.blocks) {
+      ctx2d.fillStyle = block.color;
+      ctx2d.fillRect(block.x, block.y, this.blockWidth, this.blockWidth);
     }
   }
 }

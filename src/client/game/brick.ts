@@ -1,10 +1,8 @@
 import type { Game } from "@/client/game/game";
-import { assertGetElementById } from "@/client/helpers/browser";
 import type { TJumpDirection } from "@/shared/types";
 
 export class Brick {
   game: Game;
-  ele: HTMLElement;
   x: number;
   y: number;
   xv: number;
@@ -17,11 +15,11 @@ export class Brick {
   isCollidingLeft: boolean;
   isCollidingRight: boolean;
   isCollidingTop: boolean;
+  isSpinning: boolean;
+  spinAngle: number;
 
   constructor(game: Game) {
     this.game = game;
-    this.ele = assertGetElementById("brick");
-    this.ele.classList.remove("spin");
     this.x = this.game.canvas.width / 2;
     this.y = this.game.canvas.height / 2;
     this.xv = 0;
@@ -34,7 +32,13 @@ export class Brick {
     this.isCollidingLeft = false;
     this.isCollidingRight = false;
     this.isCollidingTop = true;
+    this.isSpinning = false;
+    this.spinAngle = 0;
     this.resize();
+  }
+
+  startSpin() {
+    this.isSpinning = true;
   }
 
   jump(direction: TJumpDirection) {
@@ -56,18 +60,8 @@ export class Brick {
     this.diagonalWidth = (this.sideLength ** 2 * 2) ** 0.5;
     this.diagonalRadius = this.diagonalWidth / 2;
 
-    this.ele.style.width = `${this.sideLength}px`;
-    this.ele.style.height = `${this.sideLength}px`;
-
     this.jumpSpeedY = this.jumpSpeedY * resizeRatio;
     this.jumpSpeedX = this.jumpSpeedX * resizeRatio;
-
-    this.adjustPosition();
-  }
-
-  adjustPosition() {
-    this.ele.style.left = `${this.x - this.sideLength / 2}px`;
-    this.ele.style.top = `${this.y - this.sideLength / 2}px`;
   }
 
   update(delta: number) {
@@ -80,6 +74,20 @@ export class Brick {
 
     this.x += this.xv * delta;
     this.y += this.yv * delta;
-    this.adjustPosition();
+
+    // Match CSS spin animation: spin 4s linear infinite, 0deg → -1440deg = -1 revolution/second
+    if (this.isSpinning) {
+      this.spinAngle -= 2 * Math.PI * delta;
+    }
+  }
+
+  draw(ctx2d: CanvasRenderingContext2D, color: string) {
+    ctx2d.save();
+    ctx2d.translate(this.x, this.y);
+    // Base 45° rotation gives diamond appearance; spinAngle adds the crash spin
+    ctx2d.rotate(Math.PI / 4 + this.spinAngle);
+    ctx2d.fillStyle = color;
+    ctx2d.fillRect(-this.sideLength / 2, -this.sideLength / 2, this.sideLength, this.sideLength);
+    ctx2d.restore();
   }
 }

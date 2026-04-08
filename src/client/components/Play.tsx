@@ -1,22 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-import { GameObject } from "@/client/components/GameObject";
 import { Jump } from "@/client/components/Jump";
 import { Pause } from "@/client/components/Pause";
 import { Score } from "@/client/components/Score";
 import { Timer } from "@/client/components/Timer";
 import { Game } from "@/client/game/game";
 import { useApp } from "@/client/hooks/useApp";
+import { useStyles } from "@/client/hooks/useStyles";
 import { GameMode } from "@/shared/constants";
 
 export const Play = () => {
   const ctx = useApp();
   const { setGame, setIsPaused, isPausedAtStart, setIsPausedAtStart, isGameMode, setScoreRes } =
     ctx;
+  const { styles } = useStyles();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: -
   useEffect(() => {
-    const game = new Game(ctx);
+    const canvasEl = canvasRef.current;
+    if (!canvasEl) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvasEl.width = ctx.canvas.width * dpr;
+    canvasEl.height = ctx.canvas.height * dpr;
+
+    const game = new Game(ctx, canvasEl);
     game.start();
     setGame(game);
     setIsPaused(false);
@@ -33,7 +42,8 @@ export const Play = () => {
         {isGameMode(GameMode.Sprint) && <Timer />}
         <Score />
       </div>
-      <GameObject />
+      <canvas ref={canvasRef} className="game-canvas" />
+      {isGameMode(GameMode.Shrouded) && <div className="absolute-center" style={styles.shroud} />}
       {isPausedAtStart && <Jump />}
     </div>
   );

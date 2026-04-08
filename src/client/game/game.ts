@@ -2,12 +2,14 @@ import { Brick } from "@/client/game/brick";
 import { Obstacle } from "@/client/game/obstacle";
 import { executeOnClass, now } from "@/client/helpers/browser";
 import { isRectangleIntersectingDiamond } from "@/client/helpers/game";
-import { GameMode } from "@/shared/constants";
+import { Color, GameMode } from "@/shared/constants";
 import type { TAppContext, TCanvas, TGotchaBrick, TJumpDirection } from "@/shared/types";
 
 export class Game {
   ctx: TAppContext;
   canvas: TCanvas;
+  canvasElement: HTMLCanvasElement;
+  ctx2d: CanvasRenderingContext2D;
   brick: Brick;
   obstacle: Obstacle;
   gravity: number;
@@ -19,25 +21,24 @@ export class Game {
   gotchaBricks = [] as TGotchaBrick[];
   gotchaBrickWidth = 0;
 
-  constructor(ctx: TAppContext) {
+  constructor(ctx: TAppContext, canvasElement: HTMLCanvasElement) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
+    this.canvasElement = canvasElement;
+    const ctx2d = canvasElement.getContext("2d");
+    if (!ctx2d) throw new Error("Failed to get 2D canvas context");
+    this.ctx2d = ctx2d;
     this.brick = new Brick(this);
     this.obstacle = new Obstacle(this);
     this.gravity = 1500 * this.canvas.scaleRatio;
     if (this.ctx.isGameMode(GameMode.Gotcha)) {
-      this.gotchaBricks = Array.from(document.getElementsByClassName("gotcha-brick")).map(
-        (ele, i) => {
-          return {
-            x: this.generateRandomGotchaBrickX(),
-            y:
-              -this.obstacle.wallSpacing * (i + 1) -
-              this.obstacle.wallHeight / 2 +
-              this.obstacle.wallSpacing / 2,
-            ele: ele as HTMLElement,
-          } as TGotchaBrick;
-        },
-      );
+      this.gotchaBricks = [0, 1].map(i => ({
+        x: this.generateRandomGotchaBrickX(),
+        y:
+          -this.obstacle.wallSpacing * (i + 1) -
+          this.obstacle.wallHeight / 2 +
+          this.obstacle.wallSpacing / 2,
+      }));
       this.gotchaBrickWidth = 20 * this.canvas.scaleRatio;
     }
   }
@@ -58,6 +59,7 @@ export class Game {
       current = now();
       delta = Math.min((current - last) / 1000, maxDelta);
       this.update(delta);
+      this.render();
       last = current;
     };
 
@@ -98,8 +100,11 @@ export class Game {
         gotchaBrick.y = gotchaBrick.y * resizeRatio;
       }
       this.gotchaBrickWidth = this.gotchaBrickWidth * resizeRatio;
-      this.adjustGotchaBrickPosition();
     }
+    // Update canvas element backing buffer to match new logical dimensions × DPR
+    const dpr = window.devicePixelRatio || 1;
+    this.canvasElement.width = canvas.width * dpr;
+    this.canvasElement.height = canvas.height * dpr;
   }
 
   handleCollisions() {
@@ -207,16 +212,8 @@ export class Game {
     if (this.isGameOver) return;
     this.isGameOver = true;
     this.ctx.submitScore();
-    this.brick.ele.classList.add("spin");
+    this.brick.startSpin();
     executeOnClass("canvas", ele => ele.classList.add("shake"));
-  }
-
-  adjustGotchaBrickPosition() {
-    if (this.ctx.gameMode.name !== GameMode.Gotcha) return;
-    for (const gotchaBrick of this.gotchaBricks) {
-      gotchaBrick.ele.style.top = `${gotchaBrick.y - this.gotchaBrickWidth / 2}px`;
-      gotchaBrick.ele.style.left = `${gotchaBrick.x - this.gotchaBrickWidth / 2}px`;
-    }
   }
 
   updateGotchaBricks(delta: number) {
@@ -226,15 +223,10 @@ export class Game {
         gotchaBrick.y -= this.brick.yv * delta;
       }
 
-      gotchaBrick.ele.style.width = `${this.gotchaBrickWidth}px`;
-      gotchaBrick.ele.style.height = `${this.gotchaBrickWidth}px`;
-
       if (gotchaBrick.y + (this.gotchaBrickWidth ** 2 * 2) ** 0.5 / 2 >= this.canvas.height) {
         gotchaBrick.y -= this.obstacle.wallSpacing * 2;
         gotchaBrick.x = this.generateRandomGotchaBrickX();
       }
-
-      this.adjustGotchaBrickPosition();
     }
   }
 
@@ -244,5 +236,45 @@ export class Game {
     this.obstacle.update(delta);
     this.updateGotchaBricks(delta);
     this.handleCollisions();
+  }
+
+  render() {
+    const { ctx2d, canvas } = this;
+    const dpr = window.devicePixelRatio || 1;
+
+    ctx2d.save();
+    ctx2d.scale(dpr, dpr);
+    ctx2d.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw walls and blocks
+    this.obstacle.draw(ctx2d);
+
+    // Draw gotcha bricks (Gotcha mode)
+    if (this.ctx.isGameMode(GameMode.Gotcha)) {
+      for (const gotchaBrick of this.gotchaBricks) {
+        this.drawDiamond(ctx2d, gotchaBrick.x, gotchaBrick.y, this.gotchaBrickWidth, "#f8a502");
+      }
+    }
+
+    // Draw player brick
+    const brickColor = this.ctx.isDarkMode ? Color.White : Color.Black;
+    this.brick.draw(ctx2d, brickColor);
+
+    ctx2d.restore();
+  }
+
+  private drawDiamond(
+    ctx2d: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    sideLength: number,
+    color: string,
+  ) {
+    ctx2d.save();
+    ctx2d.translate(x, y);
+    ctx2d.rotate(Math.PI / 4);
+    ctx2d.fillStyle = color;
+    ctx2d.fillRect(-sideLength / 2, -sideLength / 2, sideLength, sideLength);
+    ctx2d.restore();
   }
 }
