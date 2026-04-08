@@ -17,6 +17,7 @@ export class Brick {
   isCollidingTop: boolean;
   isSpinning: boolean;
   spinAngle: number;
+  spinDirection: number;
 
   constructor(game: Game) {
     this.game = game;
@@ -34,11 +35,13 @@ export class Brick {
     this.isCollidingTop = true;
     this.isSpinning = false;
     this.spinAngle = 0;
+    this.spinDirection = 1;
     this.resize();
   }
 
-  startSpin() {
+  startSpin(xv: number) {
     this.isSpinning = true;
+    this.spinDirection = xv >= 0 ? -1 : 1;
   }
 
   jump(direction: TJumpDirection) {
@@ -75,9 +78,8 @@ export class Brick {
     this.x += this.xv * delta;
     this.y += this.yv * delta;
 
-    // Match CSS spin animation: spin 4s linear infinite, 0deg → -1440deg = -1 revolution/second
     if (this.isSpinning) {
-      this.spinAngle -= 2 * Math.PI * delta;
+      this.spinAngle += this.spinDirection * 2 * Math.PI * delta;
     }
   }
 

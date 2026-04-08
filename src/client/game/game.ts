@@ -212,7 +212,7 @@ export class Game {
     if (this.isGameOver) return;
     this.isGameOver = true;
     this.ctx.submitScore();
-    this.brick.startSpin();
+    this.brick.startSpin(this.brick.xv);
     executeOnClass("canvas", ele => ele.classList.add("shake"));
   }
 
