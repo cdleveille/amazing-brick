@@ -66,12 +66,13 @@ const initInputEventListeners = (game: Game) => {
   };
 
   const onTouchStart = (e: TouchEvent) => {
+    const midX = window.innerWidth / 2;
     for (let i = 0; i < e.touches.length; i++) {
       const touch = e.touches[i];
-      if (touch.clientX < window.innerWidth / 2) game.jump("left");
-      if (touch.clientX >= window.innerWidth / 2) game.jump("right");
+      if (touch.clientX < midX) game.jump("left");
+      if (touch.clientX >= midX) game.jump("right");
     }
-    document.body.style.cursor = "none";
+    if (document.body.style.cursor !== "none") document.body.style.cursor = "none";
   };
 
   const onTouchEnd = (e: TouchEvent) => {
@@ -83,7 +84,7 @@ const initInputEventListeners = (game: Game) => {
   };
 
   document.addEventListener("keydown", onKeyDown);
-  document.addEventListener("touchstart", onTouchStart);
+  document.addEventListener("touchstart", onTouchStart, { passive: true });
   document.addEventListener("touchend", onTouchEnd);
   document.addEventListener("mousemove", onMouseMove);
 

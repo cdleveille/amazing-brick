@@ -155,6 +155,7 @@ button:focus {
 .play-container {
   position: relative;
   height: 100%;
+  touch-action: none;
 }
 
 .game-canvas {
