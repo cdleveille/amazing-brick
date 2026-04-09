@@ -118,4 +118,5 @@ export type TGameMode = {
 export type TGotchaBrick = {
   x: number;
   y: number;
+  shrinkTimer?: number;
 };

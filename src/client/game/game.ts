@@ -198,10 +198,9 @@ export class Game {
           },
           { cx: this.brick.x, cy: this.brick.y, radius: this.brick.diagonalRadius },
         );
-        if (isColliding) {
+        if (isColliding && gotchaBrick.shrinkTimer === undefined) {
           this.ctx.setScore(score => score + 1);
-          gotchaBrick.y -= this.obstacle.wallSpacing * 2;
-          gotchaBrick.x = this.generateRandomGotchaBrickX();
+          gotchaBrick.shrinkTimer = 0.1;
           break;
         }
       }
@@ -219,11 +218,23 @@ export class Game {
   updateGotchaBricks(delta: number) {
     if (this.ctx.gameMode.name !== GameMode.Gotcha) return;
     for (const gotchaBrick of this.gotchaBricks) {
+      if (gotchaBrick.shrinkTimer !== undefined) {
+        gotchaBrick.shrinkTimer -= delta;
+        if (gotchaBrick.shrinkTimer <= 0) {
+          delete gotchaBrick.shrinkTimer;
+          gotchaBrick.y -= this.obstacle.wallSpacing * 2;
+          gotchaBrick.x = this.generateRandomGotchaBrickX();
+        }
+      }
+
       if (this.brick.isCollidingTop) {
         gotchaBrick.y -= this.brick.yv * delta;
       }
 
-      if (gotchaBrick.y + (this.gotchaBrickWidth ** 2 * 2) ** 0.5 / 2 >= this.canvas.height) {
+      if (
+        gotchaBrick.shrinkTimer === undefined &&
+        gotchaBrick.y + (this.gotchaBrickWidth ** 2 * 2) ** 0.5 / 2 >= this.canvas.height
+      ) {
         gotchaBrick.y -= this.obstacle.wallSpacing * 2;
         gotchaBrick.x = this.generateRandomGotchaBrickX();
       }
@@ -252,7 +263,14 @@ export class Game {
     // Draw gotcha bricks (Gotcha mode)
     if (this.ctx.isGameMode(GameMode.Gotcha)) {
       for (const gotchaBrick of this.gotchaBricks) {
-        this.drawDiamond(ctx2d, gotchaBrick.x, gotchaBrick.y, this.gotchaBrickWidth, "#f8a502");
+        const scale = gotchaBrick.shrinkTimer !== undefined ? gotchaBrick.shrinkTimer / 0.25 : 1;
+        this.drawDiamond(
+          ctx2d,
+          gotchaBrick.x,
+          gotchaBrick.y,
+          this.gotchaBrickWidth * scale,
+          "#f8a502",
+        );
       }
     }
 
